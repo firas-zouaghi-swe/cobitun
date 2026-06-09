@@ -13,7 +13,7 @@ import { sendMail } from '@/lib/services/email-service';
 import crypto from 'crypto';
 
 const OTP_LENGTH = 6;
-const OTP_EXPIRY_MINUTES = 10;
+const OTP_EXPIRY_MINUTES = Number(process.env.MFA_OTP_EXPIRY_MINUTES && !Number.isNaN(Number(process.env.MFA_OTP_EXPIRY_MINUTES)) ? Number(process.env.MFA_OTP_EXPIRY_MINUTES) : 10);
 const OTP_RATE_LIMIT_SECONDS = 30;
 const OTP_MAX_ATTEMPTS_PER_HOUR = 5;
 const OTP_MAX_VERIFY_ATTEMPTS = 3;
@@ -126,9 +126,15 @@ If you did not request this code, please ignore this email and contact support.`
       `,
     });
   } catch (error) {
-    // Email delivery failed — fall back to console logging so OTP is still usable
-    console.warn('[MFA] Email delivery failed, falling back to console output.');
-    console.error('[MFA] Email error:', error);
+    const isSmtpMode = process.env.EMAIL_DELIVERY_MODE?.toLowerCase() === 'smtp';
+    console.warn('[MFA] Email delivery failed:', error);
+
+    if (isSmtpMode) {
+      return { success: false, message: 'Failed to send OTP email via SMTP. Please try again later.' };
+    }
+
+    // Email delivery failed in non-SMTP mode — fall back to console logging so OTP is still usable
+    console.warn('[MFA] Non-SMTP email delivery failed, falling back to console output.');
     console.info(`[MFA] Verification code for user ${userId} (${email}): ${code}`);
   }
 

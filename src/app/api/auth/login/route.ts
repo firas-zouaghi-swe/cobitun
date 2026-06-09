@@ -102,7 +102,14 @@ export async function POST(request: NextRequest) {
     });
 
     // Check if MFA is required
-    const mfaRequired = user.mfaEnabled === 1 || ['ADMIN', 'SUPER_ADMIN'].includes(user.role.roleCode);
+    const mfaEnabledGlobally = process.env.MFA_ENABLED === 'true';
+    const mfaRequireForAdmins = process.env.MFA_REQUIRE_FOR_ADMINS === 'true';
+    const mfaMethod = (process.env.MFA_METHOD || 'email_otp').toLowerCase();
+    const isAdminUser = ['ADMIN', 'SUPER_ADMIN'].includes(user.role.roleCode);
+    const mfaRequired =
+      user.mfaEnabled === 1 ||
+      (mfaMethod === 'email_otp' &&
+        ((mfaEnabledGlobally && !isAdminUser) || (mfaRequireForAdmins && isAdminUser)));
 
     if (mfaRequired) {
       await logAction({
