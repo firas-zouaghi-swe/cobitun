@@ -78,12 +78,16 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) return Errors.notFound('User');
+    if (!user.email || !user.email.trim()) {
+      return errorResponse('User does not have a valid email address for MFA delivery', 'MFA_INVALID_EMAIL', 400);
+    }
 
     // Send MFA OTP
     const sendResult = await sendMfaOtp(userId, user.email);
 
     if (!sendResult.success) {
-      return errorResponse(sendResult.message, 'MFA_CHALLENGE_FAILED', 400);
+      const status = sendResult.errorCode === 'EMAIL_DELIVERY_FAILED' ? 500 : 400;
+      return errorResponse(sendResult.message, 'MFA_CHALLENGE_FAILED', status);
     }
 
     // Non-blocking audit log — don't let audit failures break MFA flow

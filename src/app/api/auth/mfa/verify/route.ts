@@ -22,6 +22,7 @@ const verifyMfaSchema = z.object({
     }
     return value;
   }, z.number().int().positive().optional()), // Required for login MFA (no session yet)
+  preAuthToken: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -45,7 +46,7 @@ export async function POST(request: NextRequest) {
       .update(`mfa-pre-auth:${bodyUserId}`)
       .digest('hex');
 
-    const preAuthToken = request.headers.get('x-pre-auth-token');
+    const preAuthToken = request.headers.get('x-pre-auth-token') || result.data.preAuthToken;
     if (!preAuthToken) {
       return errorResponse('Pre-authentication token required for MFA login', 'PRE_AUTH_REQUIRED', 401);
     }

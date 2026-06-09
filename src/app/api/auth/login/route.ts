@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { verifyPassword } from '@/lib/auth';
 import { logAction } from '@/lib/services/audit-service';
 import { createAuthResponse, isSecureRequest } from '@/lib/session';
+import { isMfaRequired } from '@/lib/services/mfa-service';
 
 export async function POST(request: NextRequest) {
   try {
@@ -101,16 +102,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Check if MFA is required
-    const mfaEnabledGlobally = process.env.MFA_ENABLED === 'true';
-    const mfaRequireForAdmins = process.env.MFA_REQUIRE_FOR_ADMINS === 'true';
-    const mfaMethod = (process.env.MFA_METHOD || 'email_otp').toLowerCase();
-    const roleCode = user.role?.roleCode || '';
-    const isAdminUser = ['ADMIN', 'SUPER_ADMIN'].includes(roleCode);
-    const mfaRequired =
-      user.mfaEnabled === 1 ||
-      (mfaMethod === 'email_otp' &&
-        ((mfaEnabledGlobally && !isAdminUser) || (mfaRequireForAdmins && isAdminUser)));
+    // Check if MFA is required for this user
+    const mfaRequired = await isMfaRequired(user.id);
 
     if (mfaRequired) {
       await logAction({

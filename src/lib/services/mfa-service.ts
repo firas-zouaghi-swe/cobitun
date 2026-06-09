@@ -71,11 +71,11 @@ function checkRateLimit(userId: number): { allowed: boolean; reason?: string } {
 /**
  * Send MFA OTP code to user's email
  */
-export async function sendMfaOtp(userId: number, email: string): Promise<{ success: boolean; message: string; expiresAt?: Date }> {
+export async function sendMfaOtp(userId: number, email: string): Promise<{ success: boolean; message: string; expiresAt?: Date; errorCode?: string }> {
   // Check rate limit
   const rateCheck = checkRateLimit(userId);
   if (!rateCheck.allowed) {
-    return { success: false, message: rateCheck.reason || 'Rate limit exceeded' };
+    return { success: false, message: rateCheck.reason || 'Rate limit exceeded', errorCode: 'OTP_RATE_LIMITED' };
   }
 
   // Generate OTP
@@ -131,7 +131,11 @@ If you did not request this code, please ignore this email and contact support.`
     console.warn('[MFA] Email delivery failed:', error);
 
     if (isSmtpMode) {
-      return { success: false, message: 'Failed to send OTP email via SMTP. Please try again later.' };
+      return {
+        success: false,
+        message: 'Failed to send OTP email via SMTP. Please try again later.',
+        errorCode: 'EMAIL_DELIVERY_FAILED',
+      };
     }
 
     // Email delivery failed in non-SMTP mode — fall back to console logging so OTP is still usable

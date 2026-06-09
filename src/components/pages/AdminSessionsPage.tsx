@@ -98,7 +98,7 @@ export default function AdminSessionsPage() {
   };
 
   return (
-    <Protected roles={['ADMIN']}>
+    <Protected roles={['ADMIN', 'SUPER_ADMIN']}>
       <div className="space-y-6 page-enter">
         <div className="animate-fade-in-down">
           <h1 className="text-2xl font-bold mb-1">{t('adminSessions.title', 'Admin Session Activity')}</h1>

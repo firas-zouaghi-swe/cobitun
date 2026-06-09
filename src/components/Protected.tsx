@@ -7,6 +7,15 @@ import { useAppStore } from '@/lib/store';
 import { Button } from '@/components/ui/button';
 import { ShieldAlert } from 'lucide-react';
 
+function isAllowedRole(userRole: string | undefined, roles?: string[]) {
+  if (!roles || roles.length === 0) return true;
+  if (!userRole) return false;
+
+  // SUPER_ADMIN should be allowed wherever ADMIN access is required.
+  if (roles.includes(Roles.ADMIN) && userRole === Roles.SUPER_ADMIN) return true;
+  return roles.includes(userRole);
+}
+
 export function Protected({ children, roles }: { children: React.ReactNode; roles?: string[] }) {
   const { t } = useTranslation('common');
   const { user, isAuthenticated } = useAuth();
@@ -18,10 +27,8 @@ export function Protected({ children, roles }: { children: React.ReactNode; role
 
     if (!isAuthenticated) {
       const loginPage = roles
-        ? roles.includes(Roles.ADMIN) && !roles.includes(Roles.CUSTOMER)
+        ? (roles.includes(Roles.ADMIN) || roles.includes(Roles.SUPER_ADMIN)) && !roles.includes(Roles.CUSTOMER)
           ? 'admin-login'
-          : roles.includes(Roles.CUSTOMER) && !roles.includes(Roles.ADMIN)
-          ? 'customer-login'
           : 'customer-login'
         : 'customer-login';
       setCurrentPage(loginPage);
@@ -32,9 +39,9 @@ export function Protected({ children, roles }: { children: React.ReactNode; role
     if (!hydrated || !isAuthenticated) return;
     if (!roles || roles.length === 0) return;
 
-    const allowed = roles.includes(user?.role || '');
+    const allowed = isAllowedRole(user?.role, roles);
     if (!allowed) {
-      const loginPage = roles.includes(Roles.ADMIN) && !roles.includes(Roles.CUSTOMER)
+      const loginPage = (roles.includes(Roles.ADMIN) || roles.includes(Roles.SUPER_ADMIN)) && !roles.includes(Roles.CUSTOMER)
         ? 'admin-login'
         : 'home';
       setCurrentPage(loginPage);
@@ -50,7 +57,7 @@ export function Protected({ children, roles }: { children: React.ReactNode; role
   }
 
   if (roles && roles.length > 0) {
-    const allowed = roles.includes(user?.role || '');
+    const allowed = isAllowedRole(user?.role, roles);
     if (!allowed) {
       return (
         <div className="flex flex-col items-center justify-center min-h-[400px] gap-4 p-8 text-center" role="alert">

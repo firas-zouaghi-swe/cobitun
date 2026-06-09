@@ -3,13 +3,29 @@ import path from 'path';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 
-const DEFAULT_FROM = process.env.EMAIL_DEFAULT_FROM || 'no-reply@cobitun.tn';
+const SMTP_USER_RAW = process.env.SMTP_USER || '';
+const SMTP_PASS_RAW = process.env.SMTP_PASS || '';
+const SMTP_USER = SMTP_USER_RAW.trim();
+const SMTP_PASS = SMTP_PASS_RAW.trim();
+
+function isPlaceholderValue(value?: string) {
+  if (!value) return true;
+  const trimmed = value.trim();
+  return trimmed === '' || trimmed === 'your-smtp-user@example.com' || trimmed === 'your-smtp-password' || trimmed === 'your-email@example.com';
+}
+
+const EMAIL_DEFAULT_FROM_RAW = process.env.EMAIL_DEFAULT_FROM || '';
+const EMAIL_FROM_RAW = process.env.EMAIL_FROM || '';
+const EMAIL_DEFAULT_FROM = isPlaceholderValue(EMAIL_DEFAULT_FROM_RAW) ? '' : EMAIL_DEFAULT_FROM_RAW.trim();
+const EMAIL_FROM = isPlaceholderValue(EMAIL_FROM_RAW) ? '' : EMAIL_FROM_RAW.trim();
+const DEFAULT_FROM = EMAIL_DEFAULT_FROM || EMAIL_FROM || SMTP_USER || 'no-reply@cobitun.tn';
 const DELIVERY_MODE = (process.env.EMAIL_DELIVERY_MODE || 'file').toLowerCase();
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.office365.com';
 const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
-const SMTP_USER = process.env.SMTP_USER || '';
-const SMTP_PASS = process.env.SMTP_PASS || '';
 const SMTP_SECURE = process.env.SMTP_SECURE === 'true';
+const SMTP_HAS_PLACEHOLDER_CREDENTIALS =
+  SMTP_USER_RAW === 'your-smtp-user@example.com' ||
+  SMTP_PASS_RAW === 'your-smtp-password';
 
 function getFrontendUrl(): string {
   if (process.env.FRONTEND_URL) {
@@ -50,8 +66,9 @@ async function writeOutboxFile(payload: EmailPayload) {
 }
 
 async function sendSmtpMail(payload: EmailPayload) {
-  if (!SMTP_USER || !SMTP_PASS) {
-    throw new Error('SMTP_USER and SMTP_PASS must be set for SMTP email delivery');
+  const invalidCredentials = !SMTP_USER || !SMTP_PASS || SMTP_HAS_PLACEHOLDER_CREDENTIALS;
+  if (invalidCredentials) {
+    throw new Error('SMTP_USER and SMTP_PASS must be configured for SMTP email delivery and must not be placeholder values');
   }
 
   const transporter = nodemailer.createTransport({
@@ -67,6 +84,8 @@ async function sendSmtpMail(payload: EmailPayload) {
     },
   });
 
+  await transporter.verify();
+
   await transporter.sendMail({
     from: DEFAULT_FROM,
     to: payload.to,
@@ -81,7 +100,10 @@ export async function sendMail(payload: EmailPayload) {
     deliveryMode: DELIVERY_MODE,
     to: payload.to,
     subject: payload.subject,
+    from: DEFAULT_FROM,
   });
+
+  const smtpCredentialsInvalid = !SMTP_USER || !SMTP_PASS || SMTP_HAS_PLACEHOLDER_CREDENTIALS;
 
   if (DELIVERY_MODE === 'console') {
     console.info('[EMAIL] console delivery mode enabled');
@@ -95,9 +117,23 @@ export async function sendMail(payload: EmailPayload) {
       port: SMTP_PORT,
       secure: SMTP_SECURE,
       userProvided: Boolean(SMTP_USER),
+      from: DEFAULT_FROM,
+      invalidCredentials: smtpCredentialsInvalid,
     });
+
+    if (smtpCredentialsInvalid) {
+      const message = 'SMTP_USER and SMTP_PASS are not configured or contain placeholder values.';
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error(message);
+      }
+
+      console.warn('[EMAIL] SMTP credentials invalid. Falling back to console delivery in development mode.');
+      console.info(JSON.stringify({ from: DEFAULT_FROM, ...payload }, null, 2));
+      return;
+    }
+
     await sendSmtpMail(payload);
-    console.info(`[EMAIL] sent via SMTP to ${payload.to}`);
+    console.info(`[EMAIL] sent via SMTP from ${DEFAULT_FROM} to ${payload.to}`);
     return;
   }
 
