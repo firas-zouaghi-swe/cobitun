@@ -21,7 +21,6 @@ function getFrontendUrl(): string {
   return 'http://localhost:3000';
 }
 
-const FRONTEND_URL = getFrontendUrl();
 function getOutboxDir(): string { return path.join(process.cwd(), 'upload', 'email-outbox'); }
 
 export interface EmailPayload {
@@ -95,7 +94,8 @@ export async function sendMail(payload: EmailPayload) {
 }
 
 export async function sendPasswordResetEmail(email: string, token: string) {
-  const resetUrl = `${FRONTEND_URL}/reset-password?token=${encodeURIComponent(token)}`;
+  const frontendUrl = getFrontendUrl();
+  const resetUrl = `${frontendUrl}/reset-password?token=${encodeURIComponent(token)}`;
   const subject = 'COBITUN Password Reset';
   const text = `A password reset request was received for this account.\n\nVisit the link below to reset your password:\n${resetUrl}\n\nIf you did not request this, please ignore this message.`;
   const html = `<p>A password reset request was received for this account.</p><p>Visit the link below to reset your password:</p><p><a href="${resetUrl}">${resetUrl}</a></p><p>If you did not request this, please ignore this message.</p>`;
@@ -103,7 +103,8 @@ export async function sendPasswordResetEmail(email: string, token: string) {
 }
 
 export async function sendVerificationEmail(email: string, token: string) {
-  const verificationUrl = `${FRONTEND_URL}/verify-email?token=${encodeURIComponent(token)}`;
+  const frontendUrl = getFrontendUrl();
+  const verificationUrl = `${frontendUrl}/verify-email?token=${encodeURIComponent(token)}`;
   const subject = 'COBITUN Email Verification';
   const text = `Please verify your email address by visiting the link below:\n${verificationUrl}\n\nIf you did not create this account, you can ignore this email.`;
   const html = `<p>Please verify your email address by visiting the link below:</p><p><a href="${verificationUrl}">${verificationUrl}</a></p><p>If you did not create this account, you can ignore this email.</p>`;
