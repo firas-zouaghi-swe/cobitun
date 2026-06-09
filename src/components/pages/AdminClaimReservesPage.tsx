@@ -41,11 +41,20 @@ interface ReserveEntry {
   createdAt: string;
 }
 
+type ClaimStatus =
+  | string
+  | {
+      statusCode?: string;
+      statusName?: string;
+    }
+  | null
+  | undefined;
+
 interface ClaimWithReserves {
   id: number;
   claimNumber: string;
   claimAmount: number;
-  status: string;
+  status: ClaimStatus;
   reserves: ReserveEntry[];
   policy?: { policyNumber: string };
 }
@@ -59,6 +68,16 @@ const RESERVE_TYPE_STYLES: Record<string, string> = {
   INCURRED: 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800/30',
   PAID: 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800/30',
   RECOVERED: 'bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800/30',
+};
+
+const getClaimStatusLabel = (status: ClaimStatus) => {
+  if (typeof status === 'string') {
+    return status;
+  }
+  if (status && typeof status === 'object') {
+    return status.statusName || status.statusCode || '';
+  }
+  return '';
 };
 
 export default function AdminClaimReservesPage() {
@@ -195,8 +214,12 @@ export default function AdminClaimReservesPage() {
               <div className="flex items-center gap-3">
                 {expandedClaims.has(claim.id) ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                 <span className="font-mono font-semibold text-foreground">{claim.claimNumber}</span>
-                <Badge variant="outline" title={claim.status} className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-800/30 text-[10px]">
-                  {claim.status}
+                <Badge
+                  variant="outline"
+                  title={getClaimStatusLabel(claim.status) || t('common:unknown', 'Unknown')}
+                  className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-800/30 text-[10px]"
+                >
+                  {getClaimStatusLabel(claim.status) || '—'}
                 </Badge>
                 <span className="text-muted-foreground text-sm">{Number(claim.claimAmount).toLocaleString()} {t('common:unit.tnd', 'TND')}</span>
               </div>

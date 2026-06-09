@@ -79,7 +79,14 @@ async function fetchWithRetry(url: string, retries: number = 2, timeoutMs: numbe
         await new Promise((r) => setTimeout(r, wait));
         continue;
       }
-      throw new Error(`IODA API error: ${response.status} ${response.statusText}`);
+      // Try to read response body for better diagnostics
+      let bodyText = '';
+      try {
+        bodyText = await response.text();
+      } catch (_) {
+        bodyText = '(failed to read response body)';
+      }
+      throw new Error(`IODA API error: ${response.status} ${response.statusText} - ${bodyText}`);
     } catch (error) {
       lastError = error as Error;
       if (attempt < retries - 1) {

@@ -518,10 +518,16 @@ export default function AdminCyberClaimsPage() {
                         {formatTnd(claim.estimatedLoss, locale)} {t('common:unit.tnd')}
                       </td>
                       <td className="p-3">
-                        <Badge variant="outline" title={claim.statusName || claim.statusCode.replace(/_/g, ' ')} className={getStatusBadge(claim.statusCode)}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${getStatusDot(claim.statusCode)} me-1.5`} />
-                          {claim.statusName || claim.statusCode.replace(/_/g, ' ')}
-                        </Badge>
+                        {(() => {
+                          const statusKey = typeof claim.statusCode === 'string' ? claim.statusCode : '';
+                          const statusLabel = claim.statusName ?? (typeof claim.statusCode === 'string' ? claim.statusCode.replace(/_/g, ' ') : '—');
+                          return (
+                            <Badge variant="outline" title={statusLabel} className={getStatusBadge(statusKey)}>
+                              <span className={`w-1.5 h-1.5 rounded-full ${getStatusDot(statusKey)} me-1.5`} />
+                              {statusLabel}
+                            </Badge>
+                          );
+                        })()}
                       </td>
                       <td className="p-3 font-semibold">
                         {claim.approvedAmount !== null ? (
@@ -624,10 +630,17 @@ export default function AdminCyberClaimsPage() {
                     <Label className="text-muted-foreground text-xs uppercase tracking-wider">{field.label}</Label>
                     {field.badge ? (
                       <p className="mt-0.5">
-                        <Badge variant="outline" title={field.value.replace(/_/g, ' ')} className={getStatusBadge(field.value)}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${getStatusDot(field.value)} me-1.5`} />
-                          {field.value.replace(/_/g, ' ')}
-                        </Badge>
+                        {(() => {
+                          const raw = field.value;
+                          const statusKey = typeof raw === 'string' ? raw : '';
+                          const statusLabel = typeof raw === 'string' ? raw.replace(/_/g, ' ') : String(raw);
+                          return (
+                            <Badge variant="outline" title={statusLabel} className={getStatusBadge(statusKey)}>
+                              <span className={`w-1.5 h-1.5 rounded-full ${getStatusDot(statusKey)} me-1.5`} />
+                              {statusLabel}
+                            </Badge>
+                          );
+                        })()}
                       </p>
                     ) : field.incidentBadge ? (
                       <p className="mt-0.5">

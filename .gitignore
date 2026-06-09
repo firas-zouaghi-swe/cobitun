@@ -12,3 +12,5 @@ pnpm-lock.yaml
 .DS_Store
 /.git
 \.gitlsremote.out
+prisma/dev.db
+

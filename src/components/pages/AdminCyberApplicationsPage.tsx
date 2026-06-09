@@ -437,10 +437,15 @@ export default function AdminCyberApplicationsPage() {
                                 {formatTnd(app.calculatedPremium, locale)} {t('common:unit.tnd', 'TND')}
                               </div>
                               <div className="p-3 flex-shrink-0">
-                                <Badge variant="outline" title={app.statusName || app.statusCode.replace('_', ' ')} className={getStatusBadge(app.statusCode)}>
-                                  <span className={`w-1.5 h-1.5 rounded-full ${getStatusDot(app.statusCode)} me-1.5`} />
-                                  {app.statusName || app.statusCode.replace('_', ' ')}
-                                </Badge>
+                                {(() => {
+                                  const statusLabel = app.statusName ?? (typeof app.statusCode === 'string' ? app.statusCode.replace('_', ' ') : '—');
+                                  return (
+                                    <Badge variant="outline" title={statusLabel} className={getStatusBadge(app.statusCode)}>
+                                      <span className={`w-1.5 h-1.5 rounded-full ${getStatusDot(app.statusCode)} me-1.5`} />
+                                      {statusLabel}
+                                    </Badge>
+                                  );
+                                })()}
                               </div>
                               <div className="p-3 flex-shrink-0 text-xs text-muted-foreground">
                                 {formatDate(app.createdAt)}
