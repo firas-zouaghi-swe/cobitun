@@ -28,6 +28,11 @@ export async function requireAuth(request: NextRequest): Promise<AuthInfo | Next
   }
 
   if (!CSRF_SAFE_METHODS.includes(request.method.toUpperCase())) {
+    // In dev mode, allow header-based auth without CSRF token for convenience.
+    if (process.env.NODE_ENV !== 'production' && auth.authSource === 'dev-header') {
+      return auth;
+    }
+
     // Enforce CSRF token only when MFA is required for this user.
     // Admin users always require MFA; customers require MFA only when enabled.
     try {

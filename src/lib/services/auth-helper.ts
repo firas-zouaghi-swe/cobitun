@@ -25,6 +25,8 @@ export interface AuthInfo {
   email?: string | null;
   /** Customer.id for CUSTOMER role users (resolved from Customer.userId = User.id) */
   customerId?: number | null;
+  /** Indicates whether auth came from JWT cookie or dev-mode headers */
+  authSource?: 'jwt' | 'dev-header';
 }
 
 function getSessionToken(request: NextRequest): string | null {
@@ -109,6 +111,7 @@ export async function getAuthInfo(request: NextRequest): Promise<AuthInfo | null
       sessionId: payload.sessionId,
       email: payload.email ?? null,
       customerId,
+      authSource: 'jwt',
     };
   }
 
@@ -134,7 +137,7 @@ export async function getAuthInfo(request: NextRequest): Promise<AuthInfo | null
       }
     }
 
-    return { userId: userIdStr, userIdNum, role, customerId };
+    return { userId: userIdStr, userIdNum, role, customerId, authSource: 'dev-header' };
   }
 
   console.log('[GETAUTHINFO] No token or dev mode headers - returning null');
