@@ -77,6 +77,12 @@ async function sendSmtpMail(payload: EmailPayload) {
 }
 
 export async function sendMail(payload: EmailPayload) {
+  console.info('[EMAIL] sendMail called', {
+    deliveryMode: DELIVERY_MODE,
+    to: payload.to,
+    subject: payload.subject,
+  });
+
   if (DELIVERY_MODE === 'console') {
     console.info('[EMAIL] console delivery mode enabled');
     console.info(JSON.stringify({ from: DEFAULT_FROM, ...payload }, null, 2));
@@ -84,6 +90,12 @@ export async function sendMail(payload: EmailPayload) {
   }
 
   if (DELIVERY_MODE === 'smtp') {
+    console.info('[EMAIL] SMTP config', {
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      secure: SMTP_SECURE,
+      userProvided: Boolean(SMTP_USER),
+    });
     await sendSmtpMail(payload);
     console.info(`[EMAIL] sent via SMTP to ${payload.to}`);
     return;

@@ -125,6 +125,7 @@ If you did not request this code, please ignore this email and contact support.`
         </div>
       `,
     });
+    console.info(`[MFA] OTP email successfully sent to ${email} for user ${userId}`);
   } catch (error) {
     const isSmtpMode = process.env.EMAIL_DELIVERY_MODE?.toLowerCase() === 'smtp';
     console.warn('[MFA] Email delivery failed:', error);
