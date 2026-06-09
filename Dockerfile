@@ -36,5 +36,9 @@ ENV PORT=3000
 # 12. Document that the container will listen on port 3000
 EXPOSE 3000
 
-# 11. Start the production server when the container runs
-CMD ["npm", "start"]
+# Copy entrypoint script that can run DB seeds on startup when enabled
+COPY scripts/docker-entrypoint.sh /app/scripts/docker-entrypoint.sh
+RUN chmod +x /app/scripts/docker-entrypoint.sh
+
+# 13. Use entrypoint which will run optional seeding then start the app
+ENTRYPOINT ["/bin/sh", "/app/scripts/docker-entrypoint.sh"]

@@ -638,18 +638,28 @@ async function main() {
   // PHASE 5 — Admin User
   // =======================================================================
   console.log('\n--- Phase 5: Admin User ---');
-
-  const { salt: adminSalt, hash: adminHash } = hashPasswordParts('admin123');
+  // Create/ensure admin user with provided credentials
+  const { salt: adminSalt, hash: adminHash } = hashPasswordParts('admin@123456');
   const admin = await prisma.user.upsert({
     where: { username: 'admin' },
-    update: {},
+    update: {
+      passwordHash: adminHash,
+      passwordSalt: adminSalt,
+      email: 'zouaghi.firas.eng@gmail.com',
+      firstName: 'Admin',
+      lastName: 'Admin',
+      isActive: 1,
+      emailVerified: 1,
+      emailVerifiedAt: new Date(),
+      roleId: adminRole.id,
+    },
     create: {
       username: 'admin',
       passwordHash: adminHash,
       passwordSalt: adminSalt,
       firstName: 'Admin',
-      lastName: 'User',
-      email: 'admin@cobitun.tn',
+      lastName: 'Admin',
+      email: 'zouaghi.firas.eng@gmail.com',
       roleId: adminRole.id,
       isActive: 1,
       emailVerified: 1,
@@ -657,6 +667,70 @@ async function main() {
     },
   });
   console.log('  admin user:', admin.username, '(id:', admin.id, ')');
+
+  // Superadmin
+  const { salt: saSalt, hash: saHash } = hashPasswordParts('superadmin@123456');
+  const superadmin = await prisma.user.upsert({
+    where: { username: 'superadmin' },
+    update: {
+      passwordHash: saHash,
+      passwordSalt: saSalt,
+      email: 'firas.zouaghi.ing@gmail.com',
+      firstName: 'Super',
+      lastName: 'Admin',
+      isActive: 1,
+      emailVerified: 1,
+      emailVerifiedAt: new Date(),
+      roleId: superAdminRole.id,
+    },
+    create: {
+      username: 'superadmin',
+      passwordHash: saHash,
+      passwordSalt: saSalt,
+      firstName: 'Super',
+      lastName: 'Admin',
+      email: 'firas.zouaghi.ing@gmail.com',
+      roleId: superAdminRole.id,
+      isActive: 1,
+      emailVerified: 1,
+      emailVerifiedAt: new Date(),
+    },
+  });
+  console.log('  superadmin user:', superadmin.username, '(id:', superadmin.id, ')');
+
+  // Customer demo user
+  try {
+    const { salt: custSalt, hash: custHash } = hashPasswordParts('customer@123456');
+    const customerUser = await prisma.user.upsert({
+      where: { username: 'customer' },
+      update: {
+        passwordHash: custHash,
+        passwordSalt: custSalt,
+        email: 'firas.zouaghi.swe@gmail.com',
+        firstName: 'Demo',
+        lastName: 'Customer',
+        isActive: 1,
+        emailVerified: 1,
+        emailVerifiedAt: new Date(),
+        roleId: customerRole.id,
+      },
+      create: {
+        username: 'customer',
+        passwordHash: custHash,
+        passwordSalt: custSalt,
+        firstName: 'Demo',
+        lastName: 'Customer',
+        email: 'firas.zouaghi.swe@gmail.com',
+        roleId: customerRole.id,
+        isActive: 1,
+        emailVerified: 1,
+        emailVerifiedAt: new Date(),
+      },
+    });
+    console.log('  customer demo user:', customerUser.username, '(id:', customerUser.id, ')');
+  } catch (err) {
+    console.warn('  Skipping demo customer creation:', err);
+  }
 
   // =======================================================================
   // PHASE 6 — Categories
