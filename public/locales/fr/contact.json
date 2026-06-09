@@ -1,0 +1,44 @@
+{
+  "hero": {
+    "title": "Contactez-Nous",
+    "subtitle": "Des questions ? Nous sommes là pour vous aider. Contactez-nous et nous vous répondrons dans les plus brefs délais.",
+    "description": "Contactez notre équipe pour toute question sur l'assurance contre les pannes cloud",
+    "titleHighlight": "Contactez-Nous"
+  },
+  "form": {
+    "title": "Envoyez-nous un Message",
+    "nameLabel": "Votre Nom",
+    "namePlaceholder": "Entrez votre nom",
+    "emailLabel": "Votre E-mail",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Comment pouvons-nous vous aider ?",
+    "sendButton": "Envoyer le Message",
+    "sending": "Envoi en cours...",
+    "emailPlaceholder": "Entrez votre adresse e-mail",
+    "send": "Envoyer le Message"
+  },
+  "info": {
+    "title": "Informations de Contact",
+    "emailTitle": "E-mail",
+    "phoneTitle": "Téléphone",
+    "addressTitle": "Adresse",
+    "supportTitle": "Support Technique",
+    "address": "Adresse",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "softwareEngineer": "Ingénieur Logiciel",
+    "technicalSupport": "Support Technique",
+    "emailValue": "info@cyber-dbi.net",
+    "phone1": "+216 22 274 079",
+    "phone2": "+216 56 145 277",
+    "addressLine1": "Rue 7145, El Manar II",
+    "addressLine2": "Prox. Polyclinique El Manar & Colisée Soula",
+    "addressLine3": "2092 Tunis, Tunisia",
+    "supportName": "Firas Zouaghi",
+    "website": "cyber-dbi.net"
+  },
+  "toast": {
+    "messageSent": "Message envoyé avec succès !",
+    "sendFailed": "Échec de l'envoi du message"
+  }
+}

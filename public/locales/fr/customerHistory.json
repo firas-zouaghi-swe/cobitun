@@ -1,0 +1,17 @@
+{
+  "title": "Historique des polices",
+  "table": {
+    "policyName": "Nom de la police",
+    "category": "Catégorie",
+    "sumAssurance": "Capital assuré",
+    "premium": "Prime",
+    "tenure": "Durée",
+    "status": "Statut",
+    "appliedOn": "Demandé le"
+  },
+  "empty": {
+    "noApplications": "Aucune demande de police pour le moment",
+    "noApplicationsDesc": "You have not applied to any policies yet."
+  },
+  "loading": "Loading history…"
+}

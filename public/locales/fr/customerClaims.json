@@ -1,0 +1,93 @@
+{
+  "title": {
+    "backToWorkflow": "Retour au Workflow",
+    "value": "Sinistre"
+  },
+  "subtitle": "Déclarez et gérez vos sinistres d'assurance",
+  "fileNewClaim": "Déclarer un Nouveau Sinistre",
+  "newClaim": {
+    "title": "Déclarer un Nouveau Sinistre",
+    "subtitle": "Sélectionnez une police active et décrivez votre perte",
+    "selectPolicy": "Sélectionner une Police *",
+    "selectPolicyPlaceholder": "Choisissez une police terminée",
+    "lossDescription": "Description de la Perte",
+    "lossDescPlaceholder": "Décrivez l'événement de perte...",
+    "createButton": "Créer le Sinistre",
+    "creating": "Création du Sinistre...",
+    "choosePolicy": "Choisir une Police",
+    "create": "Créer le Sinistre",
+    "lossDescriptionPlaceholder": "Décrivez la perte que vous avez subie...",
+    "success": "Sinistre créé avec succès"
+  },
+  "fillDeclaration": {
+    "title": "Remplir la Déclaration de Perte",
+    "downloadPdf": "Télécharger la Déclaration de Perte PDF",
+    "lossAmount": "Montant de la Perte (TND) *",
+    "lossStart": "Date de Début de la Perte *",
+    "lossEnd": "Date de Fin de la Perte *",
+    "uploadFilled": "Téléverser la Déclaration Remplie (Optionnel)",
+    "uploadHint": "Cliquez pour téléverser la déclaration remplie en PDF (max 10 Mo)",
+    "submitButton": "Soumettre la Déclaration",
+    "submitting": "Soumission en cours...",
+    "lossEndDate": "Date de Fin de la Perte",
+    "lossStartDate": "Date de Début de la Perte",
+    "maxSize": "Taille max du fichier : 10 Mo",
+    "pdfOnly": "Fichiers PDF uniquement",
+    "submit": "Soumettre la Déclaration",
+    "uploadLabel": "Téléverser la Déclaration",
+    "claimId": "Claim Id"
+  },
+  "review": {
+    "title": "Sinistre en Cours de Révision",
+    "subtitle": "Votre déclaration est en cours de révision par notre équipe.",
+    "lossAmount": "Montant de la Perte",
+    "startDate": "Date de Début",
+    "endDate": "Date de Fin",
+    "success": "Déclaration soumise avec succès"
+  },
+  "completed": {
+    "title": "Sinistre Approuvé et Payé",
+    "payoutAmount": "Montant de l'Indemnité",
+    "transactionId": "ID de Transaction",
+    "payoutDate": "Date d'Indemnisation",
+    "lossPeriod": "Période de Perte",
+    "downloadDeclaration": "Télécharger la Déclaration",
+    "claimedAmount": "Claimed Amount"
+  },
+  "empty": {
+    "title": "Aucun Sinistre",
+    "hasPolicy": "Déclarez un sinistre si vous avez subi un événement de perte couvert.",
+    "noPolicy": "Vous avez besoin d'une police active (terminée) avant de déclarer un sinistre.",
+    "subtitleNoPolicy": "Vous avez besoin d'une police active pour déclarer un sinistre",
+    "subtitleWithPolicy": "Déclarez un nouveau sinistre pour une de vos polices actives"
+  },
+  "action": {
+    "backToList": "Retour à la Liste",
+    "fillDeclaration": "Remplir la Déclaration",
+    "underReview": "En Cours de Révision",
+    "viewPayout": "Voir l'Indemnité"
+  },
+  "actions": {
+    "removeUploadedPdf": "Supprimer le PDF téléchargé"
+  },
+  "error": {
+    "createFailed": "Échec de la création du sinistre",
+    "downloadFailed": "Échec du téléchargement du document",
+    "fillRequired": "Veuillez remplir tous les champs obligatoires",
+    "loadFailed": "Échec du chargement des sinistres",
+    "selectPolicy": "Sélectionner une Police *",
+    "submitFailed": "Échec de la soumission de la déclaration"
+  },
+  "status": {
+    "created": "Créé",
+    "loss": "Perte Signalée",
+    "open": "Ouvert",
+    "submitted": "Soumis",
+    "completed": "Terminé"
+  },
+  "confirmSubmit": {
+    "title": "Confirmer la Soumission du Sinistre",
+    "description": "En soumettant ce sinistre, vous déclarez légalement que les informations de perte fournies sont véridiques et exactes. Déposer un sinistre frauduleux est un délit pénal. Cette soumission est irréversible."
+  },
+  "loading": "Loading claims..."
+}

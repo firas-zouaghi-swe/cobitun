@@ -1,0 +1,24 @@
+{
+  "title": "Ask a Question",
+  "form": {
+    "title": "Submit Your Question",
+    "yourQuestion": "Your Question",
+    "placeholder": "Type your question here...",
+    "submitQuestion": "Submit Question",
+    "submitting": "Submitting..."
+  },
+  "history": {
+    "title": "Your Questions",
+    "empty": "No questions yet",
+    "adminResponse": "Admin Response:",
+    "notAnsweredYet": "Not Answered Yet",
+    "emptyDesc": "You have not submitted any questions yet."
+  },
+  "toast": {
+    "enterQuestion": "Please enter your question",
+    "submitFailed": "Failed to submit question",
+    "submitSuccess": "Question submitted successfully",
+    "somethingWentWrong": "Something went wrong"
+  },
+  "loading": "Loading questions…"
+}

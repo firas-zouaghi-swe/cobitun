@@ -1,0 +1,58 @@
+{
+  "validation": {
+    "turnoverMin": "Le chiffre d'affaires annuel doit être d'au moins 50 000 TND",
+    "turnoverMax": "Le chiffre d'affaires annuel dépasse 15 000 000 TND — hors périmètre PME",
+    "sectorRequired": "Le secteur est requis",
+    "businessModelRequired": "Le modèle économique est requis",
+    "resilienceRequired": "Le profil de résilience est requis",
+    "preventCalc": "Des erreurs de validation empêchent le calcul"
+  },
+  "underwriting": {
+    "autoAccept": "Le taux de prime {{rate}} % est inférieur au Q25 ({{q25}} %) — acceptation automatique",
+    "manualReview": "Le taux de prime {{rate}} % est entre Q25 ({{q25}} %) et Q75 ({{q75}} %) — révision manuelle de souscription",
+    "surcharge": "Le taux de prime {{rate}} % est entre Q75 ({{q75}} %) et 1,5×Q75 ({{threshold}} %) — surcharge 50 % ou refus (au cas par cas)",
+    "decline": "Le taux de prime {{rate}} % est à ou au-dessus de 1,5×Q75 ({{threshold}} %) — refus automatique",
+    "belowSoftBound": ". Attention : en dessous de la borne basse souple (0,05 %) — déclenche une révision manuelle",
+    "aboveSoftBound": ". Attention : au-dessus de la borne haute souple (2,0 %) — déclenche une révision manuelle"
+  },
+  "turnoverBands": {
+    "under500k": "< 500 000 TND",
+    "500kTo2m": "500K – 2M TND",
+    "2mTo5m": "2M – 5M TND",
+    "5mTo10m": "5M – 10M TND",
+    "10mTo15m": "10M – 15M TND"
+  },
+  "resilience": {
+    "high": "Élevée",
+    "medium": "Moyenne",
+    "low": "Faible",
+    "highDesc": "Systèmes solides de reprise après sinistre, redondance et basculement",
+    "mediumDesc": "Procédures de sauvegarde et de récupération de base en place",
+    "lowDesc": "Capacité de récupération minimale, points de défaillance uniques"
+  },
+  "businessModels": {
+    "b2c": "B2C",
+    "b2b": "B2B",
+    "b2b2c": "B2B2C",
+    "mixed": "Mixte (B2B/B2C)",
+    "other": "Autre"
+  },
+  "sectors": {
+    "ecommerce": "E-commerce",
+    "edtech": "EdTech",
+    "businessSoftware": "Logiciel Métier",
+    "ai": "IA & Apprentissage Automatique",
+    "fintech": "FinTech",
+    "healthtech": "HealthTech",
+    "saas": "SaaS",
+    "media": "Médias & Streaming",
+    "gaming": "Jeux Vidéo",
+    "iot": "IoT & Appareils Connectés",
+    "logistics": "Logistique & Livraison",
+    "travel": "Voyage & Hôtellerie",
+    "realestate": "Immobilier (PropTech)",
+    "agritech": "AgriTech",
+    "legal": "Juridique & Conformité",
+    "government": "Gouvernement & Secteur Public"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "title": "AI Fake Account Detection",
+  "description": "Manage and monitor fake account detection and fraud prevention",
+  "loading": "Loading fraud detection dashboard...",
+  "stats": {
+    "totalChecked": "Total Checked",
+    "fakeDetected": "Fake Detected",
+    "needsReview": "Needs Review",
+    "avgRiskScore": "Avg Risk Score",
+    "suspiciousIps": "Suspicious IPs"
+  },
+  "scan": {
+    "scanning": "Scanning...",
+    "scanAll": "Scan All Users",
+    "success": "Scan completed successfully",
+    "error": "Failed to scan users. Please try again.",
+    "userSuccess": "User scanned successfully",
+    "userError": "Failed to scan user. Please try again."
+  },
+  "actions": {
+    "delete": "Delete",
+    "lock": "Lock",
+    "whitelist": "Whitelist",
+    "confirmFake": "Confirm Fake",
+    "confirmLegit": "Confirm Legitimate",
+    "success": "Action {{action}} completed successfully",
+    "error": "Failed to perform action. Please try again."
+  },
+  "recommendations": {
+    "strongDelete": "STRONG DELETE — Highly suspicious, immediate deletion recommended",
+    "delete": "DELETE — High confidence fake, consider deletion",
+    "review": "REVIEW — Suspicious, manual verification needed",
+    "monitor": "MONITOR — Some risk, monitor activity",
+    "legitimate": "LEGITIMATE — No action needed"
+  },
+  "viewDetails": "View Details",
+  "fraudFlags": {
+    "disposable_email": "Disposable Email",
+    "bot_username_pattern": "Bot Username Pattern",
+    "email_name_mismatch": "Email Name Mismatch",
+    "no_business_website": "No Business Website",
+    "multiple_accounts_same_ip": "Multiple Accounts from Same IP",
+    "multiple_accounts_same_device": "Multiple Accounts from Same Device",
+    "vpn_proxy_detected": "VPN/Proxy Detected",
+    "tor_exit_node": "Tor Exit Node",
+    "high_risk_country": "High Risk Country",
+    "mismatched_name_email": "Mismatched Name/Email",
+    "generic_suspicious_name": "Generic/Suspicious Name",
+    "numeric_suffix": "Numeric Username Suffix",
+    "failed_logins": "Failed Logins",
+    "account_locked": "Account Locked"
+  },
+  "table": {
+    "username": "Username",
+    "email": "Email",
+    "name": "Name",
+    "company": "Company",
+    "riskScore": "Risk Score",
+    "verdict": "Verdict",
+    "flags": "Risk Flags",
+    "scannedAt": "Scanned At",
+    "actions": "Actions"
+  },
+  "verdict": {
+    "LEGITIMATE": "Legitimate",
+    "REVIEW": "Review",
+    "FAKE": "Fake"
+  },
+  "modal": {
+    "delete": {
+      "title": "Delete User Account",
+      "description": "Are you sure you want to delete this user account? This action cannot be undone.",
+      "confirm": "Delete Account",
+      "placeholder": "Enter reason for deletion..."
+    },
+    "action": {
+      "title": "Take Action on User",
+      "description": "Select an action to take on this user account.",
+      "confirm": "Confirm Action",
+      "placeholder": "Enter reason for action..."
+    }
+  },
+  "errors": {
+    "userNotFound": "User not found",
+    "failedToLoad": "Failed to load fraud detection data. Please try again."
+  }
+}

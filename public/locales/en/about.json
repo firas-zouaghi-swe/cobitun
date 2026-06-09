@@ -1,0 +1,48 @@
+{
+  "hero": {
+    "title": "About COBITUN",
+    "subtitle": "Tunisia's first parametric cloud outage insurance portal. Automatic payouts powered by IODA real-time monitoring — no claims forms, no adjusters, no waiting.",
+    "description": "Tunisia's first parametric cloud outage insurance portal. Automatic payouts powered by IODA real-time monitoring — no claims forms, no adjusters, no waiting."
+  },
+  "mission": {
+    "title": "Our Mission",
+    "p1": "At COBITUN, our mission is to protect Tunisian businesses from cloud downtime. We believe every SME deserves automatic, transparent coverage when their cloud provider fails — no paperwork, no delays, no disputes.",
+    "p2": "Through our innovative parametric platform, we monitor cloud providers 24/7 using Georgia Tech's IODA data. When an outage exceeds the provider's SLA MTTR threshold, claims are automatically created, approved, and paid — in minutes, not months.",
+    "description1": "At COBITUN, our mission is to protect Tunisian businesses from cloud downtime. We believe every SME deserves automatic, transparent coverage when their cloud provider fails — no paperwork, no delays, no disputes.",
+    "description2": "Through our innovative parametric platform, we monitor cloud providers 24/7 using Georgia Tech's IODA data. When an outage exceeds the provider's SLA MTTR threshold, claims are automatically created, approved, and paid — in minutes, not months."
+  },
+  "stats": {
+    "monitoredProviders": "Monitored Providers",
+    "iodaMonitoring": "IODA Monitoring",
+    "payoutSpeed": "Payout Speed",
+    "claimsForms": "Claims Forms"
+  },
+  "values": {
+    "title": "Our Values",
+    "subtitle": "The principles that drive every decision we make in building parametric insurance for Tunisian businesses.",
+    "objectiveData": {
+      "title": "Objective Data",
+      "desc": "Claims triggered by IODA monitoring data from Georgia Tech, not opinions. Objective, transparent, indisputable."
+    },
+    "tunisiaFirst": {
+      "title": "Tunisia-First",
+      "desc": "Built specifically for Tunisian businesses, with local providers, ANCS certification, and TND-denominated payouts."
+    },
+    "actuarialRigor": {
+      "title": "Actuarial Rigor",
+      "desc": "Premiums calculated from peer-reviewed actuarial models based on real outage data from 15+ Tunisian providers."
+    },
+    "speedOfPayout": {
+      "title": "Speed of Payout",
+      "desc": "Auto-triggered claims paid in minutes, not months. When your cloud goes down, your money arrives fast."
+    },
+    "fullTransparency": {
+      "title": "Full Transparency",
+      "desc": "Every trigger, every calculation, every payout is visible. No hidden charges, no black-box decisions."
+    },
+    "hybridControl": {
+      "title": "Hybrid Control",
+      "desc": "Automation for speed, admin oversight for trust, policy approval for quality. Three layers protecting you."
+    }
+  }
+}

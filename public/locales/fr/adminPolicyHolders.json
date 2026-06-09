@@ -1,0 +1,26 @@
+{
+  "title": "Titulaires de police",
+  "tabs": {
+    "all": "Tous",
+    "pending": "En attente",
+    "approved": "Approuvé",
+    "disapproved": "Désapprouvé"
+  },
+  "table": {
+    "customer": "Client",
+    "policy": "Police",
+    "category": "Catégorie",
+    "sumAssurance": "Capital assuré",
+    "premium": "Prime",
+    "status": "Statut",
+    "applied": "Demandé",
+    "actions": "Actions"
+  },
+  "empty": {
+    "noPolicyHolders": "Aucun titulaire de police trouvé"
+  },
+  "toast": {
+    "statusSuccess": "Police {{status}} avec succès",
+    "updateFailed": "Échec de la mise à jour"
+  }
+}

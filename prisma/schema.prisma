@@ -1,0 +1,2426 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// SECTION 1: SYSTEM & AUDIT INFRASTRUCTURE
+// ============================================================================
+
+model SystemSetting {
+  id           Int       @id @default(autoincrement())
+  settingKey   String    @map("setting_key")
+  settingValue String    @map("setting_value")
+  valueType    String    @map("value_type")
+  isEditable   Int       @default(1) @map("is_editable")
+  category     String
+  description  String?
+  validFrom    DateTime  @default(now()) @map("valid_from")
+  validTo      DateTime? @map("valid_to")
+  isCurrent    Int       @default(1) @map("is_current")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+  updatedBy    Int?      @map("updated_by")
+  version      Int       @default(1)
+
+  @@unique([settingKey, validFrom])
+  @@map("system_settings")
+}
+
+model SequenceRegistry {
+  sequenceName String   @id @map("sequence_name")
+  currentValue Int      @default(0) @map("current_value")
+  prefix       String
+  paddingWidth Int      @default(6) @map("padding_width")
+  yearReset    Int      @default(1) @map("year_reset")
+  lastYear     Int?     @map("last_year")
+  description  String?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("sequence_registry")
+}
+
+model AuditLog {
+  id             Int      @id @default(autoincrement())
+  entityType     String   @map("entity_type")
+  entityId       Int      @map("entity_id")
+  entityVersion  Int      @default(1) @map("entity_version")
+  actorId        Int?     @map("actor_id")
+  actorType      String   @default("USER") @map("actor_type")
+  action         String
+  actionCategory String   @map("action_category")
+  oldValuesJson  String?  @map("old_values_json")
+  newValuesJson  String?  @map("new_values_json")
+  metadataJson   String?  @map("metadata_json")
+  ipAddress      String?  @map("ip_address")
+  userAgent      String?  @map("user_agent")
+  requestPath    String?  @map("request_path")
+  correlationId  String?  @map("correlation_id")
+  sessionId      String?  @map("session_id")
+  previousHash   String?  @map("previous_hash")
+  rowHash        String?  @map("row_hash")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt], map: "idx_audit_time")
+  @@index([entityType, entityId], map: "idx_audit_entity")
+  @@index([actorId], map: "idx_audit_actor")
+  @@index([actorId, createdAt], map: "idx_audit_actor_time")
+  @@index([actionCategory], map: "idx_audit_action")
+  @@index([correlationId], map: "idx_audit_correlation")
+  @@map("audit_logs")
+}
+
+// ============================================================================
+// SECTION 2: ENUM & REFERENCE TABLES — VERSIONED WITH is_current
+// ============================================================================
+
+model EnumUserRole {
+  id              Int       @id @default(autoincrement())
+  roleCode        String    @unique @map("role_code")
+  roleName        String    @map("role_name")
+  roleNameAr      String?   @map("role_name_ar")
+  description     String?
+  permissionsJson String    @default("[]") @map("permissions_json")
+  isActive        Int       @default(1) @map("is_active")
+  validFrom       DateTime  @default(now()) @map("valid_from")
+  validTo         DateTime? @map("valid_to")
+  isCurrent       Int       @default(1) @map("is_current")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @default(now()) @map("updated_at")
+  createdBy       Int?      @map("created_by")
+  updatedBy       Int?      @map("updated_by")
+  version         Int       @default(1)
+
+  users User[]
+
+  @@map("enum_user_role")
+}
+
+model EnumProductType {
+  id          Int       @id @default(autoincrement())
+  typeCode    String    @unique @map("type_code")
+  typeName    String    @map("type_name")
+  typeNameAr  String?   @map("type_name_ar")
+  description String?
+  isActive    Int       @default(1) @map("is_active")
+  validFrom   DateTime  @default(now()) @map("valid_from")
+  validTo     DateTime? @map("valid_to")
+  isCurrent   Int       @default(1) @map("is_current")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+  createdBy   Int?      @map("created_by")
+  updatedBy   Int?      @map("updated_by")
+  version     Int       @default(1)
+
+  products Product[]
+
+  @@map("enum_product_type")
+}
+
+model EnumSlaTier {
+  id                Int       @id @default(autoincrement())
+  tierCode          String    @unique @map("tier_code")
+  tierName          String    @map("tier_name")
+  tierNameAr        String?   @map("tier_name_ar")
+  mttrHours         Decimal   @map("mttr_hours")
+  basePremiumFactor Decimal   @default(1.0000) @map("base_premium_factor")
+  thresholdHours    Decimal   @map("threshold_hours")
+  description       String?
+  isActive          Int       @default(1) @map("is_active")
+  validFrom         DateTime  @default(now()) @map("valid_from")
+  validTo           DateTime? @map("valid_to")
+  isCurrent         Int       @default(1) @map("is_current")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @default(now()) @map("updated_at")
+  createdBy         Int?      @map("created_by")
+  updatedBy         Int?      @map("updated_by")
+  version           Int       @default(1)
+
+  cloudProviders CloudProvider[]
+  triggerEvents  TriggerEvent[]
+
+  @@map("enum_sla_tier")
+}
+
+model EnumParamPolicyStatus {
+  id           Int       @id @default(autoincrement())
+  statusCode   String    @unique @map("status_code")
+  statusName   String    @map("status_name")
+  statusNameAr String?   @map("status_name_ar")
+  isTerminal   Int       @default(0) @map("is_terminal")
+  allowsClaims Int       @default(0) @map("allows_claims")
+  description  String?
+  isActive     Int       @default(1) @map("is_active")
+  validFrom    DateTime  @default(now()) @map("valid_from")
+  validTo      DateTime? @map("valid_to")
+  isCurrent    Int       @default(1) @map("is_current")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+  createdBy    Int?      @map("created_by")
+  updatedBy    Int?      @map("updated_by")
+  version      Int       @default(1)
+
+  parametricPolicies ParametricPolicy[]
+
+  @@map("enum_param_policy_status")
+}
+
+model EnumParamClaimStatus {
+  id            Int       @id @default(autoincrement())
+  statusCode    String    @unique @map("status_code")
+  statusName    String    @map("status_name")
+  statusNameAr  String?   @map("status_name_ar")
+  isTerminal    Int       @default(0) @map("is_terminal")
+  allowsPayment Int       @default(0) @map("allows_payment")
+  description   String?
+  isActive      Int       @default(1) @map("is_active")
+  validFrom     DateTime  @default(now()) @map("valid_from")
+  validTo       DateTime? @map("valid_to")
+  isCurrent     Int       @default(1) @map("is_current")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @default(now()) @map("updated_at")
+  createdBy     Int?      @map("created_by")
+  updatedBy     Int?      @map("updated_by")
+  version       Int       @default(1)
+
+  parametricClaims ParametricClaim[]
+
+  @@map("enum_param_claim_status")
+}
+
+model EnumCyberAppStatus {
+  id           Int       @id @default(autoincrement())
+  statusCode   String    @unique @map("status_code")
+  statusName   String    @map("status_name")
+  statusNameAr String?   @map("status_name_ar")
+  isTerminal   Int       @default(0) @map("is_terminal")
+  description  String?
+  isActive     Int       @default(1) @map("is_active")
+  validFrom    DateTime  @default(now()) @map("valid_from")
+  validTo      DateTime? @map("valid_to")
+  isCurrent    Int       @default(1) @map("is_current")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+  createdBy    Int?      @map("created_by")
+  updatedBy    Int?      @map("updated_by")
+  version      Int       @default(1)
+
+  cyberApplications CyberApplication[]
+
+  @@map("enum_cyber_app_status")
+}
+
+// ============================================================================
+// FRAUD DETECTION — Zero-Cost Ollama + SQLite
+// ============================================================================
+
+model FraudDetectionResult {
+  id              Int       @id @default(autoincrement())
+  userId          Int       @map("user_id")
+  ruleScore       Float     @map("rule_score")
+  ruleFlags       String    @default("[]") @map("rule_flags") // JSON array
+  llmScore        Float     @map("llm_score")
+  llmReasoning    String?   @map("llm_reasoning")
+  finalScore      Float     @map("final_score")
+  verdict         String    // 'LEGITIMATE', 'REVIEW', 'FAKE'
+  modelUsed       String    @map("model_used")
+  latencyMs       Float     @map("latency_ms")
+  ipAtCheck       String?   @map("ip_at_check")
+  uaAtCheck       String?   @map("ua_at_check")
+  humanLabel      String?   @map("human_label") // 'confirmed_fake', 'confirmed_legit', null
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_fraud_user")
+  @@index([verdict], map: "idx_fraud_verdict")
+  @@index([createdAt], map: "idx_fraud_time")
+  @@map("fraud_detection_results")
+}
+
+model IpReputation {
+  ip            String   @id
+  firstSeen     DateTime @default(now()) @map("first_seen")
+  lastSeen      DateTime @default(now()) @map("last_seen")
+  accountCount  Int      @default(0) @map("account_count")
+  fakeCount     Int      @default(0) @map("fake_count")
+  riskScore     Float    @default(0) @map("risk_score") // 0-100
+  blocked       Int      @default(0) @map("is_blocked")
+  notes         String?
+  updatedAt     DateTime @default(now()) @map("updated_at")
+
+  @@index([riskScore], map: "idx_ip_reputation_score")
+  @@map("ip_reputation")
+}
+
+model DeviceFingerprint {
+  fingerprint   String   @id
+  userCount     Int      @default(0) @map("user_count")
+  firstSeen     DateTime @default(now()) @map("first_seen")
+  lastSeen      DateTime @default(now()) @map("last_seen")
+  riskScore     Float    @default(0) @map("risk_score")
+  blocked       Int      @default(0) @map("is_blocked")
+  updatedAt     DateTime @default(now()) @map("updated_at")
+
+  @@index([riskScore], map: "idx_device_risk_score")
+  @@map("device_fingerprints")
+}
+
+model EnumCyberPolicyStatus {
+  id           Int       @id @default(autoincrement())
+  statusCode   String    @unique @map("status_code")
+  statusName   String    @map("status_name")
+  statusNameAr String?   @map("status_name_ar")
+  isTerminal   Int       @default(0) @map("is_terminal")
+  allowsClaims Int       @default(0) @map("allows_claims")
+  description  String?
+  isActive     Int       @default(1) @map("is_active")
+  validFrom    DateTime  @default(now()) @map("valid_from")
+  validTo      DateTime? @map("valid_to")
+  isCurrent    Int       @default(1) @map("is_current")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+  createdBy    Int?      @map("created_by")
+  updatedBy    Int?      @map("updated_by")
+  version      Int       @default(1)
+
+  cyberPolicies CyberPolicy[]
+
+  @@map("enum_cyber_policy_status")
+}
+
+model EnumCyberClaimStatus {
+  id            Int       @id @default(autoincrement())
+  statusCode    String    @unique @map("status_code")
+  statusName    String    @map("status_name")
+  statusNameAr  String?   @map("status_name_ar")
+  isTerminal    Int       @default(0) @map("is_terminal")
+  allowsPayment Int       @default(0) @map("allows_payment")
+  description   String?
+  isActive      Int       @default(1) @map("is_active")
+  validFrom     DateTime  @default(now()) @map("valid_from")
+  validTo       DateTime? @map("valid_to")
+  isCurrent     Int       @default(1) @map("is_current")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @default(now()) @map("updated_at")
+  createdBy     Int?      @map("created_by")
+  updatedBy     Int?      @map("updated_by")
+  version       Int       @default(1)
+
+  cyberClaims CyberClaim[]
+
+  @@map("enum_cyber_claim_status")
+}
+
+model EnumSecurityPosture {
+  id             Int       @id @default(autoincrement())
+  postureCode    String    @unique @map("posture_code")
+  postureName    String    @map("posture_name")
+  postureNameAr  String?   @map("posture_name_ar")
+  riskMultiplier Decimal   @default(1.0000) @map("risk_multiplier")
+  description    String?
+  isActive       Int       @default(1) @map("is_active")
+  validFrom      DateTime  @default(now()) @map("valid_from")
+  validTo        DateTime? @map("valid_to")
+  isCurrent      Int       @default(1) @map("is_current")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @default(now()) @map("updated_at")
+  createdBy      Int?      @map("created_by")
+  updatedBy      Int?      @map("updated_by")
+  version        Int       @default(1)
+
+  cyberApplications CyberApplication[]
+
+  @@map("enum_security_posture")
+}
+
+model EnumIncidentType {
+  id          Int       @id @default(autoincrement())
+  typeCode    String    @unique @map("type_code")
+  typeName    String    @map("type_name")
+  typeNameAr  String?   @map("type_name_ar")
+  description String?
+  isActive    Int       @default(1) @map("is_active")
+  validFrom   DateTime  @default(now()) @map("valid_from")
+  validTo     DateTime? @map("valid_to")
+  isCurrent   Int       @default(1) @map("is_current")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+  createdBy   Int?      @map("created_by")
+  updatedBy   Int?      @map("updated_by")
+  version     Int       @default(1)
+
+  cyberClaims CyberClaim[]
+
+  @@map("enum_incident_type")
+}
+
+model EnumWorkflowAppStatus {
+  id             Int       @id @default(autoincrement())
+  statusCode     String    @unique @map("status_code")
+  statusName     String    @map("status_name")
+  statusNameAr   String?   @map("status_name_ar")
+  isTerminal     Int       @default(0) @map("is_terminal")
+  actorRequired  String    @map("actor_required")
+  nextStatesJson String    @default("[]") @map("next_states_json")
+  description    String?
+  isActive       Int       @default(1) @map("is_active")
+  validFrom      DateTime  @default(now()) @map("valid_from")
+  validTo        DateTime? @map("valid_to")
+  isCurrent      Int       @default(1) @map("is_current")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @default(now()) @map("updated_at")
+  createdBy      Int?      @map("created_by")
+  updatedBy      Int?      @map("updated_by")
+  version        Int       @default(1)
+
+  workflowPolicyApplications WorkflowPolicyApplication[]
+
+  @@map("enum_workflow_app_status")
+}
+
+model EnumWorkflowClaimStatus {
+  id             Int       @id @default(autoincrement())
+  statusCode     String    @unique @map("status_code")
+  statusName     String    @map("status_name")
+  statusNameAr   String?   @map("status_name_ar")
+  isTerminal     Int       @default(0) @map("is_terminal")
+  actorRequired  String    @map("actor_required")
+  nextStatesJson String    @default("[]") @map("next_states_json")
+  description    String?
+  isActive       Int       @default(1) @map("is_active")
+  validFrom      DateTime  @default(now()) @map("valid_from")
+  validTo        DateTime? @map("valid_to")
+  isCurrent      Int       @default(1) @map("is_current")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @default(now()) @map("updated_at")
+  createdBy      Int?      @map("created_by")
+  updatedBy      Int?      @map("updated_by")
+  version        Int       @default(1)
+
+  workflowClaims WorkflowClaim[]
+
+  @@map("enum_workflow_claim_status")
+}
+
+model EnumTaskActor {
+  id          Int       @id @default(autoincrement())
+  actorCode   String    @unique @map("actor_code")
+  actorName   String    @map("actor_name")
+  actorNameAr String?   @map("actor_name_ar")
+  description String?
+  isActive    Int       @default(1) @map("is_active")
+  validFrom   DateTime  @default(now()) @map("valid_from")
+  validTo     DateTime? @map("valid_to")
+  isCurrent   Int       @default(1) @map("is_current")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+  createdBy   Int?      @map("created_by")
+  updatedBy   Int?      @map("updated_by")
+  version     Int       @default(1)
+
+  workflowPolicyTasks WorkflowPolicyTask[]
+  workflowClaimTasks  WorkflowClaimTask[]
+
+  @@map("enum_task_actor")
+}
+
+model EnumTaskStatus {
+  id           Int       @id @default(autoincrement())
+  statusCode   String    @unique @map("status_code")
+  statusName   String    @map("status_name")
+  statusNameAr String?   @map("status_name_ar")
+  isTerminal   Int       @default(0) @map("is_terminal")
+  description  String?
+  isActive     Int       @default(1) @map("is_active")
+  validFrom    DateTime  @default(now()) @map("valid_from")
+  validTo      DateTime? @map("valid_to")
+  isCurrent    Int       @default(1) @map("is_current")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+  createdBy    Int?      @map("created_by")
+  updatedBy    Int?      @map("updated_by")
+  version      Int       @default(1)
+
+  workflowPolicyTasks WorkflowPolicyTask[]
+  workflowClaimTasks  WorkflowClaimTask[]
+
+  @@map("enum_task_status")
+}
+
+model EnumQuestionType {
+  id          Int       @id @default(autoincrement())
+  typeCode    String    @unique @map("type_code")
+  typeName    String    @map("type_name")
+  typeNameAr  String?   @map("type_name_ar")
+  description String?
+  isActive    Int       @default(1) @map("is_active")
+  validFrom   DateTime  @default(now()) @map("valid_from")
+  validTo     DateTime? @map("valid_to")
+  isCurrent   Int       @default(1) @map("is_current")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+  createdBy   Int?      @map("created_by")
+  updatedBy   Int?      @map("updated_by")
+  version     Int       @default(1)
+
+  underwritingQuestions UnderwritingQuestion[]
+
+  @@map("enum_question_type")
+}
+
+// ============================================================================
+// VERSIONED REFERENCE DATA (Actuarial Factors)
+// ============================================================================
+
+model RefSector {
+  id           Int       @id @default(autoincrement())
+  sectorCode   String    @unique @map("sector_code")
+  sectorName   String    @map("sector_name")
+  sectorNameAr String?   @map("sector_name_ar")
+  riskFactor   Decimal   @map("risk_factor")
+  description  String?
+  isActive     Int       @default(1) @map("is_active")
+  validFrom    DateTime  @default(now()) @map("valid_from")
+  validTo      DateTime? @map("valid_to")
+  isCurrent    Int       @default(1) @map("is_current")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+  createdBy    Int?      @map("created_by")
+  updatedBy    Int?      @map("updated_by")
+  version      Int       @default(1)
+
+  customers          Customer[]
+  parametricPolicies ParametricPolicy[]
+
+  @@map("ref_sector")
+}
+
+model RefBusinessModel {
+  id          Int       @id @default(autoincrement())
+  modelCode   String    @unique @map("model_code")
+  modelName   String    @map("model_name")
+  modelNameAr String?   @map("model_name_ar")
+  riskFactor  Decimal   @map("risk_factor")
+  description String?
+  isActive    Int       @default(1) @map("is_active")
+  validFrom   DateTime  @default(now()) @map("valid_from")
+  validTo     DateTime? @map("valid_to")
+  isCurrent   Int       @default(1) @map("is_current")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+  createdBy   Int?      @map("created_by")
+  updatedBy   Int?      @map("updated_by")
+  version     Int       @default(1)
+
+  customers          Customer[]
+  parametricPolicies ParametricPolicy[]
+
+  @@map("ref_business_model")
+}
+
+model RefResilienceProfile {
+  id            Int       @id @default(autoincrement())
+  profileCode   String    @unique @map("profile_code")
+  profileName   String    @map("profile_name")
+  profileNameAr String?   @map("profile_name_ar")
+  riskFactor    Decimal   @map("risk_factor")
+  description   String?
+  isActive      Int       @default(1) @map("is_active")
+  validFrom     DateTime  @default(now()) @map("valid_from")
+  validTo       DateTime? @map("valid_to")
+  isCurrent     Int       @default(1) @map("is_current")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @default(now()) @map("updated_at")
+  createdBy     Int?      @map("created_by")
+  updatedBy     Int?      @map("updated_by")
+  version       Int       @default(1)
+
+  parametricPolicies ParametricPolicy[]
+
+  @@map("ref_resilience_profile")
+}
+
+model RefTurnoverBand {
+  id          Int       @id @default(autoincrement())
+  bandCode    String    @unique @map("band_code")
+  bandName    String    @map("band_name")
+  bandNameAr  String?   @map("band_name_ar")
+  minTurnover Decimal   @map("min_turnover")
+  maxTurnover Decimal   @map("max_turnover")
+  riskFactor  Decimal   @map("risk_factor")
+  description String?
+  isActive    Int       @default(1) @map("is_active")
+  validFrom   DateTime  @default(now()) @map("valid_from")
+  validTo     DateTime? @map("valid_to")
+  isCurrent   Int       @default(1) @map("is_current")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+  createdBy   Int?      @map("created_by")
+  updatedBy   Int?      @map("updated_by")
+  version     Int       @default(1)
+
+  parametricPolicies ParametricPolicy[]
+
+  @@map("ref_turnover_band")
+}
+
+// ============================================================================
+// SECTION 3: USER & CUSTOMER MANAGEMENT — WITH SOFT DELETE
+// ============================================================================
+
+model User {
+  id                Int       @id @default(autoincrement())
+  username          String    @unique
+  passwordHash      String    @map("password_hash")
+  passwordSalt      String    @map("password_salt")
+  firstName         String    @map("first_name")
+  lastName          String    @map("last_name")
+  email             String    @unique
+  roleId            Int       @map("role_id")
+  isActive          Int       @default(1) @map("is_active")
+  emailVerified     Int       @default(0) @map("email_verified")
+  emailVerifiedAt   DateTime? @map("email_verified_at")
+  lastLoginAt       DateTime? @map("last_login_at")
+  lastLoginIp       String?   @map("last_login_ip")
+  failedLoginCount  Int       @default(0) @map("failed_login_count")
+  lockedUntil       DateTime? @map("locked_until")
+  passwordChangedAt DateTime? @map("password_changed_at")
+  passwordExpiresAt DateTime? @map("password_expires_at")
+  mfaEnabled        Int       @default(0) @map("mfa_enabled")
+  mfaSecret         String?   @map("mfa_secret")
+  deletedAt         DateTime? @map("deleted_at")
+  deletedBy         Int?      @map("deleted_by")
+  deletionReason    String?   @map("deletion_reason")
+  isDeleted         Int       @default(0) @map("is_deleted")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @default(now()) @map("updated_at")
+  createdBy         Int?      @map("created_by")
+  updatedBy         Int?      @map("updated_by")
+  version           Int       @default(1)
+
+  role                                EnumUserRole                  @relation(fields: [roleId], references: [id])
+  deletedByUser                       User?                         @relation("UserSelfDeletedBy", fields: [deletedBy], references: [id])
+  customer                            Customer?
+  fraudResults                        FraudDetectionResult[]
+  contactMessagesResponded            ContactMessage[]
+  customerQuestionsAssigned           CustomerQuestion[]
+  categoriesCreatedBy                 Category[]                    @relation("CategoryCreatedBy")
+  categoriesUpdatedBy                 Category[]                    @relation("CategoryUpdatedBy")
+  productsCreatedBy                   Product[]                     @relation("ProductCreatedBy")
+  productsUpdatedBy                   Product[]                     @relation("ProductUpdatedBy")
+  cloudProvidersVerifiedBy            CloudProvider[]               @relation("CloudProviderVerifiedBy")
+  cloudProvidersCreatedBy             CloudProvider[]               @relation("CloudProviderCreatedBy")
+  cloudProvidersUpdatedBy             CloudProvider[]               @relation("CloudProviderUpdatedBy")
+  payoutConfigsCreatedBy              PayoutFunctionConfig[]        @relation("PayoutConfigCreatedBy")
+  payoutConfigsUpdatedBy              PayoutFunctionConfig[]        @relation("PayoutConfigUpdatedBy")
+  parametricPoliciesUnderwrittenBy    ParametricPolicy[]            @relation("ParametricPolicyUnderwrittenBy")
+  parametricPoliciesCreatedBy         ParametricPolicy[]            @relation("ParametricPolicyCreatedBy")
+  parametricPoliciesUpdatedBy         ParametricPolicy[]            @relation("ParametricPolicyUpdatedBy")
+  parametricPoliciesDeletedBy         ParametricPolicy[]            @relation("ParametricPolicyDeletedBy")
+  parametricClaimsReviewedBy          ParametricClaim[]             @relation("ParametricClaimReviewedBy")
+  parametricClaimsPaidBy              ParametricClaim[]             @relation("ParametricClaimPaidBy")
+  parametricClaimsReserveAdjustedBy   ParametricClaim[]             @relation("ParametricClaimReserveAdjustedBy")
+  parametricClaimsCreatedBy           ParametricClaim[]             @relation("ParametricClaimCreatedBy")
+  parametricClaimsUpdatedBy           ParametricClaim[]             @relation("ParametricClaimUpdatedBy")
+  parametricClaimsDeletedBy           ParametricClaim[]             @relation("ParametricClaimDeletedBy")
+  cyberApplicationsUnderReviewBy      CyberApplication[]            @relation("CyberAppUnderReviewBy")
+  cyberApplicationsDecisionBy         CyberApplication[]            @relation("CyberAppDecisionBy")
+  cyberApplicationsCreatedBy          CyberApplication[]            @relation("CyberAppCreatedBy")
+  cyberApplicationsUpdatedBy          CyberApplication[]            @relation("CyberAppUpdatedBy")
+  cyberApplicationsDeletedBy          CyberApplication[]            @relation("CyberAppDeletedBy")
+  cyberPoliciesCreatedBy              CyberPolicy[]                 @relation("CyberPolicyCreatedBy")
+  cyberPoliciesUpdatedBy              CyberPolicy[]                 @relation("CyberPolicyUpdatedBy")
+  cyberPoliciesDeletedBy              CyberPolicy[]                 @relation("CyberPolicyDeletedBy")
+  cyberClaimsInvestigator             CyberClaim[]                  @relation("CyberClaimInvestigator")
+  cyberClaimsAdjustedBy               CyberClaim[]                  @relation("CyberClaimAdjustedBy")
+  cyberClaimsApprovedBy               CyberClaim[]                  @relation("CyberClaimApprovedBy")
+  cyberClaimsPaidBy                   CyberClaim[]                  @relation("CyberClaimPaidBy")
+  cyberClaimsReserveAdjustedBy        CyberClaim[]                  @relation("CyberClaimReserveAdjustedBy")
+  cyberClaimsCreatedBy                CyberClaim[]                  @relation("CyberClaimCreatedBy")
+  cyberClaimsUpdatedBy                CyberClaim[]                  @relation("CyberClaimUpdatedBy")
+  cyberClaimsDeletedBy                CyberClaim[]                  @relation("CyberClaimDeletedBy")
+  parametricClaimReservesCreatedBy    ParametricClaimReserve[]      @relation("ParamReserveCreatedBy")
+  parametricClaimReservesUpdatedBy    ParametricClaimReserve[]      @relation("ParamReserveUpdatedBy")
+  parametricClaimReservesDeletedBy    ParametricClaimReserve[]      @relation("ParamReserveDeletedBy")
+  cyberClaimReservesCreatedBy         CyberClaimReserve[]           @relation("CyberReserveCreatedBy")
+  cyberClaimReservesUpdatedBy         CyberClaimReserve[]           @relation("CyberReserveUpdatedBy")
+  cyberClaimReservesDeletedBy         CyberClaimReserve[]           @relation("CyberReserveDeletedBy")
+  reinsuranceTreatiesCreatedBy        ReinsuranceTreaty[]           @relation("TreatyCreatedBy")
+  reinsuranceTreatiesUpdatedBy        ReinsuranceTreaty[]           @relation("TreatyUpdatedBy")
+  reinsuranceTreatiesDeletedBy        ReinsuranceTreaty[]           @relation("TreatyDeletedBy")
+  parametricReinsuranceCededCreatedBy ParametricReinsuranceCeded[]  @relation("ParamCededCreatedBy")
+  parametricReinsuranceCededUpdatedBy ParametricReinsuranceCeded[]  @relation("ParamCededUpdatedBy")
+  parametricReinsuranceCededDeletedBy ParametricReinsuranceCeded[]  @relation("ParamCededDeletedBy")
+  cyberReinsuranceCededCreatedBy      CyberReinsuranceCeded[]       @relation("CyberCededCreatedBy")
+  cyberReinsuranceCededUpdatedBy      CyberReinsuranceCeded[]       @relation("CyberCededUpdatedBy")
+  cyberReinsuranceCededDeletedBy      CyberReinsuranceCeded[]       @relation("CyberCededDeletedBy")
+  parametricEndorsementsRequestedBy   ParametricPolicyEndorsement[] @relation("ParamEndorseRequestedBy")
+  parametricEndorsementsApprovedBy    ParametricPolicyEndorsement[] @relation("ParamEndorseApprovedBy")
+  parametricEndorsementsDeletedBy     ParametricPolicyEndorsement[] @relation("ParamEndorseDeletedBy")
+  cyberEndorsementsRequestedBy        CyberPolicyEndorsement[]      @relation("CyberEndorseRequestedBy")
+  cyberEndorsementsApprovedBy         CyberPolicyEndorsement[]      @relation("CyberEndorseApprovedBy")
+  cyberEndorsementsDeletedBy          CyberPolicyEndorsement[]      @relation("CyberEndorseDeletedBy")
+  parametricRenewalsQuotedBy          ParametricPolicyRenewal[]     @relation("ParamRenewalQuotedBy")
+  parametricRenewalsDeletedBy         ParametricPolicyRenewal[]     @relation("ParamRenewalDeletedBy")
+  cyberRenewalsQuotedBy               CyberPolicyRenewal[]          @relation("CyberRenewalQuotedBy")
+  cyberRenewalsDeletedBy              CyberPolicyRenewal[]          @relation("CyberRenewalDeletedBy")
+  workflowPolicyAppFinalizedBy        WorkflowPolicyApplication[]   @relation("WfAppFinalizedBy")
+  workflowPolicyAppRejectedBy         WorkflowPolicyApplication[]   @relation("WfAppRejectedBy")
+  workflowPolicyAppDeletedBy          WorkflowPolicyApplication[]   @relation("WfAppDeletedBy")
+  workflowClaimsPaidBy                WorkflowClaim[]               @relation("WfClaimPaidBy")
+  workflowClaimsDeletedBy             WorkflowClaim[]               @relation("WfClaimDeletedBy")
+  workflowPolicyTasksCompletedBy      WorkflowPolicyTask[]          @relation("WfPolicyTaskCompletedBy")
+  workflowPolicyTasksDeletedBy        WorkflowPolicyTask[]          @relation("WfPolicyTaskDeletedBy")
+  workflowClaimTasksCompletedBy       WorkflowClaimTask[]           @relation("WfClaimTaskCompletedBy")
+  workflowClaimTasksDeletedBy         WorkflowClaimTask[]           @relation("WfClaimTaskDeletedBy")
+  uploadedFiles                       UploadedFile[]
+  notificationsRecipient              Notification[]                @relation("NotificationRecipient")
+  notificationsDeletedBy              Notification[]                @relation("NotificationDeletedBy")
+  triggerEventsAdminReviewedBy        TriggerEvent[]                @relation("TriggerAdminReviewedBy")
+  usersDeletedByThis                  User[]                        @relation("UserSelfDeletedBy")
+  // Missing Journey Relations
+  passwordResetTokens                 PasswordResetToken[]
+  emailVerificationTokens             EmailVerificationToken[]
+  userSessions                        UserSession[]
+  cancellationsInitiatedBy            PolicyCancellation[]          @relation("CancellationInitiatedBy")
+  cancellationsProcessedBy            PolicyCancellation[]          @relation("CancellationProcessedBy")
+  cancellationsDeletedBy              PolicyCancellation[]          @relation("CancellationDeletedBy")
+  appealsReviewedBy                   ClaimAppeal[]                 @relation("AppealReviewedBy")
+  appealsWithdrawnBy                  ClaimAppeal[]                 @relation("AppealWithdrawnBy")
+  appealsDeletedBy                    ClaimAppeal[]                 @relation("AppealDeletedBy")
+  rejectionsCreatedBy                 ClaimRejection[]
+  rejectionsDeletedBy                 ClaimRejection[]              @relation("RejectionDeletedBy")
+  underwritingNotesCreatedBy          UnderwritingNote[]            @relation("UnderwritingNoteCreatedBy")
+  underwritingNotesDeletedBy          UnderwritingNote[]            @relation("UnderwritingNoteDeletedBy")
+  notificationLogsRecipient           NotificationLog[]             @relation("NotificationLogRecipient")
+  contactSubmissionsRespondedBy       ContactSubmission[]           @relation("ContactSubmissionRespondedBy")
+  contactSubmissionsDeletedBy         ContactSubmission[]           @relation("ContactSubmissionDeletedBy")
+  iodaClaimsClaimedBy                 IODAClaimSuggestion[]         @relation("IODAClaimClaimedBy")
+  iodaClaimsIgnoredBy                 IODAClaimSuggestion[]         @relation("IODAClaimIgnoredBy")
+  iodaClaimsFalsePositiveBy           IODAClaimSuggestion[]         @relation("IODAClaimFalsePositiveBy")
+  iodaClaimsDeletedBy                 IODAClaimSuggestion[]         @relation("IODAClaimDeletedBy")
+
+  @@index([email], map: "idx_users_email")
+  @@index([roleId], map: "idx_users_role")
+  @@index([deletedBy], map: "idx_users_deleted_by")
+  @@map("users")
+}
+
+model Customer {
+  id                   Int       @id @default(autoincrement())
+  userId               Int       @unique @map("user_id")
+  companyName          String    @map("company_name")
+  registrationNumber   String?   @map("registration_number")
+  taxId                String?   @map("tax_id")
+  sectorId             Int?      @map("sector_id")
+  businessModelId      Int?      @map("business_model_id")
+  address              String
+  addressAr            String?   @map("address_ar")
+  city                 String?
+  postalCode           String?   @map("postal_code")
+  country              String    @default("Tunisia")
+  mobile               String?
+  phone                String?
+  website              String?
+  profilePicUrl        String?   @map("profile_pic_url")
+  annualTurnoverTnd    Decimal?  @map("annual_turnover_tnd")
+  totalPolicies        Int       @default(0) @map("total_policies")
+  totalClaims          Int       @default(0) @map("total_claims")
+  totalPremiumPaid     Decimal   @default(0) @map("total_premium_paid")
+  totalPayoutsReceived Decimal   @default(0) @map("total_payouts_received")
+  deletedAt            DateTime? @map("deleted_at")
+  deletedBy            Int?      @map("deleted_by")
+  deletionReason       String?   @map("deletion_reason")
+  isDeleted            Int       @default(0) @map("is_deleted")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @default(now()) @map("updated_at")
+  createdBy            Int?      @map("created_by")
+  updatedBy            Int?      @map("updated_by")
+  version              Int       @default(1)
+
+  user                       User                        @relation(fields: [userId], references: [id])
+  sector                     RefSector?                  @relation(fields: [sectorId], references: [id])
+  businessModel              RefBusinessModel?           @relation(fields: [businessModelId], references: [id])
+  customerQuestions          CustomerQuestion[]
+  parametricPolicies         ParametricPolicy[]
+  parametricClaims           ParametricClaim[]
+  cyberApplications          CyberApplication[]
+  cyberPolicies              CyberPolicy[]
+  cyberClaims                CyberClaim[]
+  workflowPolicyApplications WorkflowPolicyApplication[]
+  workflowClaims             WorkflowClaim[]
+  // Missing Journey Relations
+  policyCancellations        PolicyCancellation[]
+  claimAppeals               ClaimAppeal[]
+  claimRejections            ClaimRejection[]
+  iodaClaimSuggestions       IODAClaimSuggestion[]
+
+  @@index([userId], map: "idx_customers_user")
+  @@index([companyName], map: "idx_customers_company")
+  @@index([sectorId], map: "idx_customers_sector")
+  @@index([deletedBy], map: "idx_customers_deleted_by")
+  @@map("customers")
+}
+
+model ContactMessage {
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String
+  phone        String?
+  subject      String
+  message      String
+  category     String    @default("GENERAL")
+  priority     String    @default("MEDIUM")
+  isRead       Int       @default(0) @map("is_read")
+  readAt       DateTime? @map("read_at")
+  respondedBy  Int?      @map("responded_by")
+  responseText String?   @map("response_text")
+  respondedAt  DateTime? @map("responded_at")
+  deletedAt    DateTime? @map("deleted_at")
+  deletedBy    Int?      @map("deleted_by")
+  isDeleted    Int       @default(0) @map("is_deleted")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+
+  respondedByUser User? @relation(fields: [respondedBy], references: [id])
+
+  @@map("contact_messages")
+}
+
+model CustomerQuestion {
+  id           Int       @id @default(autoincrement())
+  customerId   Int       @map("customer_id")
+  category     String
+  subject      String
+  description  String
+  priority     String    @default("MEDIUM")
+  status       String    @default("OPEN")
+  assignedTo   Int?      @map("assigned_to")
+  adminComment String?   @map("admin_comment")
+  resolvedAt   DateTime? @map("resolved_at")
+  deletedAt    DateTime? @map("deleted_at")
+  deletedBy    Int?      @map("deleted_by")
+  isDeleted    Int       @default(0) @map("is_deleted")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+
+  customer       Customer @relation(fields: [customerId], references: [id])
+  assignedToUser User?    @relation(fields: [assignedTo], references: [id])
+
+  @@map("customer_questions")
+}
+
+// ============================================================================
+// SECTION 4: INSURANCE PRODUCT CATALOG
+// ============================================================================
+
+model Category {
+  id             Int       @id @default(autoincrement())
+  code           String    @unique
+  categoryName   String    @map("category_name")
+  categoryNameAr String?   @map("category_name_ar")
+  description    String?
+  descriptionAr  String?   @map("description_ar")
+  sortOrder      Int       @default(0) @map("sort_order")
+  isActive       Int       @default(1) @map("is_active")
+  deletedAt      DateTime? @map("deleted_at")
+  deletedBy      Int?      @map("deleted_by")
+  isDeleted      Int       @default(0) @map("is_deleted")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @default(now()) @map("updated_at")
+  createdBy      Int?      @map("created_by")
+  updatedBy      Int?      @map("updated_by")
+  version        Int       @default(1)
+
+  products      Product[]
+  createdByUser User?     @relation("CategoryCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser User?     @relation("CategoryUpdatedBy", fields: [updatedBy], references: [id])
+
+  @@map("categories")
+}
+
+model Product {
+  id                       Int       @id @default(autoincrement())
+  categoryId               Int       @map("category_id")
+  productCode              String    @unique @map("product_code")
+  productName              String    @map("product_name")
+  productNameAr            String?   @map("product_name_ar")
+  productTypeId            Int       @map("product_type_id")
+  description              String?
+  descriptionAr            String?   @map("description_ar")
+  masterPolicyLimit        Decimal?  @map("master_policy_limit")
+  masterDeductibleSir      Decimal?  @map("master_deductible_sir")
+  indemnityPeriodDays      Int?      @map("indemnity_period_days")
+  currency                 String    @default("TND")
+  baseRatePer1000          Decimal?  @map("base_rate_per_1000")
+  minimumPremiumTnd        Decimal?  @map("minimum_premium_tnd")
+  maximumPremiumTnd        Decimal?  @map("maximum_premium_tnd")
+  coveragePeriodMonths     Int       @default(12) @map("coverage_period_months")
+  coolingOffDays           Int       @default(14) @map("cooling_off_days")
+  regulatoryApprovalNumber String?   @map("regulatory_approval_number")
+  regulatoryApprovalDate   DateTime? @map("regulatory_approval_date")
+  isActive                 Int       @default(1) @map("is_active")
+  deletedAt                DateTime? @map("deleted_at")
+  deletedBy                Int?      @map("deleted_by")
+  isDeleted                Int       @default(0) @map("is_deleted")
+  createdAt                DateTime  @default(now()) @map("created_at")
+  updatedAt                DateTime  @default(now()) @map("updated_at")
+  createdBy                Int?      @map("created_by")
+  updatedBy                Int?      @map("updated_by")
+  version                  Int       @default(1)
+
+  category                   Category                    @relation(fields: [categoryId], references: [id])
+  productType                EnumProductType             @relation(fields: [productTypeId], references: [id])
+  coverageGrants             CoverageGrant[]
+  exclusions                 ProductExclusion[]
+  underwritingQuestions      UnderwritingQuestion[]
+  parametricPolicies         ParametricPolicy[]
+  cyberApplications          CyberApplication[]
+  cyberPolicies              CyberPolicy[]
+  workflowPolicyApplications WorkflowPolicyApplication[]
+  createdByUser              User?                       @relation("ProductCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser              User?                       @relation("ProductUpdatedBy", fields: [updatedBy], references: [id])
+
+  @@map("products")
+}
+
+model CoverageGrant {
+  id                 Int       @id @default(autoincrement())
+  productId          Int       @map("product_id")
+  coverageCode       String    @map("coverage_code")
+  coverageName       String    @map("coverage_name")
+  coverageNameAr     String?   @map("coverage_name_ar")
+  subLimitDefault    Decimal?  @map("sub_limit_default")
+  subLimitMax        Decimal?  @map("sub_limit_max")
+  waitingPeriodHours Int       @default(0) @map("waiting_period_hours")
+  waitingPeriodDays  Int       @default(0) @map("waiting_period_days")
+  deductiblePct      Decimal   @default(0) @map("deductible_pct")
+  coInsurancePct     Decimal   @default(0) @map("co_insurance_pct")
+  exclusionsJson     String    @default("[]") @map("exclusions_json")
+  isOptional         Int       @default(0) @map("is_optional")
+  sortOrder          Int       @default(0) @map("sort_order")
+  isActive           Int       @default(1) @map("is_active")
+  deletedAt          DateTime? @map("deleted_at")
+  deletedBy          Int?      @map("deleted_by")
+  isDeleted          Int       @default(0) @map("is_deleted")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @default(now()) @map("updated_at")
+  createdBy          Int?      @map("created_by")
+  updatedBy          Int?      @map("updated_by")
+  version            Int       @default(1)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, coverageCode])
+  @@map("coverage_grants")
+}
+
+model ProductExclusion {
+  id              Int       @id @default(autoincrement())
+  productId       Int       @map("product_id")
+  exclusionCode   String    @map("exclusion_code")
+  exclusionName   String    @map("exclusion_name")
+  exclusionNameAr String?   @map("exclusion_name_ar")
+  description     String?
+  descriptionAr   String?   @map("description_ar")
+  isActive        Int       @default(1) @map("is_active")
+  deletedAt       DateTime? @map("deleted_at")
+  deletedBy       Int?      @map("deleted_by")
+  isDeleted       Int       @default(0) @map("is_deleted")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @default(now()) @map("updated_at")
+  createdBy       Int?      @map("created_by")
+  updatedBy       Int?      @map("updated_by")
+  version         Int       @default(1)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, exclusionCode])
+  @@map("product_exclusions")
+}
+
+model UnderwritingQuestion {
+  id             Int       @id @default(autoincrement())
+  productId      Int       @map("product_id")
+  fieldName      String    @map("field_name")
+  questionText   String    @map("question_text")
+  questionTextAr String?   @map("question_text_ar")
+  questionTypeId Int       @map("question_type_id")
+  optionsJson    String?   @map("options_json")
+  expectedAnswer String?   @map("expected_answer")
+  weight         Decimal   @default(1.00)
+  isScored       Int       @default(1) @map("is_scored")
+  isRequired     Int       @default(1) @map("is_required")
+  sortOrder      Int       @default(0) @map("sort_order")
+  isActive       Int       @default(1) @map("is_active")
+  deletedAt      DateTime? @map("deleted_at")
+  deletedBy      Int?      @map("deleted_by")
+  isDeleted      Int       @default(0) @map("is_deleted")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @default(now()) @map("updated_at")
+  createdBy      Int?      @map("created_by")
+  updatedBy      Int?      @map("updated_by")
+  version        Int       @default(1)
+
+  product      Product          @relation(fields: [productId], references: [id], onDelete: Cascade)
+  questionType EnumQuestionType @relation(fields: [questionTypeId], references: [id])
+
+  @@unique([productId, fieldName])
+  @@map("underwriting_questions")
+}
+
+// ============================================================================
+// SECTION 5: PARAMETRIC CLOUD OUTAGE INSURANCE
+// ============================================================================
+
+model CloudProvider {
+  id                 Int       @id @default(autoincrement())
+  asn                String    @unique
+  organisationName   String    @map("organisation_name")
+  organisationNameAr String?   @map("organisation_name_ar")
+  iodaName           String?   @map("ioda_name")
+  slaTierId          Int       @map("sla_tier_id")
+  mttrHours          Decimal   @map("mttr_hours")
+  riskScore          Decimal   @map("risk_score")
+  premiumFactor      Decimal   @default(1.0000) @map("premium_factor")
+  isVerified         Int       @default(0) @map("is_verified")
+  verifiedAt         DateTime? @map("verified_at")
+  verifiedBy         Int?      @map("verified_by")
+  isActive           Int       @default(1) @map("is_active")
+  deletedAt          DateTime? @map("deleted_at")
+  deletedBy          Int?      @map("deleted_by")
+  isDeleted          Int       @default(0) @map("is_deleted")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @default(now()) @map("updated_at")
+  createdBy          Int?      @map("created_by")
+  updatedBy          Int?      @map("updated_by")
+  version            Int       @default(1)
+
+  slaTier            EnumSlaTier        @relation(fields: [slaTierId], references: [id])
+  verifiedByUser     User?              @relation("CloudProviderVerifiedBy", fields: [verifiedBy], references: [id])
+  outageEvents       OutageEvent[]
+  mergedIncidents    MergedIncident[]
+  triggerEvents      TriggerEvent[]
+  parametricPolicies ParametricPolicy[]
+  createdByUser      User?              @relation("CloudProviderCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser      User?              @relation("CloudProviderUpdatedBy", fields: [updatedBy], references: [id])
+
+  @@map("cloud_providers")
+}
+
+model PayoutFunctionConfig {
+  id                   Int       @id @default(autoincrement())
+  configName           String    @map("config_name")
+  configCode           String    @unique @map("config_code")
+  functionType         String    @map("function_type")
+  description          String?
+  linearMultiplier     Decimal?  @map("linear_multiplier")
+  stepConfigJson       String?   @map("step_config_json")
+  hybridBaseRate       Decimal?  @map("hybrid_base_rate")
+  hybridStepConfigJson String?   @map("hybrid_step_config_json")
+  exponentialBase      Decimal?  @map("exponential_base")
+  exponentialExponent  Decimal?  @map("exponential_exponent")
+  isActive             Int       @default(1) @map("is_active")
+  deletedAt            DateTime? @map("deleted_at")
+  deletedBy            Int?      @map("deleted_by")
+  isDeleted            Int       @default(0) @map("is_deleted")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @default(now()) @map("updated_at")
+  createdBy            Int?      @map("created_by")
+  updatedBy            Int?      @map("updated_by")
+  version              Int       @default(1)
+
+  parametricPolicies ParametricPolicy[]
+  createdByUser      User?              @relation("PayoutConfigCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser      User?              @relation("PayoutConfigUpdatedBy", fields: [updatedBy], references: [id])
+
+  @@map("payout_function_configs")
+}
+
+model ParametricPolicy {
+  id                            Int       @id @default(autoincrement())
+  policyNumber                  String    @unique @map("policy_number")
+  customerId                    Int       @map("customer_id")
+  cloudProviderId               Int       @map("cloud_provider_id")
+  productId                     Int       @map("product_id")
+  sectorId                      Int       @map("sector_id")
+  businessModelId               Int       @map("business_model_id")
+  turnoverBandId                Int       @map("turnover_band_id")
+  resilienceProfileId           Int       @map("resilience_profile_id")
+  annualTurnoverTnd             Decimal   @map("annual_turnover_tnd")
+  hourlyRevenue                 Decimal   @map("hourly_revenue")
+  basePremium                   Decimal   @map("base_premium")
+  commercialPremium             Decimal   @map("commercial_premium")
+  providerAdjustedPremium       Decimal   @map("provider_adjusted_premium")
+  finalPremium                  Decimal   @map("final_premium")
+  premiumRatePct                Decimal   @map("premium_rate_pct")
+  maxInsuredHours               Decimal   @map("max_insured_hours")
+  hourlyPayoutRate              Decimal   @map("hourly_payout_rate")
+  maxPayoutAmount               Decimal   @map("max_payout_amount")
+  payoutFunctionConfigId        Int?      @map("payout_function_config_id")
+  sectorFactorAtCreation        Decimal   @map("sector_factor_at_creation")
+  businessModelFactorAtCreation Decimal   @map("business_model_factor_at_creation")
+  turnoverBandFactorAtCreation  Decimal   @map("turnover_band_factor_at_creation")
+  resilienceFactorAtCreation    Decimal   @map("resilience_factor_at_creation")
+  providerFactorAtCreation      Decimal   @map("provider_factor_at_creation")
+  loadingFactorAtCreation       Decimal   @default(1.3200) @map("loading_factor_at_creation")
+  underwritingDecision          String    @map("underwriting_decision")
+  underwritingNotes             String?   @map("underwriting_notes")
+  underwrittenBy                Int?      @map("underwritten_by")
+  underwrittenAt                DateTime? @map("underwritten_at")
+  statusId                      Int?      @map("status_id")
+  effectiveDate                 DateTime? @map("effective_date")
+  expiryDate                    DateTime? @map("expiry_date")
+  cancellationDate              DateTime? @map("cancellation_date")
+  cancellationReason            String?   @map("cancellation_reason")
+  cancellationRefundAmount      Decimal?  @map("cancellation_refund_amount")
+  totalClaimsCount              Int       @default(0) @map("total_claims_count")
+  totalPayoutAmount             Decimal   @default(0) @map("total_payout_amount")
+  deletedAt                     DateTime? @map("deleted_at")
+  deletedBy                     Int?      @map("deleted_by")
+  deletionReason                String?   @map("deletion_reason")
+  isDeleted                     Int       @default(0) @map("is_deleted")
+  createdAt                     DateTime  @default(now()) @map("created_at")
+  updatedAt                     DateTime  @default(now()) @map("updated_at")
+  createdBy                     Int?      @map("created_by")
+  updatedBy                     Int?      @map("updated_by")
+  version                       Int       @default(1)
+
+  customer                Customer                      @relation(fields: [customerId], references: [id])
+  cloudProvider           CloudProvider                 @relation(fields: [cloudProviderId], references: [id])
+  product                 Product                       @relation(fields: [productId], references: [id])
+  sector                  RefSector                     @relation(fields: [sectorId], references: [id])
+  businessModel           RefBusinessModel              @relation(fields: [businessModelId], references: [id])
+  turnoverBand            RefTurnoverBand               @relation(fields: [turnoverBandId], references: [id])
+  resilienceProfile       RefResilienceProfile          @relation(fields: [resilienceProfileId], references: [id])
+  payoutFunctionConfig    PayoutFunctionConfig?         @relation(fields: [payoutFunctionConfigId], references: [id])
+  underwrittenByUser      User?                         @relation("ParametricPolicyUnderwrittenBy", fields: [underwrittenBy], references: [id])
+  status                  EnumParamPolicyStatus?        @relation(fields: [statusId], references: [id])
+  claims                  ParametricClaim[]
+  endorsements            ParametricPolicyEndorsement[]
+  renewalsAsParent        ParametricPolicyRenewal[]     @relation("ParamRenewalParent")
+  renewalsAsNew           ParametricPolicyRenewal[]     @relation("ParamRenewalNew")
+  reinsuranceCeded        ParametricReinsuranceCeded[]
+  uploadedFiles           UploadedFile[]
+  notifications           Notification[]
+  // Missing Journey Relations
+  cancellations           PolicyCancellation[]
+  underwritingNoteEntries UnderwritingNote[]            @relation("ParametricPolicyUnderwritingNotes")
+  iodaClaimSuggestions    IODAClaimSuggestion[]
+  linkedWorkflows         WorkflowPolicyApplication[]   @relation("ParametricPolicyWorkflowLink")
+  createdByUser           User?                         @relation("ParametricPolicyCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser           User?                         @relation("ParametricPolicyUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser           User?                         @relation("ParametricPolicyDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([customerId], map: "idx_param_policies_customer")
+  @@index([cloudProviderId], map: "idx_param_policies_provider")
+  @@index([productId], map: "idx_param_policies_product")
+  @@index([statusId], map: "idx_param_policies_status")
+  @@index([effectiveDate, expiryDate], map: "idx_param_policies_dates")
+  @@index([payoutFunctionConfigId], map: "idx_param_policies_payout_config")
+  @@index([deletedBy], map: "idx_param_policies_deleted_by")
+  @@map("parametric_policies")
+}
+
+model OutageEvent {
+  id                Int       @id @default(autoincrement())
+  cloudProviderId   Int       @map("cloud_provider_id")
+  iodaEventId       String?   @map("ioda_event_id")
+  eventStart        DateTime  @map("event_start")
+  eventEnd          DateTime? @map("event_end")
+  durationSeconds   Int?      @map("duration_seconds")
+  durationHours     Decimal?  @map("duration_hours")
+  datasource        String
+  score             Decimal?
+  severity          String?
+  iodaRawData       String?   @map("ioda_raw_data")
+  processed         Int       @default(0)
+  processedAt       DateTime? @map("processed_at")
+  processingBatchId String?   @map("processing_batch_id")
+  deletedAt         DateTime? @map("deleted_at")
+  deletedBy         Int?      @map("deleted_by")
+  isDeleted         Int       @default(0) @map("is_deleted")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @default(now()) @map("updated_at")
+
+  cloudProvider      CloudProvider       @relation(fields: [cloudProviderId], references: [id], onDelete: Cascade)
+  incidentEventLinks IncidentEventLink[]
+
+  @@index([cloudProviderId], map: "idx_outage_provider")
+  @@index([processed], map: "idx_outage_processed")
+  @@index([eventStart, eventEnd], map: "idx_outage_dates")
+  @@index([processingBatchId], map: "idx_outage_batch")
+  @@index([deletedBy], map: "idx_outage_deleted_by")
+  @@map("outage_events")
+}
+
+model MergedIncident {
+  id               Int       @id @default(autoincrement())
+  cloudProviderId  Int       @map("cloud_provider_id")
+  incidentStart    DateTime  @map("incident_start")
+  incidentEnd      DateTime  @map("incident_end")
+  durationSeconds  Int       @map("duration_seconds")
+  durationHours    Decimal   @map("duration_hours")
+  nRawEvents       Int       @default(1) @map("n_raw_events")
+  maxScore         Decimal?  @map("max_score")
+  avgScore         Decimal?  @map("avg_score")
+  isTriggerChecked Int       @default(0) @map("is_trigger_checked")
+  triggerCheckedAt DateTime? @map("trigger_checked_at")
+  deletedAt        DateTime? @map("deleted_at")
+  deletedBy        Int?      @map("deleted_by")
+  isDeleted        Int       @default(0) @map("is_deleted")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @default(now()) @map("updated_at")
+
+  cloudProvider      CloudProvider       @relation(fields: [cloudProviderId], references: [id], onDelete: Cascade)
+  incidentEventLinks IncidentEventLink[]
+  triggerEvent       TriggerEvent?
+
+  @@index([cloudProviderId], map: "idx_merged_provider")
+  @@index([isTriggerChecked], map: "idx_merged_trigger")
+  @@index([deletedBy], map: "idx_merged_deleted_by")
+  @@map("merged_incidents")
+}
+
+model IncidentEventLink {
+  incidentId Int @map("incident_id")
+  eventId    Int @map("event_id")
+
+  incident MergedIncident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  event    OutageEvent    @relation(fields: [eventId], references: [id])
+
+  @@id([incidentId, eventId])
+  @@map("incident_event_links")
+}
+
+model TriggerEvent {
+  id                    Int       @id @default(autoincrement())
+  cloudProviderId       Int       @map("cloud_provider_id")
+  mergedIncidentId      Int?      @unique @map("merged_incident_id")
+  slaTierId             Int       @map("sla_tier_id")
+  insuredHours          Decimal   @map("insured_hours")
+  thresholdHours        Decimal   @map("threshold_hours")
+  affectedPoliciesCount Int?      @map("affected_policies_count")
+  totalEstimatedPayout  Decimal?  @map("total_estimated_payout")
+  claimCreated          Int       @default(0) @map("claim_created")
+  claimsCreatedAt       DateTime? @map("claims_created_at")
+  adminReviewed         Int       @default(0) @map("admin_reviewed")
+  adminReviewedAt       DateTime? @map("admin_reviewed_at")
+  adminReviewedBy       Int?      @map("admin_reviewed_by")
+  adminNotes            String?   @map("admin_notes")
+  deletedAt             DateTime? @map("deleted_at")
+  deletedBy             Int?      @map("deleted_by")
+  isDeleted             Int       @default(0) @map("is_deleted")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @default(now()) @map("updated_at")
+
+  cloudProvider       CloudProvider     @relation(fields: [cloudProviderId], references: [id], onDelete: Cascade)
+  mergedIncident      MergedIncident?   @relation(fields: [mergedIncidentId], references: [id], onDelete: Cascade)
+  slaTier             EnumSlaTier       @relation(fields: [slaTierId], references: [id])
+  adminReviewedByUser User?             @relation("TriggerAdminReviewedBy", fields: [adminReviewedBy], references: [id])
+  parametricClaims    ParametricClaim[]
+
+  @@index([cloudProviderId], map: "idx_trigger_provider")
+  @@index([claimCreated], map: "idx_trigger_claim")
+  @@index([mergedIncidentId], map: "idx_trigger_incident")
+  @@index([deletedBy], map: "idx_trigger_deleted_by")
+  @@map("trigger_events")
+}
+
+model ParametricClaim {
+  id                      Int       @id @default(autoincrement())
+  claimNumber             String    @unique @map("claim_number")
+  customerId              Int       @map("customer_id")
+  policyId                Int       @map("policy_id")
+  triggerEventId          Int?      @map("trigger_event_id")
+  outageDurationHours     Decimal   @map("outage_duration_hours")
+  hourlyPayoutRate        Decimal   @map("hourly_payout_rate")
+  payoutAmount            Decimal   @map("payout_amount")
+  payoutCalculationJson   String    @map("payout_calculation_json")
+  statusId                Int?      @map("status_id")
+  autoApproved            Int       @default(0) @map("auto_approved")
+  autoApprovedAt          DateTime? @map("auto_approved_at")
+  autoApprovalThreshold   Decimal?  @map("auto_approval_threshold")
+  adminOverride           Int       @default(0) @map("admin_override")
+  adminOverrideReason     String?   @map("admin_override_reason")
+  adminOverrideAt         DateTime? @map("admin_override_at")
+  reviewedBy              Int?      @map("reviewed_by")
+  reviewedAt              DateTime? @map("reviewed_at")
+  reviewNotes             String?   @map("review_notes")
+  paidBy                  Int?      @map("paid_by")
+  paidAt                  DateTime? @map("paid_at")
+  payoutTransactionId     String?   @map("payout_transaction_id")
+  payoutMethod            String?   @map("payout_method")
+  initialReserve          Decimal?  @map("initial_reserve")
+  currentReserve          Decimal?  @map("current_reserve")
+  reserveAdjustedAt       DateTime? @map("reserve_adjusted_at")
+  reserveAdjustedBy       Int?      @map("reserve_adjusted_by")
+  reserveAdjustmentReason String?   @map("reserve_adjustment_reason")
+  deletedAt               DateTime? @map("deleted_at")
+  deletedBy               Int?      @map("deleted_by")
+  deletionReason          String?   @map("deletion_reason")
+  isDeleted               Int       @default(0) @map("is_deleted")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @default(now()) @map("updated_at")
+  createdBy               Int?      @map("created_by")
+  updatedBy               Int?      @map("updated_by")
+  version                 Int       @default(1)
+
+  customer              Customer                 @relation(fields: [customerId], references: [id])
+  policy                ParametricPolicy         @relation(fields: [policyId], references: [id])
+  triggerEvent          TriggerEvent?            @relation(fields: [triggerEventId], references: [id])
+  status                EnumParamClaimStatus?    @relation(fields: [statusId], references: [id])
+  reviewedByUser        User?                    @relation("ParametricClaimReviewedBy", fields: [reviewedBy], references: [id])
+  paidByUser            User?                    @relation("ParametricClaimPaidBy", fields: [paidBy], references: [id])
+  reserveAdjustedByUser User?                    @relation("ParametricClaimReserveAdjustedBy", fields: [reserveAdjustedBy], references: [id])
+  reserves              ParametricClaimReserve[]
+  uploadedFiles         UploadedFile[]
+  notifications         Notification[]
+  // Missing Journey Relations
+  appeals               ClaimAppeal[]
+  rejections            ClaimRejection[]
+  createdByUser         User?                    @relation("ParametricClaimCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser         User?                    @relation("ParametricClaimUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser         User?                    @relation("ParametricClaimDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([policyId], map: "idx_param_claims_policy")
+  @@index([customerId], map: "idx_param_claims_customer")
+  @@index([statusId], map: "idx_param_claims_status")
+  @@index([triggerEventId], map: "idx_param_claims_trigger")
+  @@index([reviewedBy], map: "idx_param_claims_reviewed_by")
+  @@index([paidBy], map: "idx_param_claims_paid_by")
+  @@index([deletedBy], map: "idx_param_claims_deleted_by")
+  @@map("parametric_claims")
+}
+
+// ============================================================================
+// SECTION 6: CYBER INDEMNITY INSURANCE
+// ============================================================================
+
+model CyberApplication {
+  id                    Int       @id @default(autoincrement())
+  applicationNumber     String    @unique @map("application_number")
+  customerId            Int       @map("customer_id")
+  productId             Int       @map("product_id")
+  answersJson           String    @map("answers_json")
+  answersSchemaVersion  Int       @default(1) @map("answers_schema_version")
+  riskScore             Decimal   @map("risk_score")
+  securityPostureId     Int       @map("security_posture_id")
+  calculatedPremium     Decimal   @map("calculated_premium")
+  waiverFlagsJson       String    @default("[]") @map("waiver_flags_json")
+  selectedCoveragesJson String    @default("[]") @map("selected_coverages_json")
+  statusId              Int?      @map("status_id")
+  submittedAt           DateTime? @map("submitted_at")
+  underReviewAt         DateTime? @map("under_review_at")
+  underReviewBy         Int?      @map("under_review_by")
+  decisionAt            DateTime? @map("decision_at")
+  decisionBy            Int?      @map("decision_by")
+  decisionNotes         String?   @map("decision_notes")
+  deletedAt             DateTime? @map("deleted_at")
+  deletedBy             Int?      @map("deleted_by")
+  deletionReason        String?   @map("deletion_reason")
+  isDeleted             Int       @default(0) @map("is_deleted")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @default(now()) @map("updated_at")
+  createdBy             Int?      @map("created_by")
+  updatedBy             Int?      @map("updated_by")
+  version               Int       @default(1)
+
+  customer          Customer            @relation(fields: [customerId], references: [id])
+  product           Product             @relation(fields: [productId], references: [id])
+  securityPosture   EnumSecurityPosture @relation(fields: [securityPostureId], references: [id])
+  status            EnumCyberAppStatus? @relation(fields: [statusId], references: [id])
+  underReviewByUser User?               @relation("CyberAppUnderReviewBy", fields: [underReviewBy], references: [id])
+  decisionByUser    User?               @relation("CyberAppDecisionBy", fields: [decisionBy], references: [id])
+  cyberPolicy       CyberPolicy?
+  // Missing Journey Relations
+  underwritingNotes UnderwritingNote[]
+  createdByUser     User?               @relation("CyberAppCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser     User?               @relation("CyberAppUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser     User?               @relation("CyberAppDeletedBy", fields: [deletedBy], references: [id])
+
+  @@map("cyber_applications")
+}
+
+model CyberPolicy {
+  id                       Int       @id @default(autoincrement())
+  policyNumber             String    @unique @map("policy_number")
+  applicationId            Int       @unique @map("application_id")
+  customerId               Int       @map("customer_id")
+  productId                Int       @map("product_id")
+  policyLimit              Decimal   @map("policy_limit")
+  deductibleSir            Decimal   @default(0) @map("deductible_sir")
+  premium                  Decimal   @map("premium")
+  selectedCoveragesJson    String    @map("selected_coverages_json")
+  endorsementsJson         String    @default("[]") @map("endorsements_json")
+  exclusionsJson           String    @default("[]") @map("exclusions_json")
+  statusId                 Int?      @map("status_id")
+  effectiveDate            DateTime  @map("effective_date")
+  expiryDate               DateTime  @map("expiry_date")
+  cancellationDate         DateTime? @map("cancellation_date")
+  cancellationReason       String?   @map("cancellation_reason")
+  cancellationRefundAmount Decimal?  @map("cancellation_refund_amount")
+  isRenewal                Int       @default(0) @map("is_renewal")
+  parentPolicyId           Int?      @map("parent_policy_id")
+  renewalCount             Int       @default(0) @map("renewal_count")
+  totalClaimsCount         Int       @default(0) @map("total_claims_count")
+  totalClaimsAmount        Decimal   @default(0) @map("total_claims_amount")
+  deletedAt                DateTime? @map("deleted_at")
+  deletedBy                Int?      @map("deleted_by")
+  deletionReason           String?   @map("deletion_reason")
+  isDeleted                Int       @default(0) @map("is_deleted")
+  createdAt                DateTime  @default(now()) @map("created_at")
+  updatedAt                DateTime  @default(now()) @map("updated_at")
+  createdBy                Int?      @map("created_by")
+  updatedBy                Int?      @map("updated_by")
+  version                  Int       @default(1)
+
+  application      CyberApplication         @relation(fields: [applicationId], references: [id])
+  customer         Customer                 @relation(fields: [customerId], references: [id])
+  product          Product                  @relation(fields: [productId], references: [id])
+  status           EnumCyberPolicyStatus?   @relation(fields: [statusId], references: [id])
+  parentPolicy     CyberPolicy?             @relation("CyberPolicyRenewalChain", fields: [parentPolicyId], references: [id])
+  childPolicies    CyberPolicy[]            @relation("CyberPolicyRenewalChain")
+  claims           CyberClaim[]
+  endorsements     CyberPolicyEndorsement[]
+  renewalsAsParent CyberPolicyRenewal[]     @relation("CyberRenewalParent")
+  renewalsAsNew    CyberPolicyRenewal[]     @relation("CyberRenewalNew")
+  reinsuranceCeded CyberReinsuranceCeded[]
+  uploadedFiles    UploadedFile[]
+  notifications    Notification[]
+  createdByUser    User?                    @relation("CyberPolicyCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser    User?                    @relation("CyberPolicyUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser    User?                    @relation("CyberPolicyDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([customerId], map: "idx_cyber_policies_customer")
+  @@index([statusId], map: "idx_cyber_policies_status")
+  @@index([applicationId], map: "idx_cyber_policies_app")
+  @@index([productId], map: "idx_cyber_policies_product")
+  @@index([parentPolicyId], map: "idx_cyber_policies_parent")
+  @@index([deletedBy], map: "idx_cyber_policies_deleted_by")
+  @@map("cyber_policies")
+}
+
+model CyberClaim {
+  id                      Int       @id @default(autoincrement())
+  claimNumber             String    @unique @map("claim_number")
+  policyId                Int       @map("policy_id")
+  customerId              Int       @map("customer_id")
+  incidentDate            DateTime  @map("incident_date")
+  incidentDiscoveredDate  DateTime? @map("incident_discovered_date")
+  incidentTypeId          Int       @map("incident_type_id")
+  incidentDescription     String    @map("incident_description")
+  estimatedLoss           Decimal   @map("estimated_loss")
+  assignedInvestigator    Int?      @map("assigned_investigator")
+  investigationStartedAt  DateTime? @map("investigation_started_at")
+  investigationNotes      String?   @map("investigation_notes")
+  adjustedAmount          Decimal?  @map("adjusted_amount")
+  adjustedAt              DateTime? @map("adjusted_at")
+  adjustedBy              Int?      @map("adjusted_by")
+  adjustmentReason        String?   @map("adjustment_reason")
+  approvedAmount          Decimal?  @map("approved_amount")
+  approvedAt              DateTime? @map("approved_at")
+  approvedBy              Int?      @map("approved_by")
+  approvalNotes           String?   @map("approval_notes")
+  paidAmount              Decimal?  @map("paid_amount")
+  paidAt                  DateTime? @map("paid_at")
+  paidBy                  Int?      @map("paid_by")
+  payoutTransactionId     String?   @map("payout_transaction_id")
+  payoutMethod            String?   @map("payout_method")
+  statusId                Int?      @map("status_id")
+  initialReserve          Decimal?  @map("initial_reserve")
+  currentReserve          Decimal?  @map("current_reserve")
+  reserveAdjustedAt       DateTime? @map("reserve_adjusted_at")
+  reserveAdjustedBy       Int?      @map("reserve_adjusted_by")
+  reserveAdjustmentReason String?   @map("reserve_adjustment_reason")
+  deletedAt               DateTime? @map("deleted_at")
+  deletedBy               Int?      @map("deleted_by")
+  deletionReason          String?   @map("deletion_reason")
+  isDeleted               Int       @default(0) @map("is_deleted")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @default(now()) @map("updated_at")
+  createdBy               Int?      @map("created_by")
+  updatedBy               Int?      @map("updated_by")
+  version                 Int       @default(1)
+
+  policy                   CyberPolicy           @relation(fields: [policyId], references: [id])
+  customer                 Customer              @relation(fields: [customerId], references: [id])
+  incidentType             EnumIncidentType      @relation(fields: [incidentTypeId], references: [id])
+  assignedInvestigatorUser User?                 @relation("CyberClaimInvestigator", fields: [assignedInvestigator], references: [id])
+  adjustedByUser           User?                 @relation("CyberClaimAdjustedBy", fields: [adjustedBy], references: [id])
+  approvedByUser           User?                 @relation("CyberClaimApprovedBy", fields: [approvedBy], references: [id])
+  paidByUser               User?                 @relation("CyberClaimPaidBy", fields: [paidBy], references: [id])
+  status                   EnumCyberClaimStatus? @relation(fields: [statusId], references: [id])
+  reserveAdjustedByUser    User?                 @relation("CyberClaimReserveAdjustedBy", fields: [reserveAdjustedBy], references: [id])
+  reserves                 CyberClaimReserve[]
+  uploadedFiles            UploadedFile[]
+  notifications            Notification[]
+  createdByUser            User?                 @relation("CyberClaimCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser            User?                 @relation("CyberClaimUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser            User?                 @relation("CyberClaimDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([policyId], map: "idx_cyber_claims_policy")
+  @@index([statusId], map: "idx_cyber_claims_status")
+  @@index([incidentDate], map: "idx_cyber_claims_incident")
+  @@index([assignedInvestigator], map: "idx_cyber_claims_investigator")
+  @@index([approvedBy], map: "idx_cyber_claims_approved_by")
+  @@index([paidBy], map: "idx_cyber_claims_paid_by")
+  @@index([deletedBy], map: "idx_cyber_claims_deleted_by")
+  @@map("cyber_claims")
+}
+
+// ============================================================================
+// SECTION 7: CLAIM RESERVE TRACKING
+// ============================================================================
+
+model ParametricClaimReserve {
+  id                Int       @id @default(autoincrement())
+  parametricClaimId Int       @map("parametric_claim_id")
+  reserveType       String    @map("reserve_type")
+  reserveAmount     Decimal   @map("reserve_amount")
+  reserveCurrency   String    @default("TND") @map("reserve_currency")
+  previousAmount    Decimal?  @map("previous_amount")
+  adjustmentAmount  Decimal?  @map("adjustment_amount")
+  adjustmentReason  String    @map("adjustment_reason")
+  actuarialMethod   String?   @map("actuarial_method")
+  confidenceLevel   Decimal?  @map("confidence_level")
+  deletedAt         DateTime? @map("deleted_at")
+  deletedBy         Int?      @map("deleted_by")
+  isDeleted         Int       @default(0) @map("is_deleted")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @default(now()) @map("updated_at")
+  createdBy         Int?      @map("created_by")
+  updatedBy         Int?      @map("updated_by")
+  version           Int       @default(1)
+
+  parametricClaim ParametricClaim @relation(fields: [parametricClaimId], references: [id])
+  createdByUser   User?           @relation("ParamReserveCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser   User?           @relation("ParamReserveUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser   User?           @relation("ParamReserveDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([parametricClaimId], map: "idx_param_reserve_claim")
+  @@index([reserveType], map: "idx_param_reserve_type")
+  @@index([deletedBy], map: "idx_param_reserve_deleted_by")
+  @@map("parametric_claim_reserves")
+}
+
+model CyberClaimReserve {
+  id               Int       @id @default(autoincrement())
+  cyberClaimId     Int       @map("cyber_claim_id")
+  reserveType      String    @map("reserve_type")
+  reserveAmount    Decimal   @map("reserve_amount")
+  reserveCurrency  String    @default("TND") @map("reserve_currency")
+  previousAmount   Decimal?  @map("previous_amount")
+  adjustmentAmount Decimal?  @map("adjustment_amount")
+  adjustmentReason String    @map("adjustment_reason")
+  actuarialMethod  String?   @map("actuarial_method")
+  confidenceLevel  Decimal?  @map("confidence_level")
+  deletedAt        DateTime? @map("deleted_at")
+  deletedBy        Int?      @map("deleted_by")
+  isDeleted        Int       @default(0) @map("is_deleted")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @default(now()) @map("updated_at")
+  createdBy        Int?      @map("created_by")
+  updatedBy        Int?      @map("updated_by")
+  version          Int       @default(1)
+
+  cyberClaim    CyberClaim @relation(fields: [cyberClaimId], references: [id])
+  createdByUser User?      @relation("CyberReserveCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser User?      @relation("CyberReserveUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser User?      @relation("CyberReserveDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([cyberClaimId], map: "idx_cyber_reserve_claim")
+  @@index([reserveType], map: "idx_cyber_reserve_type")
+  @@index([deletedBy], map: "idx_cyber_reserve_deleted_by")
+  @@map("cyber_claim_reserves")
+}
+
+// ============================================================================
+// SECTION 8: REINSURANCE SUPPORT
+// ============================================================================
+
+model ReinsuranceTreaty {
+  id                    Int       @id @default(autoincrement())
+  treatyNumber          String    @unique @map("treaty_number")
+  treatyName            String    @map("treaty_name")
+  reinsurerName         String    @map("reinsurer_name")
+  reinsurerContact      String?   @map("reinsurer_contact")
+  reinsurerEmail        String?   @map("reinsurer_email")
+  reinsurerPhone        String?   @map("reinsurer_phone")
+  treatyType            String    @map("treaty_type")
+  treatyStartDate       DateTime  @map("treaty_start_date")
+  treatyEndDate         DateTime  @map("treaty_end_date")
+  cessionPct            Decimal?  @map("cession_pct")
+  retentionAmount       Decimal?  @map("retention_amount")
+  limitAmount           Decimal?  @map("limit_amount")
+  attachmentPoint       Decimal?  @map("attachment_point")
+  reinsurancePremiumPct Decimal?  @map("reinsurance_premium_pct")
+  profitCommissionPct   Decimal?  @map("profit_commission_pct")
+  noClaimBonusPct       Decimal?  @map("no_claim_bonus_pct")
+  status                String    @default("ACTIVE")
+  deletedAt             DateTime? @map("deleted_at")
+  deletedBy             Int?      @map("deleted_by")
+  deletionReason        String?   @map("deletion_reason")
+  isDeleted             Int       @default(0) @map("is_deleted")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @default(now()) @map("updated_at")
+  createdBy             Int?      @map("created_by")
+  updatedBy             Int?      @map("updated_by")
+  version               Int       @default(1)
+
+  parametricReinsuranceCeded ParametricReinsuranceCeded[]
+  cyberReinsuranceCeded      CyberReinsuranceCeded[]
+  createdByUser              User?                        @relation("TreatyCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser              User?                        @relation("TreatyUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser              User?                        @relation("TreatyDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([status], map: "idx_treaty_status")
+  @@index([deletedBy], map: "idx_treaty_deleted_by")
+  @@map("reinsurance_treaties")
+}
+
+model ParametricReinsuranceCeded {
+  id                 Int       @id @default(autoincrement())
+  treatyId           Int       @map("treaty_id")
+  parametricPolicyId Int       @map("parametric_policy_id")
+  grossPremium       Decimal   @map("gross_premium")
+  cededPremium       Decimal   @map("ceded_premium")
+  netPremium         Decimal?  @map("net_premium")
+  grossClaimReserve  Decimal?  @map("gross_claim_reserve")
+  cededClaimReserve  Decimal?  @map("ceded_claim_reserve")
+  grossClaimPaid     Decimal?  @map("gross_claim_paid")
+  cededClaimPaid     Decimal?  @map("ceded_claim_paid")
+  netClaimPaid       Decimal?  @map("net_claim_paid")
+  recoveryAmount     Decimal?  @map("recovery_amount")
+  recoveryDate       DateTime? @map("recovery_date")
+  deletedAt          DateTime? @map("deleted_at")
+  deletedBy          Int?      @map("deleted_by")
+  isDeleted          Int       @default(0) @map("is_deleted")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @default(now()) @map("updated_at")
+  createdBy          Int?      @map("created_by")
+  updatedBy          Int?      @map("updated_by")
+  version            Int       @default(1)
+
+  treaty           ReinsuranceTreaty @relation(fields: [treatyId], references: [id])
+  parametricPolicy ParametricPolicy  @relation(fields: [parametricPolicyId], references: [id])
+  createdByUser    User?             @relation("ParamCededCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser    User?             @relation("ParamCededUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser    User?             @relation("ParamCededDeletedBy", fields: [deletedBy], references: [id])
+
+  @@unique([treatyId, parametricPolicyId])
+  @@index([treatyId], map: "idx_param_ceded_treaty")
+  @@index([parametricPolicyId], map: "idx_param_ceded_policy")
+  @@index([deletedBy], map: "idx_param_ceded_deleted_by")
+  @@map("parametric_reinsurance_ceded")
+}
+
+model CyberReinsuranceCeded {
+  id                Int       @id @default(autoincrement())
+  treatyId          Int       @map("treaty_id")
+  cyberPolicyId     Int       @map("cyber_policy_id")
+  grossPremium      Decimal   @map("gross_premium")
+  cededPremium      Decimal   @map("ceded_premium")
+  netPremium        Decimal?  @map("net_premium")
+  grossClaimReserve Decimal?  @map("gross_claim_reserve")
+  cededClaimReserve Decimal?  @map("ceded_claim_reserve")
+  grossClaimPaid    Decimal?  @map("gross_claim_paid")
+  cededClaimPaid    Decimal?  @map("ceded_claim_paid")
+  netClaimPaid      Decimal?  @map("net_claim_paid")
+  recoveryAmount    Decimal?  @map("recovery_amount")
+  recoveryDate      DateTime? @map("recovery_date")
+  deletedAt         DateTime? @map("deleted_at")
+  deletedBy         Int?      @map("deleted_by")
+  isDeleted         Int       @default(0) @map("is_deleted")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @default(now()) @map("updated_at")
+  createdBy         Int?      @map("created_by")
+  updatedBy         Int?      @map("updated_by")
+  version           Int       @default(1)
+
+  treaty        ReinsuranceTreaty @relation(fields: [treatyId], references: [id])
+  cyberPolicy   CyberPolicy       @relation(fields: [cyberPolicyId], references: [id])
+  createdByUser User?             @relation("CyberCededCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser User?             @relation("CyberCededUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser User?             @relation("CyberCededDeletedBy", fields: [deletedBy], references: [id])
+
+  @@unique([treatyId, cyberPolicyId])
+  @@index([treatyId], map: "idx_cyber_ceded_treaty")
+  @@index([cyberPolicyId], map: "idx_cyber_ceded_policy")
+  @@index([deletedBy], map: "idx_cyber_ceded_deleted_by")
+  @@map("cyber_reinsurance_ceded")
+}
+
+// ============================================================================
+// SECTION 9: POLICY ENDORSEMENTS & RENEWALS
+// ============================================================================
+
+model ParametricPolicyEndorsement {
+  id                    Int       @id @default(autoincrement())
+  parametricPolicyId    Int       @map("parametric_policy_id")
+  endorsementNumber     String    @unique @map("endorsement_number")
+  endorsementType       String    @map("endorsement_type")
+  previousValuesJson    String    @map("previous_values_json")
+  newValuesJson         String    @map("new_values_json")
+  changeDescription     String    @map("change_description")
+  premiumAdjustment     Decimal   @default(0) @map("premium_adjustment")
+  premiumAdjustmentType String?   @map("premium_adjustment_type")
+  effectiveDate         DateTime  @map("effective_date")
+  processedDate         DateTime? @map("processed_date")
+  requestedBy           Int?      @map("requested_by")
+  approvedBy            Int?      @map("approved_by")
+  approvedAt            DateTime? @map("approved_at")
+  approvalNotes         String?   @map("approval_notes")
+  status                String    @default("PENDING")
+  deletedAt             DateTime? @map("deleted_at")
+  deletedBy             Int?      @map("deleted_by")
+  isDeleted             Int       @default(0) @map("is_deleted")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @default(now()) @map("updated_at")
+  createdBy             Int?      @map("created_by")
+  updatedBy             Int?      @map("updated_by")
+  version               Int       @default(1)
+
+  parametricPolicy ParametricPolicy @relation(fields: [parametricPolicyId], references: [id])
+  requestedByUser  User?            @relation("ParamEndorseRequestedBy", fields: [requestedBy], references: [id])
+  approvedByUser   User?            @relation("ParamEndorseApprovedBy", fields: [approvedBy], references: [id])
+  deletedByUser    User?            @relation("ParamEndorseDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([parametricPolicyId], map: "idx_param_endorsement_policy")
+  @@index([status], map: "idx_param_endorsement_status")
+  @@index([approvedBy], map: "idx_param_endorsement_approved_by")
+  @@index([deletedBy], map: "idx_param_endorsement_deleted_by")
+  @@map("parametric_policy_endorsements")
+}
+
+model CyberPolicyEndorsement {
+  id                    Int       @id @default(autoincrement())
+  cyberPolicyId         Int       @map("cyber_policy_id")
+  endorsementNumber     String    @unique @map("endorsement_number")
+  endorsementType       String    @map("endorsement_type")
+  previousValuesJson    String    @map("previous_values_json")
+  newValuesJson         String    @map("new_values_json")
+  changeDescription     String    @map("change_description")
+  premiumAdjustment     Decimal   @default(0) @map("premium_adjustment")
+  premiumAdjustmentType String?   @map("premium_adjustment_type")
+  effectiveDate         DateTime  @map("effective_date")
+  processedDate         DateTime? @map("processed_date")
+  requestedBy           Int?      @map("requested_by")
+  approvedBy            Int?      @map("approved_by")
+  approvedAt            DateTime? @map("approved_at")
+  approvalNotes         String?   @map("approval_notes")
+  status                String    @default("PENDING")
+  deletedAt             DateTime? @map("deleted_at")
+  deletedBy             Int?      @map("deleted_by")
+  isDeleted             Int       @default(0) @map("is_deleted")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @default(now()) @map("updated_at")
+  createdBy             Int?      @map("created_by")
+  updatedBy             Int?      @map("updated_by")
+  version               Int       @default(1)
+
+  cyberPolicy     CyberPolicy @relation(fields: [cyberPolicyId], references: [id])
+  requestedByUser User?       @relation("CyberEndorseRequestedBy", fields: [requestedBy], references: [id])
+  approvedByUser  User?       @relation("CyberEndorseApprovedBy", fields: [approvedBy], references: [id])
+  deletedByUser   User?       @relation("CyberEndorseDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([cyberPolicyId], map: "idx_cyber_endorsement_policy")
+  @@index([status], map: "idx_cyber_endorsement_status")
+  @@index([approvedBy], map: "idx_cyber_endorsement_approved_by")
+  @@index([deletedBy], map: "idx_cyber_endorsement_deleted_by")
+  @@map("cyber_policy_endorsements")
+}
+
+model ParametricPolicyRenewal {
+  id                      Int       @id @default(autoincrement())
+  parentPolicyId          Int       @map("parent_policy_id")
+  newPolicyId             Int?      @map("new_policy_id")
+  renewalNumber           String    @unique @map("renewal_number")
+  renewalTermMonths       Int       @default(12) @map("renewal_term_months")
+  previousPremium         Decimal   @map("previous_premium")
+  newPremium              Decimal?  @map("new_premium")
+  premiumAdjustmentReason String?   @map("premium_adjustment_reason")
+  claimsCountPeriod       Int       @default(0) @map("claims_count_period")
+  claimsAmountPeriod      Decimal   @default(0) @map("claims_amount_period")
+  status                  String    @default("PENDING")
+  quotedAt                DateTime? @map("quoted_at")
+  quotedBy                Int?      @map("quoted_by")
+  acceptedAt              DateTime? @map("accepted_at")
+  declinedAt              DateTime? @map("declined_at")
+  declinedReason          String?   @map("declined_reason")
+  deletedAt               DateTime? @map("deleted_at")
+  deletedBy               Int?      @map("deleted_by")
+  isDeleted               Int       @default(0) @map("is_deleted")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @default(now()) @map("updated_at")
+  createdBy               Int?      @map("created_by")
+  updatedBy               Int?      @map("updated_by")
+  version                 Int       @default(1)
+
+  parentPolicy  ParametricPolicy  @relation("ParamRenewalParent", fields: [parentPolicyId], references: [id])
+  newPolicy     ParametricPolicy? @relation("ParamRenewalNew", fields: [newPolicyId], references: [id])
+  quotedByUser  User?             @relation("ParamRenewalQuotedBy", fields: [quotedBy], references: [id])
+  deletedByUser User?             @relation("ParamRenewalDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([parentPolicyId], map: "idx_param_renewal_parent")
+  @@index([status], map: "idx_param_renewal_status")
+  @@index([quotedBy], map: "idx_param_renewal_quoted_by")
+  @@index([deletedBy], map: "idx_param_renewal_deleted_by")
+  @@map("parametric_policy_renewals")
+}
+
+model CyberPolicyRenewal {
+  id                      Int       @id @default(autoincrement())
+  parentPolicyId          Int       @map("parent_policy_id")
+  newPolicyId             Int?      @map("new_policy_id")
+  renewalNumber           String    @unique @map("renewal_number")
+  renewalTermMonths       Int       @default(12) @map("renewal_term_months")
+  previousPremium         Decimal   @map("previous_premium")
+  newPremium              Decimal?  @map("new_premium")
+  premiumAdjustmentReason String?   @map("premium_adjustment_reason")
+  claimsCountPeriod       Int       @default(0) @map("claims_count_period")
+  claimsAmountPeriod      Decimal   @default(0) @map("claims_amount_period")
+  status                  String    @default("PENDING")
+  quotedAt                DateTime? @map("quoted_at")
+  quotedBy                Int?      @map("quoted_by")
+  acceptedAt              DateTime? @map("accepted_at")
+  declinedAt              DateTime? @map("declined_at")
+  declinedReason          String?   @map("declined_reason")
+  deletedAt               DateTime? @map("deleted_at")
+  deletedBy               Int?      @map("deleted_by")
+  isDeleted               Int       @default(0) @map("is_deleted")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @default(now()) @map("updated_at")
+  createdBy               Int?      @map("created_by")
+  updatedBy               Int?      @map("updated_by")
+  version                 Int       @default(1)
+
+  parentPolicy  CyberPolicy  @relation("CyberRenewalParent", fields: [parentPolicyId], references: [id])
+  newPolicy     CyberPolicy? @relation("CyberRenewalNew", fields: [newPolicyId], references: [id])
+  quotedByUser  User?        @relation("CyberRenewalQuotedBy", fields: [quotedBy], references: [id])
+  deletedByUser User?        @relation("CyberRenewalDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([parentPolicyId], map: "idx_cyber_renewal_parent")
+  @@index([status], map: "idx_cyber_renewal_status")
+  @@index([quotedBy], map: "idx_cyber_renewal_quoted_by")
+  @@index([deletedBy], map: "idx_cyber_renewal_deleted_by")
+  @@map("cyber_policy_renewals")
+}
+
+// ============================================================================
+// SECTION 10: WORKFLOW ENGINE
+// ============================================================================
+
+model WorkflowPolicyApplication {
+  id                            Int       @id @default(autoincrement())
+  applicationNumber             String    @unique @map("application_number")
+  customerId                    Int       @map("customer_id")
+  productId                     Int?      @map("product_id")
+  providerContractPdfUrl        String?   @map("provider_contract_pdf_url")
+  insurancePolicyContractPdfUrl String?   @map("insurance_policy_contract_pdf_url")
+  signedPolicyContractPdfUrl    String?   @map("signed_policy_contract_pdf_url")
+  premiumAmount                 Decimal?  @map("premium_amount")
+  paymentTransactionId          String?   @map("payment_transaction_id")
+  paymentMethod                 String?   @map("payment_method")
+  paymentStatus                 String?   @map("payment_status")
+  premiumPaidAt                 DateTime? @map("premium_paid_at")
+  customerSignedAt              DateTime? @map("customer_signed_at")
+  customerSignatureIp           String?   @map("customer_signature_ip")
+  adminFinalSignatureAt         DateTime? @map("admin_final_signature_at")
+  adminFinalizedBy              Int?      @map("admin_finalized_by")
+  adminFinalSignatureIp         String?   @map("admin_final_signature_ip")
+  parametricPolicyId            Int?      @map("parametric_policy_id")
+  statusId                      Int?      @map("status_id")
+  rejectedBy                    Int?      @map("rejected_by")
+  rejectedAt                    DateTime? @map("rejected_at")
+  rejectionReason               String?   @map("rejection_reason")
+  deletedAt                     DateTime? @map("deleted_at")
+  deletedBy                     Int?      @map("deleted_by")
+  isDeleted                     Int       @default(0) @map("is_deleted")
+  createdAt                     DateTime  @default(now()) @map("created_at")
+  updatedAt                     DateTime  @default(now()) @map("updated_at")
+  createdBy                     Int?      @map("created_by")
+  updatedBy                     Int?      @map("updated_by")
+  version                       Int       @default(1)
+
+  customer             Customer               @relation(fields: [customerId], references: [id])
+  product              Product?               @relation(fields: [productId], references: [id])
+  parametricPolicy     ParametricPolicy?      @relation("ParametricPolicyWorkflowLink", fields: [parametricPolicyId], references: [id])
+  status               EnumWorkflowAppStatus? @relation(fields: [statusId], references: [id])
+  adminFinalizedByUser User?                  @relation("WfAppFinalizedBy", fields: [adminFinalizedBy], references: [id])
+  rejectedByUser       User?                  @relation("WfAppRejectedBy", fields: [rejectedBy], references: [id])
+  deletedByUser        User?                  @relation("WfAppDeletedBy", fields: [deletedBy], references: [id])
+  claims               WorkflowClaim[]
+  tasks                WorkflowPolicyTask[]
+  uploadedFiles        UploadedFile[]
+  // Missing Journey Relations
+  underwritingNotes    UnderwritingNote[]
+
+  @@index([customerId], map: "idx_workflow_app_customer")
+  @@index([statusId], map: "idx_workflow_app_status")
+  @@index([parametricPolicyId], map: "idx_workflow_app_parametric_policy")
+  @@index([adminFinalizedBy], map: "idx_workflow_app_finalized_by")
+  @@index([rejectedBy], map: "idx_workflow_app_rejected_by")
+  @@index([deletedBy], map: "idx_workflow_app_deleted_by")
+  @@map("workflow_policy_applications")
+}
+
+model WorkflowClaim {
+  id                      Int       @id @default(autoincrement())
+  claimNumber             String    @unique @map("claim_number")
+  policyApplicationId     Int       @map("policy_application_id")
+  customerId              Int       @map("customer_id")
+  declarationOfLossPdfUrl String?   @map("declaration_of_loss_pdf_url")
+  lossAmount              Decimal?  @map("loss_amount")
+  lossStartDate           DateTime? @map("loss_start_date")
+  lossEndDate             DateTime? @map("loss_end_date")
+  lossDescription         String?   @map("loss_description")
+  payoutAmount            Decimal?  @map("payout_amount")
+  payoutTransactionId     String?   @map("payout_transaction_id")
+  payoutMethod            String?   @map("payout_method")
+  statusId                Int?      @map("status_id")
+  paidBy                  Int?      @map("paid_by")
+  paidAt                  DateTime? @map("paid_at")
+  deletedAt               DateTime? @map("deleted_at")
+  deletedBy               Int?      @map("deleted_by")
+  isDeleted               Int       @default(0) @map("is_deleted")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @default(now()) @map("updated_at")
+  createdBy               Int?      @map("created_by")
+  updatedBy               Int?      @map("updated_by")
+  version                 Int       @default(1)
+
+  policyApplication WorkflowPolicyApplication @relation(fields: [policyApplicationId], references: [id])
+  customer          Customer                  @relation(fields: [customerId], references: [id])
+  status            EnumWorkflowClaimStatus?  @relation(fields: [statusId], references: [id])
+  paidByUser        User?                     @relation("WfClaimPaidBy", fields: [paidBy], references: [id])
+  deletedByUser     User?                     @relation("WfClaimDeletedBy", fields: [deletedBy], references: [id])
+  tasks             WorkflowClaimTask[]
+  uploadedFiles     UploadedFile[]
+  // Missing Journey Relations
+  appeals           ClaimAppeal[]
+  rejections        ClaimRejection[]
+
+  @@index([policyApplicationId], map: "idx_workflow_claim_policy")
+  @@index([statusId], map: "idx_workflow_claim_status")
+  @@index([paidBy], map: "idx_workflow_claim_paid_by")
+  @@index([deletedBy], map: "idx_workflow_claim_deleted_by")
+  @@map("workflow_claims")
+}
+
+model WorkflowPolicyTask {
+  id                  Int       @id @default(autoincrement())
+  policyApplicationId Int       @map("policy_application_id")
+  actorId             Int       @map("actor_id")
+  actionRequired      String    @map("action_required")
+  actionDetailsJson   String    @default("{}") @map("action_details_json")
+  priority            String    @default("MEDIUM")
+  dueDate             DateTime? @map("due_date")
+  statusId            Int?      @map("status_id")
+  completedBy         Int?      @map("completed_by")
+  completedAt         DateTime? @map("completed_at")
+  completionNotes     String?   @map("completion_notes")
+  deletedAt           DateTime? @map("deleted_at")
+  deletedBy           Int?      @map("deleted_by")
+  isDeleted           Int       @default(0) @map("is_deleted")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @default(now()) @map("updated_at")
+  createdBy           Int?      @map("created_by")
+  updatedBy           Int?      @map("updated_by")
+  version             Int       @default(1)
+
+  policyApplication WorkflowPolicyApplication @relation(fields: [policyApplicationId], references: [id], onDelete: Cascade)
+  actor             EnumTaskActor             @relation(fields: [actorId], references: [id])
+  status            EnumTaskStatus?           @relation(fields: [statusId], references: [id])
+  completedByUser   User?                     @relation("WfPolicyTaskCompletedBy", fields: [completedBy], references: [id])
+  deletedByUser     User?                     @relation("WfPolicyTaskDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([policyApplicationId], map: "idx_policy_tasks_app")
+  @@index([actorId, statusId], map: "idx_policy_tasks_actor")
+  @@index([dueDate], map: "idx_policy_tasks_due")
+  @@index([completedBy], map: "idx_policy_tasks_completed_by")
+  @@index([deletedBy], map: "idx_policy_tasks_deleted_by")
+  @@map("workflow_policy_tasks")
+}
+
+model WorkflowClaimTask {
+  id                Int       @id @default(autoincrement())
+  workflowClaimId   Int       @map("workflow_claim_id")
+  actorId           Int       @map("actor_id")
+  actionRequired    String    @map("action_required")
+  actionDetailsJson String    @default("{}") @map("action_details_json")
+  priority          String    @default("MEDIUM")
+  dueDate           DateTime? @map("due_date")
+  statusId          Int?      @map("status_id")
+  completedBy       Int?      @map("completed_by")
+  completedAt       DateTime? @map("completed_at")
+  completionNotes   String?   @map("completion_notes")
+  deletedAt         DateTime? @map("deleted_at")
+  deletedBy         Int?      @map("deleted_by")
+  isDeleted         Int       @default(0) @map("is_deleted")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @default(now()) @map("updated_at")
+  createdBy         Int?      @map("created_by")
+  updatedBy         Int?      @map("updated_by")
+  version           Int       @default(1)
+
+  workflowClaim   WorkflowClaim   @relation(fields: [workflowClaimId], references: [id], onDelete: Cascade)
+  actor           EnumTaskActor   @relation(fields: [actorId], references: [id])
+  status          EnumTaskStatus? @relation(fields: [statusId], references: [id])
+  completedByUser User?           @relation("WfClaimTaskCompletedBy", fields: [completedBy], references: [id])
+  deletedByUser   User?           @relation("WfClaimTaskDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([workflowClaimId], map: "idx_claim_tasks_claim")
+  @@index([actorId, statusId], map: "idx_claim_tasks_actor")
+  @@index([dueDate], map: "idx_claim_tasks_due")
+  @@index([completedBy], map: "idx_claim_tasks_completed_by")
+  @@index([deletedBy], map: "idx_claim_tasks_deleted_by")
+  @@map("workflow_claim_tasks")
+}
+
+// ============================================================================
+// SECTION 11: AUDIT, COMPLIANCE & SYSTEM
+// ============================================================================
+
+model UploadedFile {
+  id                  Int       @id @default(autoincrement())
+  fileName            String    @map("file_name")
+  filePath            String    @map("file_path")
+  mimeType            String    @map("mime_type")
+  fileSizeBytes       Int       @map("file_size_bytes")
+  fileHashSha256      String    @map("file_hash_sha256")
+  fileCategory        String    @map("file_category")
+  virusScanStatus     String    @default("PENDING") @map("virus_scan_status")
+  virusScanResult     String?   @map("virus_scan_result")
+  virusScannedAt      DateTime? @map("virus_scanned_at")
+  uploadedBy          Int       @map("uploaded_by")
+  parametricPolicyId  Int?      @map("parametric_policy_id")
+  cyberPolicyId       Int?      @map("cyber_policy_id")
+  parametricClaimId   Int?      @map("parametric_claim_id")
+  cyberClaimId        Int?      @map("cyber_claim_id")
+  workflowPolicyAppId Int?      @map("workflow_policy_app_id")
+  workflowClaimId     Int?      @map("workflow_claim_id")
+  isPublic            Int       @default(0) @map("is_public")
+  deletedAt           DateTime? @map("deleted_at")
+  deletedBy           Int?      @map("deleted_by")
+  isDeleted           Int       @default(0) @map("is_deleted")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @default(now()) @map("updated_at")
+
+  uploadedByUser    User                       @relation(fields: [uploadedBy], references: [id])
+  parametricPolicy  ParametricPolicy?          @relation(fields: [parametricPolicyId], references: [id])
+  cyberPolicy       CyberPolicy?               @relation(fields: [cyberPolicyId], references: [id])
+  parametricClaim   ParametricClaim?           @relation(fields: [parametricClaimId], references: [id])
+  cyberClaim        CyberClaim?                @relation(fields: [cyberClaimId], references: [id])
+  workflowPolicyApp WorkflowPolicyApplication? @relation(fields: [workflowPolicyAppId], references: [id])
+  workflowClaim     WorkflowClaim?             @relation(fields: [workflowClaimId], references: [id])
+
+  @@index([parametricPolicyId], map: "idx_files_param_policy")
+  @@index([cyberPolicyId], map: "idx_files_cyber_policy")
+  @@index([parametricClaimId], map: "idx_files_param_claim")
+  @@index([cyberClaimId], map: "idx_files_cyber_claim")
+  @@index([workflowPolicyAppId], map: "idx_files_workflow_app")
+  @@index([workflowClaimId], map: "idx_files_workflow_claim")
+  @@index([fileCategory], map: "idx_files_category")
+  @@index([uploadedBy], map: "idx_files_uploaded_by")
+  @@index([deletedBy], map: "idx_files_deleted_by")
+  @@map("uploaded_files")
+}
+
+model Notification {
+  id                 Int       @id @default(autoincrement())
+  recipientId        Int       @map("recipient_id")
+  notificationType   String    @map("notification_type")
+  title              String
+  titleAr            String?   @map("title_ar")
+  message            String
+  messageAr          String?   @map("message_ar")
+  isRead             Int       @default(0) @map("is_read")
+  readAt             DateTime? @map("read_at")
+  deliveryMethod     String    @default("IN_APP") @map("delivery_method")
+  emailSent          Int       @default(0) @map("email_sent")
+  emailSentAt        DateTime? @map("email_sent_at")
+  smsSent            Int       @default(0) @map("sms_sent")
+  smsSentAt          DateTime? @map("sms_sent_at")
+  parametricPolicyId Int?      @map("parametric_policy_id")
+  cyberPolicyId      Int?      @map("cyber_policy_id")
+  parametricClaimId  Int?      @map("parametric_claim_id")
+  cyberClaimId       Int?      @map("cyber_claim_id")
+  deletedAt          DateTime? @map("deleted_at")
+  deletedBy          Int?      @map("deleted_by")
+  isDeleted          Int       @default(0) @map("is_deleted")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @default(now()) @map("updated_at")
+
+  recipient        User              @relation("NotificationRecipient", fields: [recipientId], references: [id])
+  parametricPolicy ParametricPolicy? @relation(fields: [parametricPolicyId], references: [id])
+  cyberPolicy      CyberPolicy?      @relation(fields: [cyberPolicyId], references: [id])
+  parametricClaim  ParametricClaim?  @relation(fields: [parametricClaimId], references: [id])
+  cyberClaim       CyberClaim?       @relation(fields: [cyberClaimId], references: [id])
+  deletedByUser    User?             @relation("NotificationDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([recipientId, isRead], map: "idx_notif_recipient")
+  @@index([notificationType], map: "idx_notif_type")
+  @@index([parametricPolicyId], map: "idx_notif_param_policy")
+  @@index([cyberPolicyId], map: "idx_notif_cyber_policy")
+  @@index([parametricClaimId], map: "idx_notif_param_claim")
+  @@index([cyberClaimId], map: "idx_notif_cyber_claim")
+  @@index([deletedBy], map: "idx_notif_deleted_by")
+  @@map("notifications")
+}
+
+// ============================================================================
+// SECTION X: MISSING JOURNEY IMPLEMENTATIONS (Password Reset, Claims, Policies, Audit)
+// ============================================================================
+
+// =================== PASSWORD RESET & EMAIL VERIFICATION ===================
+// =================== USER SESSIONS ===================
+
+model UserSession {
+  id                    Int       @id @default(autoincrement())
+  userId                Int       @map("user_id")
+  sessionId             String    @unique @map("session_id")
+  ipAddress             String?   @map("ip_address")
+  userAgent             String?   @map("user_agent")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  lastActiveAt          DateTime? @map("last_active_at")
+  revokedAt             DateTime? @map("revoked_at")
+  expiresAt             DateTime? @map("expires_at")
+  refreshTokenHash      String?   @map("refresh_token_hash")
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_user_session_user")
+  @@map("user_sessions")
+}
+
+// =================== PASSWORD RESET & EMAIL VERIFICATION ===================
+model PasswordResetToken {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt], map: "idx_pwd_reset_expiry")
+  @@index([userId], map: "idx_pwd_reset_user")
+  @@map("password_reset_tokens")
+}
+
+model EmailVerificationToken {
+  id         Int       @id @default(autoincrement())
+  userId     Int       @map("user_id")
+  tokenHash  String    @unique @map("token_hash")
+  expiresAt  DateTime  @map("expires_at")
+  verifiedAt DateTime? @map("verified_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt], map: "idx_email_verify_expiry")
+  @@index([userId], map: "idx_email_verify_user")
+  @@map("email_verification_tokens")
+}
+
+// =================== IDEMPOTENCY & FINANCIAL SAFETY ===================
+
+model IdempotencyKey {
+  id             Int       @id @default(autoincrement())
+  key            String    @unique
+  endpoint       String?
+  path           String?
+  method         String?
+  userId         Int?      @map("user_id")
+  payloadHash    String?   @map("payload_hash")
+  response       String?   // JSON (legacy)
+  responseStatus Int?      @map("response_status")
+  responseBody   String?   @map("response_body") // JSON
+  usedAt         DateTime? @map("used_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  expiresAt      DateTime  @map("expires_at")
+
+  @@index([expiresAt], map: "idx_idempotency_expiry")
+  @@index([key], map: "idx_idempotency_key")
+  @@index([userId], map: "idx_idempotency_user")
+  @@map("idempotency_keys")
+}
+
+// =================== POLICY CANCELLATION & REFUNDS ===================
+
+model PolicyCancellation {
+  id                      Int       @id @default(autoincrement())
+  parametricPolicyId      Int       @map("parametric_policy_id")
+  customerId              Int       @map("customer_id")
+  cancellationReason      String    @map("cancellation_reason")
+  cancellationCategory    String    @map("cancellation_category") // 'CUSTOMER_REQUEST', 'NON_PAYMENT', 'FRAUD', 'ADMIN_CANCELLATION'
+  refundAmount            Decimal   @map("refund_amount")
+  refundStatus            String    @default("PENDING") @map("refund_status") // 'PENDING', 'PROCESSED', 'FAILED'
+  refundProcessedAt       DateTime? @map("refund_processed_at")
+  effectiveDate           DateTime  @map("effective_date")
+  cancellationInitiatedBy Int       @map("cancellation_initiated_by")
+  refundProcessedBy       Int?      @map("refund_processed_by")
+  remarks                 String?
+  deletedAt               DateTime? @map("deleted_at")
+  deletedBy               Int?      @map("deleted_by")
+  isDeleted               Int       @default(0) @map("is_deleted")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @default(now()) @map("updated_at")
+  version                 Int       @default(1)
+
+  parametricPolicy ParametricPolicy @relation(fields: [parametricPolicyId], references: [id])
+  customer         Customer         @relation(fields: [customerId], references: [id])
+  initiatedByUser  User             @relation("CancellationInitiatedBy", fields: [cancellationInitiatedBy], references: [id])
+  processedByUser  User?            @relation("CancellationProcessedBy", fields: [refundProcessedBy], references: [id])
+  deletedByUser    User?            @relation("CancellationDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([parametricPolicyId], map: "idx_cancellation_policy")
+  @@index([customerId], map: "idx_cancellation_customer")
+  @@index([refundStatus], map: "idx_cancellation_refund_status")
+  @@index([createdAt], map: "idx_cancellation_date")
+  @@map("policy_cancellations")
+}
+
+// =================== CLAIM APPEAL WORKFLOW ===================
+
+model ClaimAppeal {
+  id                    Int       @id @default(autoincrement())
+  paramClaimId          Int?      @map("param_claim_id")
+  workflowClaimId       Int?      @map("workflow_claim_id")
+  customerId            Int       @map("customer_id")
+  appealReason          String    @map("appeal_reason")
+  appealJustification   String?   @map("appeal_justification")
+  supportingDocumentUrl String?   @map("supporting_document_url")
+  appealStatus          String    @default("SUBMITTED") @map("appeal_status") // 'SUBMITTED', 'UNDER_REVIEW', 'APPROVED', 'REJECTED', 'WITHDRAWN'
+  reviewedBy            Int?      @map("reviewed_by")
+  reviewNotes           String?   @map("review_notes")
+  reviewedAt            DateTime? @map("reviewed_at")
+  appealDecision        String?   @map("appeal_decision") // 'APPROVED', 'REJECTED', 'PARTIALLY_APPROVED'
+  appealDecisionAmount  Decimal?  @map("appeal_decision_amount")
+  appealWithdrawnAt     DateTime? @map("appeal_withdrawn_at")
+  appealWithdrawnBy     Int?      @map("appeal_withdrawn_by")
+  deletedAt             DateTime? @map("deleted_at")
+  deletedBy             Int?      @map("deleted_by")
+  isDeleted             Int       @default(0) @map("is_deleted")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @default(now()) @map("updated_at")
+  version               Int       @default(1)
+
+  paramClaim      ParametricClaim? @relation(fields: [paramClaimId], references: [id])
+  workflowClaim   WorkflowClaim?   @relation(fields: [workflowClaimId], references: [id])
+  customer        Customer         @relation(fields: [customerId], references: [id])
+  reviewedByUser  User?            @relation("AppealReviewedBy", fields: [reviewedBy], references: [id])
+  withdrawnByUser User?            @relation("AppealWithdrawnBy", fields: [appealWithdrawnBy], references: [id])
+  deletedByUser   User?            @relation("AppealDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([paramClaimId], map: "idx_appeal_param_claim")
+  @@index([workflowClaimId], map: "idx_appeal_workflow_claim")
+  @@index([customerId], map: "idx_appeal_customer")
+  @@index([appealStatus], map: "idx_appeal_status")
+  @@index([createdAt], map: "idx_appeal_date")
+  @@map("claim_appeals")
+}
+
+// =================== CLAIM REJECTION TRACKING ===================
+
+model ClaimRejection {
+  id                 Int       @id @default(autoincrement())
+  paramClaimId       Int?      @map("param_claim_id")
+  workflowClaimId    Int?      @map("workflow_claim_id")
+  customerId         Int       @map("customer_id")
+  rejectionReason    String    @map("rejection_reason")
+  rejectionCategory  String    @map("rejection_category") // 'FRAUD', 'INSUFFICIENT_EVIDENCE', 'NOT_COVERED', 'POLICY_LIMIT_EXCEEDED', 'EXCLUSION_APPLIED'
+  rejectedBy         Int       @map("rejected_by")
+  rejectionNotes     String?   @map("rejection_notes")
+  rejectedAt         DateTime  @map("rejected_at")
+  appealDeadlineDate DateTime  @map("appeal_deadline_date")
+  deletedAt          DateTime? @map("deleted_at")
+  deletedBy          Int?      @map("deleted_by")
+  isDeleted          Int       @default(0) @map("is_deleted")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @default(now()) @map("updated_at")
+  version            Int       @default(1)
+
+  paramClaim     ParametricClaim? @relation(fields: [paramClaimId], references: [id])
+  workflowClaim  WorkflowClaim?   @relation(fields: [workflowClaimId], references: [id])
+  customer       Customer         @relation(fields: [customerId], references: [id])
+  rejectedByUser User             @relation(fields: [rejectedBy], references: [id])
+  deletedByUser  User?            @relation("RejectionDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([paramClaimId], map: "idx_rejection_param_claim")
+  @@index([workflowClaimId], map: "idx_rejection_workflow_claim")
+  @@index([customerId], map: "idx_rejection_customer")
+  @@index([rejectionCategory], map: "idx_rejection_category")
+  @@index([rejectedAt], map: "idx_rejection_date")
+  @@map("claim_rejections")
+}
+
+// =================== UNDERWRITING NOTES ===================
+
+model UnderwritingNote {
+  id                 Int       @id @default(autoincrement())
+  parametricPolicyId Int?      @map("parametric_policy_id")
+  workflowAppId      Int?      @map("workflow_app_id")
+  cyberApplicationId Int?      @map("cyber_application_id")
+  createdBy          Int       @map("created_by")
+  noteText           String
+  noteCategory       String    @map("note_category") // 'RISK_ASSESSMENT', 'COVERAGE_CONCERN', 'PREMIUM_ADJUSTMENT', 'FOLLOW_UP_REQUIRED', 'OTHER'
+  priority           String    @default("NORMAL") @map("priority") // 'LOW', 'NORMAL', 'HIGH', 'CRITICAL'
+  isInternal         Int       @default(1) @map("is_internal") // 1=internal only, 0=can share with customer
+  deletedAt          DateTime? @map("deleted_at")
+  deletedBy          Int?      @map("deleted_by")
+  isDeleted          Int       @default(0) @map("is_deleted")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @default(now()) @map("updated_at")
+
+  parametricPolicy ParametricPolicy?          @relation("ParametricPolicyUnderwritingNotes", fields: [parametricPolicyId], references: [id])
+  workflowApp      WorkflowPolicyApplication? @relation(fields: [workflowAppId], references: [id])
+  cyberApp         CyberApplication?          @relation(fields: [cyberApplicationId], references: [id])
+  createdByUser    User                       @relation("UnderwritingNoteCreatedBy", fields: [createdBy], references: [id])
+  deletedByUser    User?                      @relation("UnderwritingNoteDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([parametricPolicyId], map: "idx_note_param_policy")
+  @@index([workflowAppId], map: "idx_note_workflow_app")
+  @@index([cyberApplicationId], map: "idx_note_cyber_app")
+  @@index([createdBy], map: "idx_note_creator")
+  @@index([noteCategory], map: "idx_note_category")
+  @@map("underwriting_notes")
+}
+
+// =================== NOTIFICATION LOG & QUEUE ===================
+
+model NotificationLog {
+  id               Int       @id @default(autoincrement())
+  recipientId      Int       @map("recipient_id")
+  notificationType String    @map("notification_type") // 'PASSWORD_RESET', 'CLAIM_REJECTED', 'APPEAL_SUBMITTED', etc.
+  channel          String // 'EMAIL', 'SMS', 'IN_APP'
+  status           String    @default("PENDING") // 'PENDING', 'SENT', 'FAILED', 'RETRYING'
+  sendAttempts     Int       @default(0) @map("send_attempts")
+  lastAttemptAt    DateTime? @map("last_attempt_at")
+  sentAt           DateTime? @map("sent_at")
+  failureReason    String?   @map("failure_reason")
+  nextRetryAt      DateTime? @map("next_retry_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @default(now()) @map("updated_at")
+
+  recipient User @relation("NotificationLogRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+
+  @@index([recipientId, status], map: "idx_notif_log_recipient_status")
+  @@index([notificationType], map: "idx_notif_log_type")
+  @@index([status], map: "idx_notif_log_status")
+  @@index([nextRetryAt], map: "idx_notif_log_retry")
+  @@map("notification_logs")
+}
+
+// =================== ADMIN CONTACT SUBMISSIONS ===================
+
+model ContactSubmission {
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String
+  phoneNumber  String?   @map("phone_number")
+  subject      String
+  message      String
+  messageType  String    @map("message_type") // 'INQUIRY', 'COMPLAINT', 'FEEDBACK', 'SUPPORT_REQUEST'
+  status       String    @default("OPEN") @map("status") // 'OPEN', 'IN_PROGRESS', 'RESPONDED', 'CLOSED'
+  respondedBy  Int?      @map("responded_by")
+  responseNote String?   @map("response_note")
+  respondedAt  DateTime? @map("responded_at")
+  closedAt     DateTime? @map("closed_at")
+  deletedAt    DateTime? @map("deleted_at")
+  deletedBy    Int?      @map("deleted_by")
+  isDeleted    Int       @default(0) @map("is_deleted")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
+
+  respondedByUser User? @relation("ContactSubmissionRespondedBy", fields: [respondedBy], references: [id])
+  deletedByUser   User? @relation("ContactSubmissionDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([status], map: "idx_contact_status")
+  @@index([messageType], map: "idx_contact_type")
+  @@index([createdAt], map: "idx_contact_date")
+  @@map("contact_submissions")
+}
+
+// =================== IODA AUTO-CLAIM DRAFT SUGGESTION ===================
+
+model IODAClaimSuggestion {
+  id                     Int       @id @default(autoincrement())
+  iodalertId             String?   @unique @map("ioda_alert_id")
+  parametricPolicyId     Int       @map("parametric_policy_id")
+  customerId             Int       @map("customer_id")
+  outageDescription      String    @map("outage_description")
+  affectedProviders      String    @map("affected_providers") // JSON array
+  detectionTimestamp     DateTime  @map("detection_timestamp")
+  impactLevel            String    @map("impact_level") // 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'
+  estAffectedUsers       Int?      @map("est_affected_users")
+  estDowntimeMins        Int?      @map("est_downtime_mins")
+  suggestedClaimAmount   Decimal?  @map("suggested_claim_amount")
+  draftClaimStatus       String    @default("DRAFT") @map("draft_claim_status") // 'DRAFT', 'CLAIMED', 'IGNORED', 'FALSE_POSITIVE'
+  claimedAt              DateTime? @map("claimed_at")
+  claimedBy              Int?      @map("claimed_by")
+  ignoredAt              DateTime? @map("ignored_at")
+  ignoredBy              Int?      @map("ignored_by")
+  flaggedAsFalsePositive Int       @default(0) @map("flagged_as_false_positive")
+  falsePositiveBy        Int?      @map("false_positive_by")
+  deletedAt              DateTime? @map("deleted_at")
+  deletedBy              Int?      @map("deleted_by")
+  isDeleted              Int       @default(0) @map("is_deleted")
+  createdAt              DateTime  @default(now()) @map("created_at")
+  updatedAt              DateTime  @default(now()) @map("updated_at")
+
+  parametricPolicy    ParametricPolicy @relation(fields: [parametricPolicyId], references: [id])
+  customer            Customer         @relation(fields: [customerId], references: [id])
+  claimedByUser       User?            @relation("IODAClaimClaimedBy", fields: [claimedBy], references: [id])
+  ignoredByUser       User?            @relation("IODAClaimIgnoredBy", fields: [ignoredBy], references: [id])
+  falsePositiveByUser User?            @relation("IODAClaimFalsePositiveBy", fields: [falsePositiveBy], references: [id])
+  deletedByUser       User?            @relation("IODAClaimDeletedBy", fields: [deletedBy], references: [id])
+
+  @@index([parametricPolicyId], map: "idx_ioda_suggestion_policy")
+  @@index([customerId], map: "idx_ioda_suggestion_customer")
+  @@index([draftClaimStatus], map: "idx_ioda_suggestion_status")
+  @@index([detectionTimestamp], map: "idx_ioda_suggestion_timestamp")
+  @@map("ioda_claim_suggestions")
+}
+
+// ============================================================================
+// LEGACY MODELS (kept for backward compatibility with existing PolicyRecords)
+// ============================================================================
+
+model Policy {
+  id           String    @id @default(cuid())
+  categoryId   String    @map("category_id")
+  policyName   String    @map("policy_name")
+  sumAssurance Int       @map("sum_assurance")
+  premium      Int
+  tenure       Int
+  isDeleted    Int       @default(0) @map("is_deleted")
+  deletedAt    DateTime? @map("deleted_at")
+  deletedBy    Int?      @map("deleted_by")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  records PolicyRecord[]
+
+  @@map("policies")
+}
+
+model PolicyRecord {
+  id         String   @id @default(cuid())
+  customerId String   @map("customer_id")
+  policyId   String   @map("policy_id")
+  status     String   @default("Pending")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  policy     Policy   @relation(fields: [policyId], references: [id])
+
+  @@map("policy_records")
+}

@@ -1,0 +1,54 @@
+{
+  "title": "Parametric Claims Management",
+  "subtitle": "Review and manage auto-triggered cloud outage claims",
+  "table": {
+    "id": "ID",
+    "customer": "Customer",
+    "provider": "Provider",
+    "insuredHours": "Insured Hours",
+    "payoutTnd": "Payout (TND)",
+    "status": "Status",
+    "type": "Type",
+    "actions": "Actions",
+    "auto": "Auto",
+    "manual": "Manual",
+    "manage": "Manage",
+    "noClaims": "No parametric claims found",
+    "claimNumber": "Claim #"
+  },
+  "dialog": {
+    "title": "Claim Details",
+    "description": "Review and manage this parametric insurance claim",
+    "fields": {
+      "claimId": "Claim ID",
+      "status": "Status",
+      "customer": "Customer",
+      "provider": "Provider",
+      "outageDuration": "Outage Duration",
+      "mttr": "MTTR",
+      "insuredHours": "Insured Hours",
+      "payoutAmount": "Payout Amount",
+      "autoApproved": "Auto Approved",
+      "created": "Created",
+      "adminComment": "Admin Comment",
+      "payoutDate": "Payout Date",
+      "reference": "Reference",
+      "payoutCalculation": "Payout Calculation"
+    },
+    "adminCommentLabel": "Admin Comment",
+    "commentPlaceholder": "Add a comment for dispute or rejection...",
+    "dispute": "Dispute",
+    "approve": "Approve",
+    "pay": "Pay",
+    "reject": "Reject",
+    "claimPaid": "Claim has been paid",
+    "claimRejected": "Claim has been rejected",
+    "yes": "Yes",
+    "no": "No",
+    "hours": "hours"
+  },
+  "toast": {
+    "actionFailed": "Action failed",
+    "claimActionFailed": "Failed to {{action}} claim"
+  }
+}

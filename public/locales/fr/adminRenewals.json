@@ -1,0 +1,53 @@
+{
+  "title": "Renouvellements de Police",
+  "subtitle": "Examiner et traiter les devis de renouvellement de police",
+  "tabs": {
+    "parametric": "Renouvellements Paramétriques",
+    "cyber": "Renouvellements Cyber"
+  },
+  "table": {
+    "renewalNumber": "Renouvellement N°",
+    "policy": "Police",
+    "termMonths": "Durée (Mois)",
+    "previousPremium": "Prime Précédente",
+    "newPremium": "Nouvelle Prime",
+    "claimsInPeriod": "Sinistres sur la Période",
+    "status": "Statut",
+    "actions": "Actions"
+  },
+  "empty": {
+    "noParametric": "Aucun renouvellement paramétrique trouvé",
+    "noCyber": "Aucun renouvellement cyber trouvé",
+    "noCyberRenewals": "Aucun renouvellement cyber trouvé"
+  },
+  "action": {
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "accepted": "Accepté",
+    "declined": "Refusé"
+  },
+  "dialog": {
+    "declineTitle": "Refuser le Renouvellement",
+    "declineDescription": "Veuillez fournir une raison pour le refus de ce renouvellement",
+    "declineReason": "Raison du Refus",
+    "declineReasonPlaceholder": "Raison du refus du renouvellement",
+    "processing": "Traitement...",
+    "declineRenewal": "Refuser le Renouvellement"
+  },
+  "status": {
+    "PENDING": "En Attente",
+    "ACCEPTED": "Accepté",
+    "DECLINED": "Refusé"
+  },
+  "cyber": {
+    "comingSoonTitle": "Renouvellements Cyber",
+    "comingSoonDescription": "La gestion des renouvellements cyber arrive bientôt. Vous pourrez examiner et traiter les renouvellements pour les polices cyber.",
+    "contactSupport": "Contacter le support"
+  },
+  "toast": {
+    "accepted": "Renouvellement accepté",
+    "declined": "Renouvellement refusé",
+    "acceptFailed": "Échec de l'acceptation du renouvellement",
+    "declineFailed": "Échec du refus du renouvellement"
+  }
+}

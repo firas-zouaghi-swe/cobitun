@@ -1,0 +1,54 @@
+{
+  "title": "مراقب الانقطاعات",
+  "subtitle": "مراقبة في الوقت الفعلي لمزودي الخدمات السحابية المؤمنين",
+  "activeOutages": "انقطاعات نشطة",
+  "overMTTR": "فوق MTTR",
+  "providersMonitored": "مزودون تحت المراقبة",
+  "tab": {
+    "liveSignals": "إشارات مباشرة",
+    "alertsTable": "جدول التنبيهات",
+    "outageHistory": "سجل الانقطاعات",
+    "live": "مباشر",
+    "outageCount": "Customeroutagemonitor:Tab Outagecount"
+  },
+  "signals": {
+    "title": "مزودوك المؤمنون — إشارات مباشرة",
+    "subtitle": "إشارات الاتصال في الوقت الفعلي للمزودين المغطين بسياساتك البارامترية",
+    "activeOutages": "انقطاعات نشطة",
+    "chartSubtitle": "إشارات الاتصال في الوقت الفعلي من IODA",
+    "chartTitle": "مراقب الإشارة",
+    "overMTTR": "فوق MTTR",
+    "providersMonitored": "مزودون تحت المراقبة"
+  },
+  "alerts": {
+    "title": "مزودوك المؤمنون — تنبيهات الانقطاع",
+    "subtitle": "تنبيهات انقطاع في الوقت الفعلي لمزودي الخدمات السحابية المغطين بسياساتك البارامترية",
+    "tableSubtitle": "تنبيهات IODA الحديثة للمزودين تحت المراقبة",
+    "tableTitle": "تفاصيل التنبيهات"
+  },
+  "outages": {
+    "noRecent": "لم يتم اكتشاف انقطاعات حديثة لمزوديك المؤمنين",
+    "goodNews": "هذا خبر سار! خدماتك السحابية تبدو مستقرة.",
+    "recentOutages": "الانقطاعات الحديثة",
+    "tableProvider": "المزود",
+    "tableStart": "البداية",
+    "tableEnd": "النهاية",
+    "tableDuration": "المدة",
+    "tableSeverity": "الشدة",
+    "tableStatus": "الحالة",
+    "mttrBadge": "> MTTR",
+    "duration": "المدة",
+    "end": "وقت الانتهاء",
+    "noOutages": "لم يتم اكتشاف انقطاعات",
+    "noOutagesDesc": "جميع المزودين تحت المراقبة يعملون بشكل طبيعي",
+    "pending": "قيد الانتظار",
+    "processed": "مُعالج",
+    "provider": "المزود",
+    "severity": "الشدة",
+    "start": "وقت البداية",
+    "status": "الحالة",
+    "asnMttr": "Asn Mttr",
+    "overMTTR": "Exceeds MTTR"
+  },
+  "loading": "Loading outage data…"
+}

@@ -1,0 +1,88 @@
+{
+  "title": "Reference Data",
+  "subtitle": "Manage versioned actuarial reference tables",
+  "newEntry": "New Entry",
+  "tabs": {
+    "sector": "Sectors",
+    "businessModel": "Business Models",
+    "turnoverBand": "Turnover Bands",
+    "resilienceProfile": "Resilience Profiles",
+    "slaTier": "SLA Tiers",
+    "securityPosture": "Security Postures"
+  },
+  "typeLabels": {
+    "sector": "Sector",
+    "businessModel": "Business Model",
+    "turnoverBand": "Turnover Band",
+    "resilienceProfile": "Resilience Profile",
+    "slaTier": "SLA Tier",
+    "securityPosture": "Security Posture"
+  },
+  "version": {
+    "history": "Version History",
+    "current": "Current",
+    "newVersion": "New Version"
+  },
+  "table": {
+    "version": "Version",
+    "validFrom": "Valid From",
+    "validTo": "Valid To",
+    "current": "Current",
+    "parameters": "Parameters"
+  },
+  "params": {
+    "rf": "RF",
+    "rm": "RM",
+    "bpf": "BPF",
+    "mttr": "MTTR",
+    "threshold": "Threshold",
+    "min": "Min",
+    "max": "Max"
+  },
+  "empty": {
+    "noEntries": "No {{type}} entries found"
+  },
+  "dialog": {
+    "newVersionTitle": "New Version — {{type}}",
+    "createTitle": "Create {{type}}",
+    "newVersionDescription": "Creating a new version for {{code}}. The current version will be closed.",
+    "createDescription": "Add a new {{type}} entry",
+    "code": "Code",
+    "codePlaceholder": "e.g. TECH",
+    "name": "Name",
+    "namePlaceholder": "e.g. Technology",
+    "description": "Description",
+    "descriptionPlaceholder": "Optional description",
+    "riskFactor": "Risk Factor",
+    "riskFactorPlaceholder": "e.g. 1.2500",
+    "riskFactorHint": "Multiplier applied during premium calculation",
+    "minTurnover": "Min Turnover (TND)",
+    "maxTurnover": "Max Turnover (TND)",
+    "basePremiumFactor": "Base Premium Factor",
+    "basePremiumFactorPlaceholder": "e.g. 1.0000",
+    "mttrHours": "MTTR (Hours)",
+    "mttrHoursPlaceholder": "e.g. 4.0",
+    "thresholdHours": "Threshold (Hours)",
+    "thresholdHoursPlaceholder": "e.g. 2.0",
+    "riskMultiplier": "Risk Multiplier",
+    "riskMultiplierPlaceholder": "e.g. 1.5000",
+    "riskMultiplierHint": "Multiplier for cyber premium based on security posture",
+    "createEntry": "Create Entry",
+    "createNewVersion": "Create New Version",
+    "saving": "Saving..."
+  },
+  "toast": {
+    "versionCreated": "New version created successfully",
+    "entryCreated": "Entry created successfully",
+    "saveFailed": "Failed to save",
+    "required": "Code and name are required",
+    "requiredFields": "Please fill in all required fields"
+  },
+  "versionTable": {
+    "current": "Current",
+    "parameters": "Parameters",
+    "validFrom": "Valid From",
+    "validTo": "Valid To",
+    "version": "Version"
+  }
+}

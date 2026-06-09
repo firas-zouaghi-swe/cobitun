@@ -1,0 +1,67 @@
+{
+  "title": "Endorsements",
+  "subtitle": "Manage policy endorsements and mid-term adjustments",
+  "createEndorsement": "Create Endorsement",
+  "tabs": {
+    "parametric": "Parametric Endorsements",
+    "cyber": "Cyber Endorsements"
+  },
+  "table": {
+    "endorsementNumber": "Endorsement #",
+    "policy": "Policy",
+    "type": "Type",
+    "description": "Description",
+    "premiumAdj": "Premium Adj.",
+    "effectiveDate": "Effective Date",
+    "status": "Status"
+  },
+  "empty": {
+    "noParametric": "No parametric endorsements found",
+    "noCyber": "No cyber endorsements found",
+    "noCyberEndorsements": "No cyber endorsements found"
+  },
+  "dialog": {
+    "createTitle": "Create Parametric Endorsement",
+    "createDescription": "Add a new endorsement to a parametric policy",
+    "policyId": "Policy ID",
+    "policyIdPlaceholder": "e.g. 1",
+    "endorsementNumber": "Endorsement #",
+    "endorsementNumberPlaceholder": "e.g. END-2025-001",
+    "type": "Type",
+    "selectType": "Select type",
+    "premiumAdjustment": "Premium Adjustment (TND)",
+    "effectiveDate": "Effective Date",
+    "changeDescription": "Change Description",
+    "changeDescriptionPlaceholder": "Describe the endorsement change",
+    "previousValues": "Previous Values (JSON)",
+    "newValues": "New Values (JSON)",
+    "creating": "Creating...",
+    "jsonPlaceholder": "Enter JSON configuration"
+  },
+  "types": {
+    "COVERAGE_CHANGE": "Coverage Change",
+    "PREMIUM_ADJUSTMENT": "Premium Adjustment",
+    "POLICYHOLDER_CHANGE": "Policyholder Change",
+    "ENDORSEMENT_ADD": "Add Endorsement",
+    "ENDORSEMENT_REMOVE": "Remove Endorsement",
+    "REINSTATEMENT": "Reinstatement",
+    "CANCELLATION": "Cancellation"
+  },
+  "status": {
+    "PENDING": "Pending",
+    "APPROVED": "Approved",
+    "REJECTED": "Rejected",
+    "PROCESSED": "Processed"
+  },
+  "cyber": {
+    "comingSoonTitle": "Cyber Endorsements",
+    "comingSoonDescription": "Cyber endorsement management is coming soon. You will be able to create and manage endorsements for cyber policies.",
+    "contactSupport": "Contact Support"
+  },
+  "toast": {
+    "created": "Endorsement created successfully",
+    "createFailed": "Failed to create endorsement",
+    "required": "Policy ID, endorsement number, type, description, and effective date are required",
+    "requiredFields": "Please fill in all required fields"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "hero": {
+    "title": "Get In Touch",
+    "subtitle": "Have questions? We are here to help. Reach out to us and we will get back to you as soon as possible.",
+    "description": "Get in touch with our team for any questions about cloud outage insurance",
+    "titleHighlight": "Get in Touch"
+  },
+  "form": {
+    "title": "Send us a Message",
+    "nameLabel": "Your Name",
+    "namePlaceholder": "Enter your name",
+    "emailLabel": "Your Email",
+    "messageLabel": "Message",
+    "messagePlaceholder": "How can we help you?",
+    "sendButton": "Send Message",
+    "sending": "Sending...",
+    "emailPlaceholder": "Enter your email address",
+    "send": "Send Message"
+  },
+  "info": {
+    "title": "Contact Information",
+    "emailTitle": "Email",
+    "phoneTitle": "Phone",
+    "addressTitle": "Address",
+    "supportTitle": "Technical Support",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "softwareEngineer": "Software Engineer",
+    "technicalSupport": "Technical Support",
+    "emailValue": "info@cyber-dbi.net",
+    "phone1": "+216 22 274 079",
+    "phone2": "+216 56 145 277",
+    "addressLine1": "Rue 7145, El Manar II",
+    "addressLine2": "Prox. Polyclinique El Manar & Colisée Soula",
+    "addressLine3": "2092 Tunis, Tunisia",
+    "supportName": "Firas Zouaghi",
+    "website": "cyber-dbi.net"
+  },
+  "toast": {
+    "messageSent": "Message sent successfully!",
+    "sendFailed": "Failed to send message"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "title": "إدارة المطالبات المعلمية",
+  "subtitle": "مراجعة وإدارة مطالبات انقطاع الخدمة السحابية ذات التفعيل التلقائي",
+  "table": {
+    "id": "المعرّف",
+    "customer": "العميل",
+    "provider": "المزود",
+    "insuredHours": "الساعات المؤمنة",
+    "payoutTnd": "الدفع (TND)",
+    "status": "الحالة",
+    "type": "النوع",
+    "actions": "الإجراءات",
+    "auto": "تلقائي",
+    "manual": "يدوي",
+    "manage": "إدارة",
+    "noClaims": "لم يتم العثور على مطالبات معلمية",
+    "claimNumber": "مطالبة رقم"
+  },
+  "dialog": {
+    "title": "تفاصيل المطالبة",
+    "description": "مراجعة وإدارة مطالبة التأمين المعلمي هذه",
+    "fields": {
+      "claimId": "معرّف المطالبة",
+      "status": "الحالة",
+      "customer": "العميل",
+      "provider": "المزود",
+      "outageDuration": "مدة الانقطاع",
+      "mttr": "MTTR",
+      "insuredHours": "الساعات المؤمنة",
+      "payoutAmount": "مبلغ الدفع",
+      "autoApproved": "موافقة تلقائية",
+      "created": "تاريخ الإنشاء",
+      "adminComment": "تعليق المسؤول",
+      "payoutDate": "تاريخ الدفع",
+      "reference": "المرجع",
+      "payoutCalculation": "حساب التعويض"
+    },
+    "adminCommentLabel": "تعليق المسؤول",
+    "commentPlaceholder": "أضف تعليقاً للنزاع أو الرفض...",
+    "dispute": "نزاع",
+    "approve": "موافقة",
+    "pay": "دفع",
+    "reject": "رفض",
+    "claimPaid": "تم دفع المطالبة",
+    "claimRejected": "تم رفض المطالبة",
+    "yes": "نعم",
+    "no": "لا",
+    "hours": "ساعات"
+  },
+  "toast": {
+    "actionFailed": "فشل تنفيذ الإجراء",
+    "claimActionFailed": "فشل {{action}} المطالبة"
+  }
+}

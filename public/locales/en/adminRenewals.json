@@ -1,0 +1,53 @@
+{
+  "title": "Policy Renewals",
+  "subtitle": "Review and process policy renewal quotes",
+  "tabs": {
+    "parametric": "Parametric Renewals",
+    "cyber": "Cyber Renewals"
+  },
+  "table": {
+    "renewalNumber": "Renewal #",
+    "policy": "Policy",
+    "termMonths": "Term (Months)",
+    "previousPremium": "Previous Premium",
+    "newPremium": "New Premium",
+    "claimsInPeriod": "Claims in Period",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "empty": {
+    "noParametric": "No parametric renewals found",
+    "noCyber": "No cyber renewals found",
+    "noCyberRenewals": "No cyber renewals found"
+  },
+  "action": {
+    "accept": "Accept",
+    "decline": "Decline",
+    "accepted": "Accepted",
+    "declined": "Declined"
+  },
+  "dialog": {
+    "declineTitle": "Decline Renewal",
+    "declineDescription": "Please provide a reason for declining this renewal",
+    "declineReason": "Decline Reason",
+    "declineReasonPlaceholder": "Reason for declining the renewal",
+    "processing": "Processing...",
+    "declineRenewal": "Decline Renewal"
+  },
+  "status": {
+    "PENDING": "Pending",
+    "ACCEPTED": "Accepted",
+    "DECLINED": "Declined"
+  },
+  "cyber": {
+    "comingSoonTitle": "Cyber Renewals",
+    "comingSoonDescription": "Cyber policy renewal management is coming soon. You will be able to review and process renewals for cyber policies.",
+    "contactSupport": "Contact Support"
+  },
+  "toast": {
+    "accepted": "Renewal accepted",
+    "declined": "Renewal declined",
+    "acceptFailed": "Failed to accept renewal",
+    "declineFailed": "Failed to decline renewal"
+  }
+}

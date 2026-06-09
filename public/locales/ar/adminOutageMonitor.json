@@ -1,0 +1,66 @@
+{
+  "title": "مراقبة انقطاعات الخدمة السحابية",
+  "subtitle": "مراقبة في الوقت الفعلي عبر IODA + Georgia Tech",
+  "runIodaCheck": "تشغيل فحص IODA",
+  "runningIodaCheck": "جاري تشغيل فحص IODA...",
+  "stats": {
+    "activeProviders": "مزودون نشطون",
+    "activeOutages": "انقطاعات نشطة",
+    "triggers24h": "المحفزات (24 ساعة)",
+    "totalPayoutsTnd": "إجمالي المدفوعات (TND)"
+  },
+  "tabs": {
+    "liveSignals": "إشارات مباشرة",
+    "alertsTable": "جدول التنبيهات",
+    "outageEvents": "أحداث الانقطاع",
+    "triggers": "المحفزات",
+    "claims": "المطالبات"
+  },
+  "events": {
+    "title": "أحداث الانقطاع غير المعالجة",
+    "table": {
+      "provider": "المزود",
+      "start": "البداية",
+      "durationH": "المدة (س)",
+      "source": "المصدر",
+      "score": "النقاط",
+      "statusCol": "الحالة"
+    },
+    "processed": "معالج",
+    "unprocessed": "غير معالج",
+    "empty": "لا توجد أحداث انقطاع غير معالجة"
+  },
+  "triggersTab": {
+    "title": "أحداث المحفزات الأخيرة",
+    "table": {
+      "provider": "المزود",
+      "slaTier": "مستوى SLA",
+      "mttrH": "MTTR (س)",
+      "insuredHours": "الساعات المؤمنة",
+      "claimsCreated": "المطالبات المنشأة",
+      "date": "التاريخ"
+    },
+    "yes": "نعم",
+    "no": "لا",
+    "empty": "لا توجد محفزات حديثة"
+  },
+  "claimsTab": {
+    "title": "المطالبات الأخيرة",
+    "table": {
+      "customer": "العميل",
+      "provider": "المزود",
+      "outageH": "الانقطاع (س)",
+      "insuredH": "مؤمن (س)",
+      "payoutTnd": "الدفع (TND)",
+      "statusCol": "الحالة",
+      "type": "النوع"
+    },
+    "auto": "تلقائي",
+    "manual": "يدوي",
+    "empty": "لا توجد مطالبات حديثة"
+  },
+  "toast": {
+    "iodaCheckCompleted": "اكتمل فحص IODA: {{triggers}} محفز/محفزات، {{claims}} مطالبة/مطالبات منشأة",
+    "iodaCheckFailed": "فشل تشغيل فحص IODA"
+  }
+}

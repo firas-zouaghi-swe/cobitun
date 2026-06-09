@@ -1,0 +1,39 @@
+{
+  "title": "Apply for New Policy",
+  "subtitle": "Upload your cloud provider contract to begin the underwriting process",
+  "backToWorkflow": "Back to Workflow",
+  "step1": {
+    "title": "Step 1: Upload Provider Contract",
+    "requirement": "Required: PDF format, max 10MB",
+    "label": "Step 1: Upload Provider Contract"
+  },
+  "upload": {
+    "dragDrop": "Drag & drop your PDF here",
+    "orBrowse": "or click to browse files",
+    "remove": "Remove"
+  },
+  "optional": {
+    "title": "Optional Details",
+    "businessSector": "Business Sector",
+    "selectSector": "Select sector",
+    "annualTurnover": "Annual Turnover (TND)",
+    "turnoverPlaceholder": "e.g. 500000",
+    "cloudProvider": "Cloud Provider",
+    "selectProvider": "Select provider"
+  },
+  "submit": {
+    "creating": "Creating Application...",
+    "submitApplication": "Submit Application"
+  },
+  "validation": {
+    "uploadContract": "Please upload a provider contract PDF",
+    "onlyPdf": "Only PDF files are accepted",
+    "maxSize": "File size must be less than 10MB",
+    "customerNotFound": "Customer profile not found. Please log in again."
+  },
+  "toast": {
+    "createFailed": "Failed to create application",
+    "createSuccess": "Policy application created successfully!",
+    "somethingWentWrong": "Something went wrong. Please try again."
+  }
+}

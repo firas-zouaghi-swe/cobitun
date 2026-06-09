@@ -1,0 +1,84 @@
+{
+  "title": "المطالبات السيبرانية",
+  "subtitle": "التحقيق وتسوية مطالبات التأمين السيبراني",
+  "stats": {
+    "totalClaims": "إجمالي المطالبات",
+    "estLoss": "الخسارة المقدرة",
+    "approved": "مقبولة",
+    "paid": "مدفوعة"
+  },
+  "filter": {
+    "status": "الحالة:",
+    "allStatuses": "جميع الحالات",
+    "filterByStatus": "تصفية حسب الحالة",
+    "claimCount": "{{count}} مطالبة/مطالبات"
+  },
+  "table": {
+    "claimId": "معرّف المطالبة",
+    "policyholder": "حامل الوثيقة",
+    "incidentDate": "تاريخ الحادث",
+    "incidentType": "نوع الحادث",
+    "estimatedLoss": "الخسارة المقدرة",
+    "status": "الحالة",
+    "approvedAmount": "المبلغ المعتمد",
+    "actions": "الإجراءات",
+    "view": "عرض"
+  },
+  "empty": {
+    "noClaims": "لم يتم العثور على مطالبات",
+    "tryChangingFilter": "حاول تغيير عامل التصفية لعرض المزيد من النتائج",
+    "newClaims": "ستظهر المطالبات الجديدة هنا للمراجعة"
+  },
+  "incidentType": {
+    "BI": "انقطاع الأعمال",
+    "DR": "استعادة البيانات",
+    "CE": "الابتزاز السيبراني",
+    "SR": "الاستجابة الأمنية",
+    "CM": "إدارة الأزمات",
+    "PL": "مسؤولية الخصوصية",
+    "RD": "الدفاع التنظيمي",
+    "ML": "المسؤولية الإعلامية",
+    "SE": "الهندسة الاجتماعية",
+    "OTHER": "أخرى"
+  },
+  "dialog": {
+    "title": "تفاصيل المطالبة",
+    "claimDescription": "مطالبة {{id}} — {{name}}",
+    "fields": {
+      "claimId": "معرّف المطالبة",
+      "status": "الحالة",
+      "policyholder": "حامل الوثيقة",
+      "product": "المنتج",
+      "incidentDate": "تاريخ الحادث",
+      "reportedDate": "تاريخ الإبلاغ",
+      "incidentType": "نوع الحادث",
+      "policyLimit": "حد الوثيقة",
+      "estimatedLoss": "الخسارة المقدرة",
+      "deductibleSIR": "المتحمل / SIR",
+      "approvedAmount": "المبلغ المعتمد",
+      "paidDate": "تاريخ الدفع"
+    },
+    "incidentDescription": "وصف الحادث",
+    "forensicReport": "التقرير الجنائي الرقمي",
+    "existingAdjusterComment": "تعليق الخبير الحالي",
+    "claimActions": "إجراءات المطالبة",
+    "updateStatus": "تحديث الحالة",
+    "selectNewStatus": "اختر الحالة الجديدة...",
+    "approvedAmountTnd": "المبلغ المعتمد (TND)",
+    "estimatedLossLabel": "الخسارة المقدرة: {{amount}} TND",
+    "adjusterComment": "تعليق الخبير",
+    "adjusterPlaceholder": "أضف ملاحظات التحقيق أو النتائج أو المبررات...",
+    "updateTo": "تحديث إلى {{status}}",
+    "markAsPaid": "تحديد كمدفوعة",
+    "denyClaim": "رفض المطالبة",
+    "claimPaid": "تم دفع المطالبة",
+    "claimDenied": "تم رفض المطالبة",
+    "on": "في"
+  },
+  "toast": {
+    "markPaidSuccess": "تم تحديد المطالبة كمدفوعة",
+    "updateSuccess": "تم تحديث المطالبة بنجاح",
+    "updateFailed": "فشل تحديث المطالبة",
+    "actionFailed": "فشل تنفيذ الإجراء"
+  }
+}

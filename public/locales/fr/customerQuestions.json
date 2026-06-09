@@ -1,0 +1,24 @@
+{
+  "title": "Poser une question",
+  "form": {
+    "title": "Soumettez votre question",
+    "yourQuestion": "Votre question",
+    "placeholder": "Tapez votre question ici...",
+    "submitQuestion": "Soumettre la question",
+    "submitting": "Soumission en cours..."
+  },
+  "history": {
+    "title": "Vos questions",
+    "empty": "Aucune question pour le moment",
+    "adminResponse": "Réponse de l'administrateur :",
+    "notAnsweredYet": "Pas encore répondu",
+    "emptyDesc": "You have not submitted any questions yet."
+  },
+  "toast": {
+    "enterQuestion": "Veuillez saisir votre question",
+    "submitFailed": "Échec de la soumission de la question",
+    "submitSuccess": "Question soumise avec succès",
+    "somethingWentWrong": "Une erreur est survenue"
+  },
+  "loading": "Loading questions…"
+}

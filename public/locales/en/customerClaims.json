@@ -1,0 +1,93 @@
+{
+  "title": {
+    "backToWorkflow": "Back to Workflow",
+    "value": "Claim"
+  },
+  "subtitle": "File and manage your insurance claims",
+  "fileNewClaim": "File New Claim",
+  "newClaim": {
+    "title": "File a New Claim",
+    "subtitle": "Select an active policy and describe your loss",
+    "selectPolicy": "Select Policy *",
+    "selectPolicyPlaceholder": "Choose a completed policy",
+    "lossDescription": "Loss Description",
+    "lossDescPlaceholder": "Describe the loss event...",
+    "createButton": "Create Claim",
+    "creating": "Creating Claim...",
+    "choosePolicy": "Choose Policy",
+    "create": "Create Claim",
+    "lossDescriptionPlaceholder": "Describe the loss you experienced...",
+    "success": "Claim created successfully"
+  },
+  "fillDeclaration": {
+    "title": "Fill Declaration of Loss",
+    "downloadPdf": "Download Declaration of Loss PDF",
+    "lossAmount": "Loss Amount (TND) *",
+    "lossStart": "Loss Start Date *",
+    "lossEnd": "Loss End Date *",
+    "uploadFilled": "Upload Filled Declaration (Optional)",
+    "uploadHint": "Click to upload filled declaration PDF (max 10MB)",
+    "submitButton": "Submit Declaration",
+    "submitting": "Submitting...",
+    "lossEndDate": "Loss End Date",
+    "lossStartDate": "Loss Start Date",
+    "maxSize": "Max file size: 10MB",
+    "pdfOnly": "PDF files only",
+    "submit": "Submit Declaration",
+    "uploadLabel": "Upload Declaration",
+    "claimId": "Claim Id"
+  },
+  "review": {
+    "title": "Claim Under Review",
+    "subtitle": "Your declaration is being reviewed by our team.",
+    "lossAmount": "Loss Amount",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "success": "Declaration submitted successfully"
+  },
+  "completed": {
+    "title": "Claim Approved & Paid",
+    "payoutAmount": "Payout Amount",
+    "transactionId": "Transaction ID",
+    "payoutDate": "Payout Date",
+    "lossPeriod": "Loss Period",
+    "downloadDeclaration": "Download Declaration",
+    "claimedAmount": "Claimed Amount"
+  },
+  "empty": {
+    "title": "No Claims Yet",
+    "hasPolicy": "File a claim if you have experienced a covered loss event.",
+    "noPolicy": "You need an active (completed) policy before filing a claim.",
+    "subtitleNoPolicy": "You need an active policy to file a claim",
+    "subtitleWithPolicy": "File a new claim for one of your active policies"
+  },
+  "action": {
+    "backToList": "Back to List",
+    "fillDeclaration": "Fill Declaration",
+    "underReview": "Under Review",
+    "viewPayout": "View Payout"
+  },
+  "actions": {
+    "removeUploadedPdf": "Remove uploaded PDF"
+  },
+  "error": {
+    "createFailed": "Failed to create claim",
+    "downloadFailed": "Failed to download document",
+    "fillRequired": "Please fill in all required fields",
+    "loadFailed": "Failed to load claims",
+    "selectPolicy": "Select Policy *",
+    "submitFailed": "Failed to submit declaration"
+  },
+  "status": {
+    "created": "Created",
+    "loss": "Loss Reported",
+    "open": "Open",
+    "submitted": "Submitted",
+    "completed": "Completed"
+  },
+  "confirmSubmit": {
+    "title": "Confirm Claim Submission",
+    "description": "By submitting this claim, you are making a legal declaration that the loss information provided is truthful and accurate. Filing a fraudulent claim is a criminal offense. This submission cannot be undone."
+  },
+  "loading": "Loading claims..."
+}

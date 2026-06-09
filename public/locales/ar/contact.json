@@ -1,0 +1,44 @@
+{
+  "hero": {
+    "title": "تواصل معنا",
+    "subtitle": "هل لديك أسئلة؟ نحن هنا للمساعدة. تواصل معنا وسنرد عليك في أقرب وقت ممكن.",
+    "description": "تواصل مع فريقنا لأي أسئلة حول تأمين انقطاع الخدمات السحابية",
+    "titleHighlight": "تواصل معنا"
+  },
+  "form": {
+    "title": "أرسل لنا رسالة",
+    "nameLabel": "اسمك",
+    "namePlaceholder": "أدخل اسمك",
+    "emailLabel": "بريدك الإلكتروني",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "كيف يمكننا مساعدتك؟",
+    "sendButton": "إرسال الرسالة",
+    "sending": "جارٍ الإرسال...",
+    "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
+    "send": "إرسال الرسالة"
+  },
+  "info": {
+    "title": "معلومات الاتصال",
+    "emailTitle": "البريد الإلكتروني",
+    "phoneTitle": "الهاتف",
+    "addressTitle": "العنوان",
+    "supportTitle": "الدعم الفني",
+    "address": "العنوان",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "softwareEngineer": "مهندس برمجيات",
+    "technicalSupport": "الدعم الفني",
+    "emailValue": "info@cyber-dbi.net",
+    "phone1": "+216 22 274 079",
+    "phone2": "+216 56 145 277",
+    "addressLine1": "Rue 7145, El Manar II",
+    "addressLine2": "Prox. Polyclinique El Manar & Colisée Soula",
+    "addressLine3": "2092 Tunis, Tunisia",
+    "supportName": "Firas Zouaghi",
+    "website": "cyber-dbi.net"
+  },
+  "toast": {
+    "messageSent": "تم إرسال الرسالة بنجاح!",
+    "sendFailed": "فشل إرسال الرسالة"
+  }
+}

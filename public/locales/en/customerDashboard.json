@@ -1,0 +1,48 @@
+{
+  "title": "Customer Dashboard",
+  "welcome": "Welcome back, {{name}}!",
+  "traditional": {
+    "title": "Traditional Insurance",
+    "availablePolicies": "Available Policies",
+    "appliedPolicies": "Applied Policies",
+    "categories": "Categories",
+    "myQuestions": "My Questions",
+    "approved": "Approved",
+    "pending": "Pending",
+    "disapproved": "Disapproved"
+  },
+  "parametric": {
+    "sectionTitle": "Cloud Outage Insurance",
+    "cloudCoverage": "Cloud Coverage",
+    "parametricClaims": "Parametric Claims",
+    "outageMonitor": "Outage Monitor",
+    "lastTrigger": "Last Trigger",
+    "viewPolicies": "View Policies",
+    "viewHistory": "View History",
+    "monitor": "Monitor",
+    "details": "Details",
+    "payout": "Payout: {{amount}} TND",
+    "viewClaims": "View Claims",
+    "insuredHours": "Insured Hours"
+  },
+  "payouts": {
+    "totalReceived": "Total Payouts Received",
+    "claimsPaid": "{{count}} claims paid"
+  },
+  "lastTrigger": {
+    "insuredHours": "{{hours}}h insured — {{provider}}",
+    "payout": "Payout: {{amount}} TND",
+    "viewClaims": "View Claims"
+  },
+  "onboarding": {
+    "title": "Get Cloud Outage Insurance",
+    "desc": "Automatic payouts when your cloud provider goes down. No forms. No waiting. Takes 2 minutes to set up.",
+    "step1": "Choose Provider",
+    "step2": "Set Coverage",
+    "step3": "Get Approved",
+    "step4": "Auto-Pay",
+    "applyNow": "Apply Now",
+    "description": "Complete your insurance setup to get protected against cloud outages"
+  },
+  "loading": "Loading dashboard…"
+}

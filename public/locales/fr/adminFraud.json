@@ -1,0 +1,122 @@
+{
+  "title": "Détection de Comptes Frauduleux IA",
+  "loading": "Chargement du tableau de bord de détection de fraude...",
+  "scanning": "Analyse en cours...",
+  "scanAll": "Analyser tous les utilisateurs",
+  "scan": {
+    "success": "Analyse terminée avec succès",
+    "error": "Échec de l'analyse des utilisateurs. Veuillez réessayer.",
+    "userSuccess": "Utilisateur analysé avec succès",
+    "userError": "Échec de l'analyse de l'utilisateur. Veuillez réessayer."
+  },
+  "delete": {
+    "success": "Compte utilisateur supprimé avec succès",
+    "error": "Échec de la suppression de l'utilisateur. Veuillez réessayer.",
+    "title": "Supprimer le compte utilisateur",
+    "description": "Êtes-vous sûr de vouloir supprimer le compte de {{username}} ? Cette action est irréversible.",
+    "reason": "Raison de la suppression (minimum 10 caractères)",
+    "reasonPlaceholder": "Entrez la raison de la suppression de ce compte...",
+    "warning": "Cette action est irréversible et supprimera définitivement le compte utilisateur et toutes les données associées.",
+    "cancel": "Annuler",
+    "deleting": "Suppression en cours...",
+    "confirm": "Supprimer le compte"
+  },
+  "action": {
+    "success": "Action {{action}} terminée avec succès",
+    "error": "Échec de l'exécution de l'action. Veuillez réessayer."
+  },
+  "actions": {
+    "delete": "Supprimer",
+    "lock": "Bloquer",
+    "whitelist": "Liste blanche",
+    "confirmFake": "Confirmer comme frauduleux",
+    "confirmLegit": "Confirmer comme légitime",
+    "confirmFakeInfo": "Marquer ce compte comme frauduleux confirmé",
+    "confirmLegitInfo": "Marquer ce compte comme légitime confirmé",
+    "lockInfo": "Bloquer ce compte",
+    "whitelistInfo": "Ajouter à la liste blanche",
+    "deleteInfo": "Supprimer ce compte"
+  },
+  "recommendations": {
+    "strongDelete": "SUPPRESSION FORTE — Très suspect, suppression immédiate recommandée",
+    "delete": "SUPPRESSION — Forte probabilité de fraude, envisager la suppression",
+    "review": "REVUE — Suspect, vérification manuelle nécessaire",
+    "monitor": "SURVEILLANCE — Certains risques, surveillez l'activité",
+    "legitimate": "LÉGITIME — Aucune action nécessaire"
+  },
+  "stats": {
+    "totalChecked": "Total vérifié",
+    "fakeDetected": "Fraude détectée",
+    "needsReview": "Nécessite une revue",
+    "avgRiskScore": "Score de risque moyen",
+    "suspiciousIps": "IPs suspectes"
+  },
+  "search": {
+    "title": "Recherche et filtre",
+    "placeholder": "Rechercher par nom d'utilisateur, e-mail ou société..."
+  },
+  "filters": {
+    "all": "Tous",
+    "fake": "Frauduleux",
+    "review": "À vérifier",
+    "legitimate": "Légitime"
+  },
+  "results": {
+    "title": "Comptes signalés",
+    "showing": "Affichage de {{start}}-{{end}} sur {{total}} résultats"
+  },
+  "table": {
+    "user": "Utilisateur",
+    "score": "Score",
+    "verdict": "Verdict",
+    "flags": "Drapeaux de risque",
+    "recommendation": "Recommandation",
+    "scanned": "Analysé",
+    "actions": "Actions"
+  },
+  "details": {
+    "title": "Détails de l'utilisateur et analyse des risques",
+    "userInfo": "Informations utilisateur",
+    "username": "Nom d'utilisateur",
+    "email": "E-mail",
+    "name": "Nom",
+    "company": "Entreprise",
+    "noCompany": "Aucune entreprise",
+    "verdict": "Statut du verdict",
+    "verdictLabel": "Verdict actuel",
+    "verdictFake": "Compte frauduleux",
+    "verdictReview": "Nécessite une revue",
+    "verdictLegitimate": "Compte légitime",
+    "lastScan": "Dernière analyse",
+    "notScanned": "Non analysé",
+    "scores": "Répartition des scores",
+    "ruleScore": "Score de règles",
+    "llmScore": "Score IA",
+    "finalScore": "Score final",
+    "ruleBasedDetection": "Détection basée sur les règles",
+    "aiAnalysis": "Analyse IA/ML",
+    "overallRiskLevel": "Niveau de risque global",
+    "riskFlags": "Drapeaux de risque",
+    "noRiskFlags": "Aucun drapeau de risque détecté",
+    "history": "Historique du compte",
+    "accountCreated": "Compte créé",
+    "lastLogin": "Dernière connexion",
+    "noLogin": "Aucune connexion enregistrée",
+    "reasoning": "Raisonnement IA",
+    "noReasoning": "Aucun raisonnement IA disponible pour cette analyse.",
+    "actions": "Actions",
+    "actionForm": "Prendre une action",
+    "actionType": "Type d'action",
+    "reason": "Raison",
+    "reasonPlaceholder": "Entrez la raison de cette action...",
+    "reasonHelp": "Veuillez fournir une raison détaillée pour cette action. Cela sera enregistré dans le journal d'audit.",
+    "cancel": "Annuler",
+    "confirm": "Confirmer l'action",
+    "close": "Fermer"
+  },
+  "pagination": {
+    "page": "Page {{page}} sur {{totalPages}}",
+    "prev": "Précédent",
+    "next": "Suivant"
+  }
+}

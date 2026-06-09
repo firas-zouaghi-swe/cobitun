@@ -1,0 +1,87 @@
+{
+  "title": "Détection de Comptes Faux par IA",
+  "description": "Gérer et surveiller la détection de comptes frauduleux et la prévention de la fraude",
+  "loading": "Chargement du tableau de bord de détection de fraude...",
+  "stats": {
+    "totalChecked": "Total Vérifiés",
+    "fakeDetected": "Faux Détectés",
+    "needsReview": "Nécessite un Examen",
+    "avgRiskScore": "Score Risque Moyen",
+    "suspiciousIps": "IP Suspicieuses"
+  },
+  "scan": {
+    "scanning": "Analyse en cours...",
+    "scanAll": "Analyser Tous les Utilisateurs",
+    "success": "L'analyse a été complétée avec succès",
+    "error": "Échec de l'analyse des utilisateurs. Veuillez réessayer.",
+    "userSuccess": "L'utilisateur a été analysé avec succès",
+    "userError": "Échec de l'analyse de l'utilisateur. Veuillez réessayer."
+  },
+  "actions": {
+    "delete": "Supprimer",
+    "lock": "Bloquer",
+    "whitelist": "Whitelister",
+    "confirmFake": "Confirmer Faux",
+    "confirmLegit": "Confirmer Légitime",
+    "success": "L'action {{action}} a été complétée avec succès",
+    "error": "Échec de l'exécution de l'action. Veuillez réessayer."
+  },
+  "recommendations": {
+    "strongDelete": "SUPPRESSION FORTE — Très suspect, suppression immédiate recommandée",
+    "delete": "SUPPRESSION — Faux avec haute confiance, suppression recommandée",
+    "review": "EXAMEN — Suspect, vérification manuelle nécessaire",
+    "monitor": "SURVEILLER — Quelques risques, surveiller l'activité",
+    "legitimate": "LÉGITIME — Aucune action nécessaire"
+  },
+  "viewDetails": "Voir les Détails",
+  "fraudFlags": {
+    "disposable_email": "Email Jetable",
+    "bot_username_pattern": "Mot de Passe Bot",
+    "email_name_mismatch": "Nom/Email Incohérent",
+    "no_business_website": "Site Web d'Entreprise Manquant",
+    "multiple_accounts_same_ip": "Comptes Multiples depuis la Même IP",
+    "multiple_accounts_same_device": "Comptes Multiples depuis le Même Appareil",
+    "vpn_proxy_detected": "VPN/Proxy Détecté",
+    "tor_exit_node": "Sortie Tor Détectée",
+    "high_risk_country": "Pays à Risque Élevé",
+    "mismatched_name_email": "Nom/Email Incohérent",
+    "generic_suspicious_name": "Nom Générique/Suspect",
+    "numeric_suffix": "Suffixe Numérique dans le Nom d'Utilisateur",
+    "failed_logins": "Connexions Échouées",
+    "account_locked": "Compte Bloqué"
+  },
+  "table": {
+    "username": "Nom d'Utilisateur",
+    "email": "Email",
+    "name": "Nom",
+    "company": "Entreprise",
+    "riskScore": "Score de Risque",
+    "verdict": "Verdict",
+    "flags": "Indicateurs de Risque",
+    "scannedAt": "Analyse le",
+    "actions": "Actions"
+  },
+  "verdict": {
+    "LEGITIMATE": "Légitime",
+    "REVIEW": "Examen",
+    "FAKE": "Faux"
+  },
+  "modal": {
+    "delete": {
+      "title": "Supprimer le Compte Utilisateur",
+      "description": "Êtes-vous sûr de vouloir supprimer ce compte utilisateur ? Cette action est irréversible.",
+      "confirm": "Supprimer le Compte",
+      "placeholder": "Entrez la raison de la suppression..."
+    },
+    "action": {
+      "title": "Prendre une Action sur l'Utilisateur",
+      "description": "Sélectionnez une action à prendre sur ce compte utilisateur.",
+      "confirm": "Confirmer l'Action",
+      "placeholder": "Entrez la raison de l'action..."
+    }
+  },
+  "errors": {
+    "userNotFound": "Utilisateur non trouvé",
+    "failedToLoad": "Échec du chargement des données de détection de fraude. Veuillez réessayer."
+  }
+}

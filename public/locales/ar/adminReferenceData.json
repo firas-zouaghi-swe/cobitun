@@ -1,0 +1,88 @@
+{
+  "title": "البيانات المرجعية",
+  "subtitle": "إدارة الجداول المرجعية الحسابية المُصدّقة",
+  "newEntry": "إدخال جديد",
+  "tabs": {
+    "sector": "القطاعات",
+    "businessModel": "النماذج التجارية",
+    "turnoverBand": "شرائح الإيرادات",
+    "resilienceProfile": "ملفات المرونة",
+    "slaTier": "مستويات SLA",
+    "securityPosture": "موقف الأمان"
+  },
+  "typeLabels": {
+    "sector": "القطاع",
+    "businessModel": "النموذج التجاري",
+    "turnoverBand": "شريحة الإيرادات",
+    "resilienceProfile": "ملف المرونة",
+    "slaTier": "مستوى SLA",
+    "securityPosture": "موقف الأمان"
+  },
+  "version": {
+    "history": "سجل الإصدارات",
+    "current": "الحالي",
+    "newVersion": "إصدار جديد"
+  },
+  "table": {
+    "version": "الإصدار",
+    "validFrom": "ساري من",
+    "validTo": "ساري حتى",
+    "current": "الحالي",
+    "parameters": "المعلمات"
+  },
+  "params": {
+    "rf": "عخ",
+    "rm": "مخ",
+    "bpf": "معق",
+    "mttr": "MTTR",
+    "threshold": "الحد",
+    "min": "أدنى",
+    "max": "أقصى"
+  },
+  "empty": {
+    "noEntries": "لم يتم العثور على إدخالات {{type}}"
+  },
+  "dialog": {
+    "newVersionTitle": "إصدار جديد — {{type}}",
+    "createTitle": "إنشاء {{type}}",
+    "newVersionDescription": "إنشاء إصدار جديد لـ {{code}}. سيتم إغلاق الإصدار الحالي.",
+    "createDescription": "إضافة إدخال {{type}} جديد",
+    "code": "الرمز",
+    "codePlaceholder": "مثال: TECH",
+    "name": "الاسم",
+    "namePlaceholder": "مثال: التكنولوجيا",
+    "description": "الوصف",
+    "descriptionPlaceholder": "وصف اختياري",
+    "riskFactor": "معامل الخطر",
+    "riskFactorPlaceholder": "مثال: 1.2500",
+    "riskFactorHint": "مضاعف يُطبّق أثناء حساب القسط",
+    "minTurnover": "الحد الأدنى للإيرادات (د.ت)",
+    "maxTurnover": "الحد الأقصى للإيرادات (د.ت)",
+    "basePremiumFactor": "معامل القسط الأساسي",
+    "basePremiumFactorPlaceholder": "مثال: 1.0000",
+    "mttrHours": "MTTR (ساعات)",
+    "mttrHoursPlaceholder": "مثال: 4.0",
+    "thresholdHours": "الحد (ساعات)",
+    "thresholdHoursPlaceholder": "مثال: 2.0",
+    "riskMultiplier": "مضاعف الخطر",
+    "riskMultiplierPlaceholder": "مثال: 1.5000",
+    "riskMultiplierHint": "مضاعف القسط السيبراني بناءً على موقف الأمان",
+    "createEntry": "إنشاء إدخال",
+    "createNewVersion": "إنشاء إصدار جديد",
+    "saving": "جاري الحفظ..."
+  },
+  "toast": {
+    "versionCreated": "تم إنشاء الإصدار الجديد بنجاح",
+    "entryCreated": "تم إنشاء الإدخال بنجاح",
+    "saveFailed": "فشل الحفظ",
+    "required": "الرمز والاسم مطلوبان",
+    "requiredFields": "يرجى ملء جميع الحقول المطلوبة"
+  },
+  "versionTable": {
+    "current": "الحالي",
+    "parameters": "المعلمات",
+    "validFrom": "ساري من",
+    "validTo": "ساري حتى",
+    "version": "الإصدار"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "title": "لوحة سير العمل",
+  "subtitle": "مراجعة طلبات الوثائق وإدارة المطالبات",
+  "summary": {
+    "totalApplications": "إجمالي الطلبات",
+    "pendingReview": "في انتظار المراجعة",
+    "awaitingFinalSign": "في انتظار التوقيع النهائي",
+    "totalClaims": "إجمالي المطالبات",
+    "pendingClaims": "المطالبات المعلقة"
+  },
+  "tab": {
+    "policyApplications": "طلبات الوثائق",
+    "claims": "المطالبات"
+  },
+  "policyTable": {
+    "customerName": "اسم العميل",
+    "sector": "القطاع",
+    "status": "الحالة",
+    "createdDate": "تاريخ الإنشاء",
+    "actions": "الإجراءات",
+    "unknownCustomer": "عميل غير معروف",
+    "review": "مراجعة"
+  },
+  "claimTable": {
+    "customerName": "اسم العميل",
+    "policyRef": "مرجع الوثيقة",
+    "lossAmount": "مبلغ الخسارة",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "unknownCustomer": "عميل غير معروف",
+    "review": "مراجعة"
+  },
+  "empty": {
+    "noPoliciesTitle": "لا توجد طلبات وثائق",
+    "noPoliciesSubtitle": "ستظهر طلبات الوثائق الجديدة من العملاء هنا للمراجعة.",
+    "noClaimsTitle": "لا توجد مطالبات",
+    "noClaimsSubtitle": "ستظهر مطالبات العملاء هنا للمراجعة والمعالجة."
+  },
+  "status": {
+    "contractUploaded": "تم رفع العقد",
+    "adminReviewing": "مراجعة المسؤول",
+    "policyGenerated": "تم إنشاء الوثيقة",
+    "awaitingSignatureAndPayment": "في انتظار التوقيع والدفع",
+    "readyForFinalApproval": "جاهز للموافقة النهائية",
+    "underwritingCompleted": "تم إتمام التسعير",
+    "rejected": "مرفوض",
+    "open": "مفتوحة",
+    "submitted": "مقدمة",
+    "completed": "مكتملة"
+  },
+  "toast": {
+    "loadFailed": "فشل تحميل بيانات سير العمل"
+  }
+}

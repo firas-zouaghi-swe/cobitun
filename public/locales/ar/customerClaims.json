@@ -1,0 +1,93 @@
+{
+  "title": {
+    "backToWorkflow": "العودة لسير العمل",
+    "value": "المطالبة"
+  },
+  "subtitle": "قدّم وأدر مطالبات التأمين الخاصة بك",
+  "fileNewClaim": "تقديم مطالبة جديدة",
+  "newClaim": {
+    "title": "تقديم مطالبة جديدة",
+    "subtitle": "اختر سياسة نشطة ووصّف خسارتك",
+    "selectPolicy": "اختر السياسة *",
+    "selectPolicyPlaceholder": "اختر سياسة مكتملة",
+    "lossDescription": "وصف الخسارة",
+    "lossDescPlaceholder": "وصّف حدث الخسارة...",
+    "createButton": "إنشاء المطالبة",
+    "creating": "جارٍ إنشاء المطالبة...",
+    "choosePolicy": "اختر السياسة",
+    "create": "إنشاء المطالبة",
+    "lossDescriptionPlaceholder": "صِف الخسارة التي تعرضت لها...",
+    "success": "تم إنشاء المطالبة بنجاح"
+  },
+  "fillDeclaration": {
+    "title": "ملء إقرار الخسارة",
+    "downloadPdf": "تنزيل إقرار الخسارة PDF",
+    "lossAmount": "مبلغ الخسارة (TND) *",
+    "lossStart": "تاريخ بداية الخسارة *",
+    "lossEnd": "تاريخ نهاية الخسارة *",
+    "uploadFilled": "رفع الإقرار المملوء (اختياري)",
+    "uploadHint": "انقر لرفع إقرار الخسارة المملوء بصيغة PDF (10 ميغابايت كحد أقصى)",
+    "submitButton": "إرسال الإقرار",
+    "submitting": "جارٍ الإرسال...",
+    "lossEndDate": "تاريخ انتهاء الخسارة",
+    "lossStartDate": "تاريخ بداية الخسارة",
+    "maxSize": "الحد الأقصى لحجم الملف: 10 ميغابايت",
+    "pdfOnly": "ملفات PDF فقط",
+    "submit": "إرسال الإقرار",
+    "uploadLabel": "رفع الإقرار",
+    "claimId": "Claim Id"
+  },
+  "review": {
+    "title": "المطالبة قيد المراجعة",
+    "subtitle": "إقرارك قيد المراجعة من قبل فريقنا.",
+    "lossAmount": "مبلغ الخسارة",
+    "startDate": "تاريخ البداية",
+    "endDate": "تاريخ النهاية",
+    "success": "تم إرسال الإقرار بنجاح"
+  },
+  "completed": {
+    "title": "المطالبة موافق عليها ومدفوعة",
+    "payoutAmount": "مبلغ التعويض",
+    "transactionId": "رقم المعاملة",
+    "payoutDate": "تاريخ التعويض",
+    "lossPeriod": "فترة الخسارة",
+    "downloadDeclaration": "تنزيل الإقرار",
+    "claimedAmount": "Claimed Amount"
+  },
+  "empty": {
+    "title": "لا توجد مطالبات بعد",
+    "hasPolicy": "قدّم مطالبة إذا تعرضت لحدث خسارة مغطى.",
+    "noPolicy": "تحتاج سياسة نشطة (مكتملة) قبل تقديم مطالبة.",
+    "subtitleNoPolicy": "تحتاج سياسة نشطة لتقديم مطالبة",
+    "subtitleWithPolicy": "قدّم مطالبة جديدة لإحدى سياساتك النشطة"
+  },
+  "action": {
+    "backToList": "العودة للقائمة",
+    "fillDeclaration": "ملء الإقرار",
+    "underReview": "قيد المراجعة",
+    "viewPayout": "عرض التعويض"
+  },
+  "actions": {
+    "removeUploadedPdf": "إزالة ملف PDF المرفوع"
+  },
+  "error": {
+    "createFailed": "فشل إنشاء المطالبة",
+    "downloadFailed": "فشل تنزيل المستند",
+    "fillRequired": "يرجى ملء جميع الحقول المطلوبة",
+    "loadFailed": "فشل تحميل المطالبات",
+    "selectPolicy": "اختر السياسة *",
+    "submitFailed": "فشل إرسال الإقرار"
+  },
+  "status": {
+    "created": "تم الإنشاء",
+    "loss": "خسارة مُبلّغة",
+    "open": "مفتوح",
+    "submitted": "مُرسل",
+    "completed": "مكتمل"
+  },
+  "confirmSubmit": {
+    "title": "تأكيد تقديم المطالبة",
+    "description": "بتقديم هذه المطالبة، أنت تقدم إقرارًا قانونيًا بأن معلومات الخسارة المقدمة صحيحة ودقيقة. تقديم مطالبة احتيالية جريمة جنائية. لا يمكن التراجع عن هذا التقديم."
+  },
+  "loading": "Loading claims..."
+}

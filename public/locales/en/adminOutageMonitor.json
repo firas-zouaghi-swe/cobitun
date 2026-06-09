@@ -1,0 +1,66 @@
+{
+  "title": "Cloud Outage Monitor",
+  "subtitle": "Real-time monitoring via IODA + Georgia Tech",
+  "runIodaCheck": "Run IODA Check",
+  "runningIodaCheck": "Running IODA Check...",
+  "stats": {
+    "activeProviders": "Active Providers",
+    "activeOutages": "Active Outages",
+    "triggers24h": "Triggers (24h)",
+    "totalPayoutsTnd": "Total Payouts (TND)"
+  },
+  "tabs": {
+    "liveSignals": "Live Signals",
+    "alertsTable": "Alerts Table",
+    "outageEvents": "Outage Events",
+    "triggers": "Triggers",
+    "claims": "Claims"
+  },
+  "events": {
+    "title": "Unprocessed Outage Events",
+    "table": {
+      "provider": "Provider",
+      "start": "Start",
+      "durationH": "Duration (h)",
+      "source": "Source",
+      "score": "Score",
+      "statusCol": "Status"
+    },
+    "processed": "Processed",
+    "unprocessed": "Unprocessed",
+    "empty": "No unprocessed outage events"
+  },
+  "triggersTab": {
+    "title": "Recent Trigger Events",
+    "table": {
+      "provider": "Provider",
+      "slaTier": "SLA Tier",
+      "mttrH": "MTTR (h)",
+      "insuredHours": "Insured Hours",
+      "claimsCreated": "Claims Created",
+      "date": "Date"
+    },
+    "yes": "Yes",
+    "no": "No",
+    "empty": "No recent triggers"
+  },
+  "claimsTab": {
+    "title": "Recent Claims",
+    "table": {
+      "customer": "Customer",
+      "provider": "Provider",
+      "outageH": "Outage (h)",
+      "insuredH": "Insured (h)",
+      "payoutTnd": "Payout (TND)",
+      "statusCol": "Status",
+      "type": "Type"
+    },
+    "auto": "Auto",
+    "manual": "Manual",
+    "empty": "No recent claims"
+  },
+  "toast": {
+    "iodaCheckCompleted": "IODA check completed: {{triggers}} triggers, {{claims}} claims created",
+    "iodaCheckFailed": "Failed to run IODA check"
+  }
+}

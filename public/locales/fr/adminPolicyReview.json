@@ -1,0 +1,95 @@
+{
+  "title": "Examen des demandes de police",
+  "notFound": {
+    "title": "Demande introuvable",
+    "description": "La demande de police que vous recherchez n'existe pas ou vous n'y avez pas accès."
+  },
+  "backToWorkflow": "Retour au tableau de bord des flux de travail",
+  "details": {
+    "title": "Détails de la demande",
+    "customer": "Client",
+    "email": "E-mail",
+    "created": "Créé",
+    "sector": "Secteur",
+    "annualTurnover": "Chiffre d'affaires annuel",
+    "premium": "Prime"
+  },
+  "progress": {
+    "title": "Avancement de la demande",
+    "steps": {
+      "contractUploaded": "Contrat téléchargé",
+      "adminReview": "Examen administrateur",
+      "policyGenerated": "Police générée",
+      "signAndPay": "Signer et payer",
+      "finalApproval": "Approbation finale",
+      "completed": "Terminé",
+      "${stepKey}": "${step Key}"
+    }
+  },
+  "rejected": {
+    "title": "Demande rejetée",
+    "reason": "Raison"
+  },
+  "review": {
+    "title": "Examiner le contrat fournisseur",
+    "description": "Téléchargez le contrat fournisseur, examinez-le, puis approuvez ou rejetez",
+    "downloadProvider": "Télécharger le contrat fournisseur PDF",
+    "rejectionReason": "Raison du rejet",
+    "rejectionReasonHint": "(obligatoire en cas de rejet)",
+    "rejectionPlaceholder": "Indiquez la raison du rejet...",
+    "approve": "Approuver et générer le contrat de police",
+    "reject": "Rejeter la demande",
+    "processing": "Traitement en cours..."
+  },
+  "finalApproval": {
+    "title": "Approbation finale — Compléter la souscription",
+    "description": "Vérifiez toutes les conditions préalables et complétez le processus de souscription",
+    "prerequisites": "Conditions préalables",
+    "signedContract": "Contrat signé téléchargé",
+    "signedContractReceived": "Le client a téléchargé le contrat de police signé",
+    "signedContractWaiting": "En attente du téléchargement du contrat signé par le client",
+    "premiumPaid": "Prime payée",
+    "premiumPaidRecorded": "Le paiement de la prime a été enregistré",
+    "premiumPaidWaiting": "En attente du paiement de la prime par le client",
+    "completeUnderwriting": "Compléter la souscription",
+    "prerequisiteWarning": "Le contrat signé et le paiement de la prime doivent être reçus avant de compléter la souscription.",
+    "paymentDetails": "Détails du paiement",
+    "transactionId": "ID de transaction",
+    "paymentDate": "Date de paiement"
+  },
+  "completed": {
+    "title": "Souscription terminée",
+    "description": "Cette police a été entièrement approuvée et est maintenant active.",
+    "completedOn": "Terminé le"
+  },
+  "documents": {
+    "title": "Documents",
+    "providerContract": "Contrat fournisseur",
+    "providerContractDesc": "Téléchargé par le client",
+    "insurancePolicy": "Contrat de police d'assurance",
+    "insurancePolicyDesc": "Généré par COBITUN",
+    "signedContract": "Contrat signé",
+    "signedContractDesc": "Police signée par le client"
+  },
+  "audit": {
+    "title": "Chronologie d'audit",
+    "by": "par"
+  },
+  "dialog": {
+    "title": "Compléter la souscription",
+    "description": "Cela finalisera la police et la rendra immuable. Le client sera notifié que sa police est maintenant active. Cette action est irréversible.",
+    "signedContract": "Contrat signé",
+    "premiumPayment": "Paiement de la prime",
+    "received": "Reçu",
+    "missing": "Manquant",
+    "confirmAndComplete": "Confirmer et compléter la souscription"
+  },
+  "toast": {
+    "notFound": "Demande de police introuvable",
+    "loadFailed": "Échec du chargement des détails de la demande",
+    "approveFailed": "Échec de l'approbation de la demande",
+    "rejectFailed": "Échec du rejet de la demande",
+    "underwritingFailed": "Échec de la complétion de la souscription",
+    "downloadFailed": "Échec du téléchargement du fichier"
+  }
+}

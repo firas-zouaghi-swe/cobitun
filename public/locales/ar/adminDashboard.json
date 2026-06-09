@@ -1,0 +1,40 @@
+{
+  "title": "لوحة تحكم المسؤول",
+  "subtitle": "COBITUN — تأمين انقطاع الأعمال بسبب انهيار الخدمات السحابية في تونس | جميع البيانات من قاعدة البيانات",
+  "traditional": {
+    "title": "التأمين التقليدي",
+    "totalUsers": "إجمالي المستخدمين",
+    "totalPolicies": "إجمالي السياسات",
+    "totalCategories": "إجمالي الفئات",
+    "totalQuestions": "إجمالي الأسئلة",
+    "policyHolders": "حملة السياسات",
+    "approved": "موافق عليها",
+    "pending": "قيد الانتظار",
+    "disapproved": "مرفوضة"
+  },
+  "parametric": {
+    "sectionTitle": "تأمين انهيار الخدمات السحابية (بيانات IODA الحقيقية)",
+    "activeProviders": "المزودون النشطون",
+    "unprocessedOutages": "انقطاعات غير معالجة",
+    "parametricClaims": "المطالبات البارامترية",
+    "autoTriggers": "تفعيلات تلقائية (24 ساعة)",
+    "manage": "إدارة",
+    "monitor": "مراقبة",
+    "details": "التفاصيل",
+    "total": "{{count}} الإجمالي",
+    "totalEvents": "{{count}} إجمالي الأحداث",
+    "claimsSub": "{{paid}} مدفوعة · {{disputed}} متنازع عليها"
+  },
+  "finance": {
+    "totalPremiums": "إجمالي الأقساط المحصّلة",
+    "totalPayouts": "إجمالي التعويضات",
+    "activePolicies": "سياسات نشطة",
+    "claimsPaid": "مطالبات مدفوعة",
+    "policyRequests": "طلبات السياسات",
+    "pending": "قيد الانتظار"
+  },
+  "outage": {
+    "unprocessedEvents": "أحداث انقطاع غير معالجة",
+    "eventsRequireProcessing": "{{count}} أحداث تتطلب المعالجة"
+  }
+}

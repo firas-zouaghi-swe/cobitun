@@ -1,0 +1,57 @@
+{
+  "title": "Mon Workflow d'Assurance",
+  "subtitle": "Gérez vos demandes de police et sinistres",
+  "applyNewPolicy": "Demander une Nouvelle Police",
+  "fileClaim": "Déclarer un Sinistre",
+  "stats": {
+    "totalPolicies": "Total Polices",
+    "actionRequired": "Action Requise",
+    "completed": "Terminées",
+    "openClaims": "Sinistres Ouverts"
+  },
+  "tab": {
+    "policyApplications": "Demandes de Police",
+    "claims": "Sinistres"
+  },
+  "empty": {
+    "noPolicyApplications": "Aucune Demande de Police",
+    "startJourney": "Commencez votre parcours d'assurance en demandant une nouvelle police.",
+    "noClaims": "Aucun Sinistre",
+    "fileClaimIfLoss": "Déclarez un sinistre si vous avez subi un événement de perte.",
+    "needActivePolicy": "Vous avez besoin d'une police active avant de pouvoir déclarer un sinistre.",
+    "noClaimSubtitleNoPolicy": "Vous avez besoin d'une police active pour déclarer un sinistre",
+    "noClaimSubtitleWithPolicy": "Déclarez un sinistre pour une de vos polices actives",
+    "noClaimTitle": "Aucun Sinistre",
+    "noPolicySubtitle": "Demandez une police pour commencer",
+    "noPolicyTitle": "Aucune Demande de Police"
+  },
+  "status": {
+    "contractUploaded": "Contrat Téléversé",
+    "adminReviewing": "Révision Admin en Cours",
+    "policyGenerated": "Police Générée",
+    "awaitingSignaturePayment": "En Attente de Signature et Paiement",
+    "readyForFinalApproval": "Prêt pour l'Approbation Finale",
+    "underwritingCompleted": "Souscription Terminée",
+    "rejected": "Rejeté",
+    "created": "Créé",
+    "loss": "Perte Signalée",
+    "premium": "Prime",
+    "sector": "Secteur"
+  },
+  "action": {
+    "awaitingReview": "En Attente de Révision",
+    "inReview": "En Cours de Révision",
+    "signContract": "Signer le Contrat",
+    "payPremium": "Payer la Prime",
+    "awaitingApproval": "En Attente d'Approbation",
+    "viewPolicy": "Voir la Police",
+    "viewDetails": "Voir les Détails",
+    "fillDeclaration": "Remplir la Déclaration",
+    "underReview": "En Cours de Révision",
+    "viewPayout": "Voir l'Indemnité"
+  },
+  "error": {
+    "loadFailed": "Échec du chargement des données du workflow"
+  },
+  "loading": "Loading workflow..."
+}

@@ -1,0 +1,74 @@
+{
+  "title": "Fonctions de Paiement",
+  "subtitle": "Configurer les paramètres et types des fonctions de paiement",
+  "createConfig": "Créer une Config",
+  "table": {
+    "name": "Nom",
+    "code": "Code",
+    "type": "Type",
+    "description": "Description",
+    "parameters": "Paramètres",
+    "status": "Statut"
+  },
+  "empty": {
+    "noConfigs": "Aucune configuration de fonction de paiement trouvée"
+  },
+  "params": {
+    "multiplier": "Multiplicateur",
+    "steps": "Étapes : configuré",
+    "baseRate": "Taux de Base",
+    "base": "Base",
+    "exponent": "Exposant"
+  },
+  "status": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  },
+  "dialog": {
+    "createTitle": "Créer une Config de Fonction de Paiement",
+    "createDescription": "Définir une nouvelle configuration de fonction de paiement",
+    "configName": "Nom de la Config",
+    "configNamePlaceholder": "ex. Paiement Linéaire 1.5x",
+    "configCode": "Code Config",
+    "configCodePlaceholder": "ex. LINEAIRE_1_5X",
+    "functionType": "Type de Fonction",
+    "selectType": "Sélectionner le type",
+    "description": "Description",
+    "descriptionPlaceholder": "Description facultative",
+    "linearMultiplier": "Multiplicateur Linéaire",
+    "linearMultiplierPlaceholder": "ex. 1.5",
+    "linearFormula": "Paiement = multiplicateur × heures_panne × taux_horaire",
+    "stepConfigJson": "Configuration par Étapes (JSON)",
+    "stepConfigPlaceholder": "[{\"minHours\":0,\"maxHours\":4,\"payoutPct\":0}]",
+    "stepDescription": "Définir les étapes de pourcentage de paiement selon la durée de panne",
+    "hybridBaseRate": "Taux de Base",
+    "hybridBaseRatePlaceholder": "ex. 0.5",
+    "hybridStepConfigJson": "Configuration par Étapes (JSON)",
+    "hybridStepPlaceholder": "[{\"minHours\":4,\"payoutPct\":25}]",
+    "hybridDescription": "Combine un taux de base avec des ajustements par étapes",
+    "exponentialBase": "Base",
+    "exponentialBasePlaceholder": "ex. 1.05",
+    "exponentialExponent": "Exposant",
+    "exponentialExponentPlaceholder": "ex. 1.2",
+    "exponentialFormula": "Paiement = base^(exposant × heures)",
+    "creating": "Création...",
+    "exponentialHint": "Formule : base × valeur^exposant",
+    "hybridStepConfigJsonHint": "Tableau JSON des seuils et taux par étapes",
+    "hybridStepConfigJsonPlaceholder": "[{\"threshold\": 0, \"rate\": 0.5}]",
+    "linearMultiplierHint": "Indemnité = multiplicateur × heures de panne",
+    "stepConfigJsonHint": "Tableau JSON définissant les seuils de la fonction par étapes",
+    "stepConfigJsonPlaceholder": "[{\"from\": 0, \"to\": 24, \"rate\": 0.5}]"
+  },
+  "types": {
+    "LINEAR": "Linéaire",
+    "STEP": "Par Étapes",
+    "HYBRID": "Hybride",
+    "EXPONENTIAL": "Exponentielle"
+  },
+  "toast": {
+    "created": "Configuration de fonction de paiement créée avec succès",
+    "createFailed": "Échec de la création de la configuration",
+    "required": "Le nom, le code et le type de fonction sont obligatoires",
+    "requiredFields": "Veuillez remplir tous les champs obligatoires"
+  }
+}

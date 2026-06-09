@@ -1,0 +1,122 @@
+{
+  "title": "AI Fake Account Detection",
+  "loading": "Loading fraud detection dashboard...",
+  "scanning": "Scanning...",
+  "scanAll": "Scan All Users",
+  "scan": {
+    "success": "Scan completed successfully",
+    "error": "Failed to scan users. Please try again.",
+    "userSuccess": "User scanned successfully",
+    "userError": "Failed to scan user. Please try again."
+  },
+  "delete": {
+    "success": "User account deleted successfully",
+    "error": "Failed to delete user. Please try again.",
+    "title": "Delete User Account",
+    "description": "Are you sure you want to delete the account for {{username}}? This action cannot be undone.",
+    "reason": "Reason for deletion (minimum 10 characters)",
+    "reasonPlaceholder": "Enter reason for deleting this account...",
+    "warning": "This action is irreversible and will permanently delete the user account and all associated data.",
+    "cancel": "Cancel",
+    "deleting": "Deleting...",
+    "confirm": "Delete Account"
+  },
+  "action": {
+    "success": "Action {{action}} completed successfully",
+    "error": "Failed to perform action. Please try again."
+  },
+  "actions": {
+    "delete": "Delete",
+    "lock": "Lock",
+    "whitelist": "Whitelist",
+    "confirmFake": "Confirm Fake",
+    "confirmLegit": "Confirm Legitimate",
+    "confirmFakeInfo": "Mark this account as confirmed fake",
+    "confirmLegitInfo": "Mark this account as confirmed legitimate",
+    "lockInfo": "Lock this account",
+    "whitelistInfo": "Add to whitelist",
+    "deleteInfo": "Delete this account"
+  },
+  "recommendations": {
+    "strongDelete": "STRONG DELETE — Highly suspicious, immediate deletion recommended",
+    "delete": "DELETE — High confidence fake, consider deletion",
+    "review": "REVIEW — Suspicious, manual verification needed",
+    "monitor": "MONITOR — Some risk, monitor activity",
+    "legitimate": "LEGITIMATE — No action needed"
+  },
+  "stats": {
+    "totalChecked": "Total Checked",
+    "fakeDetected": "Fake Detected",
+    "needsReview": "Needs Review",
+    "avgRiskScore": "Avg Risk Score",
+    "suspiciousIps": "Suspicious IPs"
+  },
+  "search": {
+    "title": "Search & Filter",
+    "placeholder": "Search by username, email, or company..."
+  },
+  "filters": {
+    "all": "All",
+    "fake": "Fake",
+    "review": "Review",
+    "legitimate": "Legitimate"
+  },
+  "results": {
+    "title": "Flagged Accounts",
+    "showing": "Showing {{start}}-{{end}} of {{total}} results"
+  },
+  "table": {
+    "user": "User",
+    "score": "Score",
+    "verdict": "Verdict",
+    "flags": "Risk Flags",
+    "recommendation": "Recommendation",
+    "scanned": "Scanned",
+    "actions": "Actions"
+  },
+  "details": {
+    "title": "User Details & Risk Analysis",
+    "userInfo": "User Information",
+    "username": "Username",
+    "email": "Email",
+    "name": "Name",
+    "company": "Company",
+    "noCompany": "No company",
+    "verdict": "Verdict Status",
+    "verdictLabel": "Current Verdict",
+    "verdictFake": "Fake Account",
+    "verdictReview": "Needs Review",
+    "verdictLegitimate": "Legitimate Account",
+    "lastScan": "Last Scanned",
+    "notScanned": "Not scanned",
+    "scores": "Score Breakdown",
+    "ruleScore": "Rule Score",
+    "llmScore": "AI Score",
+    "finalScore": "Final Score",
+    "ruleBasedDetection": "Rule-based detection",
+    "aiAnalysis": "AI/ML analysis",
+    "overallRiskLevel": "Overall risk level",
+    "riskFlags": "Risk Flags",
+    "noRiskFlags": "No risk flags detected",
+    "history": "Account History",
+    "accountCreated": "Account Created",
+    "lastLogin": "Last Login",
+    "noLogin": "No login recorded",
+    "reasoning": "AI Reasoning",
+    "noReasoning": "No AI reasoning available for this scan.",
+    "actions": "Actions",
+    "actionForm": "Take Action",
+    "actionType": "Action Type",
+    "reason": "Reason",
+    "reasonPlaceholder": "Enter reason for this action...",
+    "reasonHelp": "Please provide a detailed reason for taking this action. This will be recorded in the audit log.",
+    "cancel": "Cancel",
+    "confirm": "Confirm Action",
+    "close": "Close"
+  },
+  "pagination": {
+    "page": "Page {{page}} of {{totalPages}}",
+    "prev": "Previous",
+    "next": "Next"
+  }
+}

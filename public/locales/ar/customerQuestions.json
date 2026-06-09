@@ -1,0 +1,24 @@
+{
+  "title": "اطرح سؤالاً",
+  "form": {
+    "title": "قدّم سؤالك",
+    "yourQuestion": "سؤالك",
+    "placeholder": "اكتب سؤالك هنا...",
+    "submitQuestion": "إرسال السؤال",
+    "submitting": "جاري الإرسال..."
+  },
+  "history": {
+    "title": "أسئلتك",
+    "empty": "لا توجد أسئلة بعد",
+    "adminResponse": "رد المسؤول:",
+    "notAnsweredYet": "لم يتم الرد بعد",
+    "emptyDesc": "You have not submitted any questions yet."
+  },
+  "toast": {
+    "enterQuestion": "يرجى إدخال سؤالك",
+    "submitFailed": "فشل إرسال السؤال",
+    "submitSuccess": "تم إرسال السؤال بنجاح",
+    "somethingWentWrong": "حدث خطأ ما"
+  },
+  "loading": "Loading questions…"
+}

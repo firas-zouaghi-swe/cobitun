@@ -1,0 +1,95 @@
+{
+  "title": "مراجعة طلبات الوثائق",
+  "notFound": {
+    "title": "الطلب غير موجود",
+    "description": "طلب الوثيقة الذي تبحث عنه غير موجود أو ليس لديك صلاحية الوصول إليه."
+  },
+  "backToWorkflow": "العودة إلى لوحة سير العمل",
+  "details": {
+    "title": "تفاصيل الطلب",
+    "customer": "العميل",
+    "email": "البريد الإلكتروني",
+    "created": "تاريخ الإنشاء",
+    "sector": "القطاع",
+    "annualTurnover": "حجم الأعمال السنوي",
+    "premium": "القسط"
+  },
+  "progress": {
+    "title": "تقدم الطلب",
+    "steps": {
+      "contractUploaded": "تم رفع العقد",
+      "adminReview": "مراجعة المسؤول",
+      "policyGenerated": "تم إنشاء الوثيقة",
+      "signAndPay": "توقيع ودفع",
+      "finalApproval": "الموافقة النهائية",
+      "completed": "مكتمل",
+      "${stepKey}": "${step Key}"
+    }
+  },
+  "rejected": {
+    "title": "الطلب مرفوض",
+    "reason": "السبب"
+  },
+  "review": {
+    "title": "مراجعة عقد المزود",
+    "description": "قم بتحميل عقد المزود ومراجعته، ثم قبوله أو رفضه",
+    "downloadProvider": "تحميل عقد المزود PDF",
+    "rejectionReason": "سبب الرفض",
+    "rejectionReasonHint": "(مطلوب في حالة الرفض)",
+    "rejectionPlaceholder": "حدد سبب الرفض...",
+    "approve": "موافقة وإنشاء عقد الوثيقة",
+    "reject": "رفض الطلب",
+    "processing": "جاري المعالجة..."
+  },
+  "finalApproval": {
+    "title": "الموافقة النهائية — إتمام التسعير",
+    "description": "تحقق من جميع المتطلبات المسبقة وأتم عملية التسعير",
+    "prerequisites": "المتطلبات المسبقة",
+    "signedContract": "تم رفع العقد الموقع",
+    "signedContractReceived": "قام العميل برفع عقد الوثيقة الموقع",
+    "signedContractWaiting": "في انتظار رفع العميل للعقد الموقع",
+    "premiumPaid": "تم دفع القسط",
+    "premiumPaidRecorded": "تم تسجيل دفع القسط",
+    "premiumPaidWaiting": "في انتظار دفع العميل للقسط",
+    "completeUnderwriting": "إتمام التسعير",
+    "prerequisiteWarning": "يجب استلام العقد الموقع ودفع القسط قبل إتمام التسعير.",
+    "paymentDetails": "تفاصيل الدفع",
+    "transactionId": "معرّف المعاملة",
+    "paymentDate": "تاريخ الدفع"
+  },
+  "completed": {
+    "title": "تم إتمام التسعير",
+    "description": "تمت الموافقة الكاملة على هذه الوثيقة وهي الآن سارية المفعول.",
+    "completedOn": "تم الإتمام في"
+  },
+  "documents": {
+    "title": "المستندات",
+    "providerContract": "عقد المزود",
+    "providerContractDesc": "مرفق من العميل",
+    "insurancePolicy": "عقد وثيقة التأمين",
+    "insurancePolicyDesc": "منشأ بواسطة COBITUN",
+    "signedContract": "العقد الموقع",
+    "signedContractDesc": "وثيقة موقعة من العميل"
+  },
+  "audit": {
+    "title": "الجدول الزمني للمراجعة",
+    "by": "بواسطة"
+  },
+  "dialog": {
+    "title": "إتمام التسعير",
+    "description": "سيؤدي هذا إلى إنهاء الوثيقة وجعلها غير قابلة للتعديل. سيتم إشعار العميل بأن وثيقته أصبحت سارية. لا يمكن التراجع عن هذا الإجراء.",
+    "signedContract": "العقد الموقع",
+    "premiumPayment": "دفع القسط",
+    "received": "مستلم",
+    "missing": "مفقود",
+    "confirmAndComplete": "تأكيد وإتمام التسعير"
+  },
+  "toast": {
+    "notFound": "طلب الوثيقة غير موجود",
+    "loadFailed": "فشل تحميل تفاصيل الطلب",
+    "approveFailed": "فشل قبول الطلب",
+    "rejectFailed": "فشل رفض الطلب",
+    "underwritingFailed": "فشل إتمام التسعير",
+    "downloadFailed": "فشل تحميل الملف"
+  }
+}

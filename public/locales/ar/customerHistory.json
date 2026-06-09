@@ -1,0 +1,17 @@
+{
+  "title": "سجل الوثائق",
+  "table": {
+    "policyName": "اسم الوثيقة",
+    "category": "الفئة",
+    "sumAssurance": "مبلغ التأمين",
+    "premium": "القسط",
+    "tenure": "المدة",
+    "status": "الحالة",
+    "appliedOn": "تاريخ التقديم"
+  },
+  "empty": {
+    "noApplications": "لا توجد طلبات وثائق بعد",
+    "noApplicationsDesc": "You have not applied to any policies yet."
+  },
+  "loading": "Loading history…"
+}

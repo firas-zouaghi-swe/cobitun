@@ -1,0 +1,54 @@
+{
+  "title": "Gestion des sinistres paramétriques",
+  "subtitle": "Examiner et gérer les sinistres de panne cloud à déclenchement automatique",
+  "table": {
+    "id": "ID",
+    "customer": "Client",
+    "provider": "Fournisseur",
+    "insuredHours": "Heures assurées",
+    "payoutTnd": "Paiement (TND)",
+    "status": "Statut",
+    "type": "Type",
+    "actions": "Actions",
+    "auto": "Auto",
+    "manual": "Manuel",
+    "manage": "Gérer",
+    "noClaims": "Aucun sinistre paramétrique trouvé",
+    "claimNumber": "Sinistre N°"
+  },
+  "dialog": {
+    "title": "Détails du sinistre",
+    "description": "Examiner et gérer ce sinistre d'assurance paramétrique",
+    "fields": {
+      "claimId": "ID du sinistre",
+      "status": "Statut",
+      "customer": "Client",
+      "provider": "Fournisseur",
+      "outageDuration": "Durée de la panne",
+      "mttr": "MTTR",
+      "insuredHours": "Heures assurées",
+      "payoutAmount": "Montant du paiement",
+      "autoApproved": "Approbation automatique",
+      "created": "Créé",
+      "adminComment": "Commentaire de l'administrateur",
+      "payoutDate": "Date de paiement",
+      "reference": "Référence",
+      "payoutCalculation": "Calcul de l'Indemnité"
+    },
+    "adminCommentLabel": "Commentaire de l'administrateur",
+    "commentPlaceholder": "Ajouter un commentaire pour contestation ou rejet...",
+    "dispute": "Contester",
+    "approve": "Approuver",
+    "pay": "Payer",
+    "reject": "Rejeter",
+    "claimPaid": "Le sinistre a été payé",
+    "claimRejected": "Le sinistre a été rejeté",
+    "yes": "Oui",
+    "no": "Non",
+    "hours": "heures"
+  },
+  "toast": {
+    "actionFailed": "L'action a échoué",
+    "claimActionFailed": "Impossible de {{action}} le sinistre"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "title": "طلب وثيقة",
+  "filterByCategory": "تصفية حسب الفئة",
+  "allCategories": "جميع الفئات",
+  "empty": {
+    "noPolicies": "لا توجد وثائق متاحة",
+    "noPoliciesDesc": "No policies are currently available for application."
+  },
+  "card": {
+    "sumAssurance": "مبلغ التأمين:",
+    "premium": "القسط:",
+    "tenure": "المدة:",
+    "applyNow": "قدم الآن",
+    "applying": "جاري التقديم..."
+  },
+  "confirm": {
+    "title": "تأكيد طلب الوثيقة",
+    "description": "بتقديم طلب هذه الوثيقة، أنت تبدأ طلب تأمين رسمي مع COBITUN Insurance. سيبدأ هذا عملية التقييم وقد يتضمن التزامات مالية. يرجى تأكيد رغبتك في المتابعة."
+  },
+  "toast": {
+    "applicationFailed": "فشل التقديم",
+    "submitSuccess": "تم تقديم طلب الوثيقة بنجاح!",
+    "somethingWentWrong": "حدث خطأ ما"
+  },
+  "loading": "Loading policies…"
+}

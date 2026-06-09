@@ -1,0 +1,59 @@
+{
+  "title": "مخصصات المطالبات",
+  "subtitle": "إدارة مخصصات المطالبات وتتبع تاريخ التعديلات",
+  "tabs": {
+    "parametric": "مخصصات حدودية",
+    "cyber": "مخصصات سيبرانية"
+  },
+  "addReserve": "إضافة مخصص",
+  "table": {
+    "type": "النوع",
+    "amount": "المبلغ",
+    "previous": "السابق",
+    "adjustment": "التعديل",
+    "method": "الطريقة",
+    "confidence": "مستوى الثقة",
+    "reason": "السبب",
+    "date": "التاريخ"
+  },
+  "empty": {
+    "noClaims": "لم يتم العثور على مطالبات",
+    "noReserves": "لا توجد مخصصات مسجلة لهذه المطالبة"
+  },
+  "dialog": {
+    "addTitle": "إضافة مخصص",
+    "addDescription": "إضافة مخصص جديد إلى مطالبة {{claimType}} رقم {{claimId}}",
+    "reserveType": "نوع المخصص",
+    "selectType": "اختر النوع",
+    "reserveAmount": "مبلغ المخصص (د.ت)",
+    "actuarialMethod": "الطريقة الحسابية",
+    "selectMethod": "اختر الطريقة",
+    "confidenceLevel": "مستوى الثقة",
+    "adjustmentReason": "سبب التعديل",
+    "reasonPlaceholder": "سبب هذا المخصص",
+    "saving": "جاري الحفظ...",
+    "adjustmentReasonPlaceholder": "مثال، مراجعة ربع سنوية للاحتياطيات",
+    "confidenceLevelPlaceholder": "مثال، مرتفع، متوسط، منخفض",
+    "defaultReason": "تعديل احتياطي معياري"
+  },
+  "reserveTypes": {
+    "CASE": "حالة",
+    "IBNR": "IBNR",
+    "INCURRED": "مستحق",
+    "PAID": "مدفوع",
+    "RECOVERED": "مسترد"
+  },
+  "actuarialMethods": {
+    "CHAIN_LADDER": "سلم السلسلة",
+    "BORNHUETTER_FERGUSON": "بورنهويتر-فرغسون",
+    "CAPE_COD": "كايب كود",
+    "MACK": "ماك",
+    "BF_MODIFIED": "BF معدّل"
+  },
+  "toast": {
+    "added": "تمت إضافة المخصص بنجاح",
+    "addFailed": "فشل إضافة المخصص",
+    "required": "نوع ومبلغ المخصص مطلوبان",
+    "requiredFields": "يرجى ملء جميع الحقول المطلوبة"
+  }
+}

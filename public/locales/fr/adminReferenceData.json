@@ -1,0 +1,88 @@
+{
+  "title": "Données de Référence",
+  "subtitle": "Gérer les tables de référence actuarielles versionnées",
+  "newEntry": "Nouvelle Entrée",
+  "tabs": {
+    "sector": "Secteurs",
+    "businessModel": "Modèles Économiques",
+    "turnoverBand": "Tranches de CA",
+    "resilienceProfile": "Profils de Résilience",
+    "slaTier": "Niveaux SLA",
+    "securityPosture": "Postures de Sécurité"
+  },
+  "typeLabels": {
+    "sector": "Secteur",
+    "businessModel": "Modèle Économique",
+    "turnoverBand": "Tranche de CA",
+    "resilienceProfile": "Profil de Résilience",
+    "slaTier": "Niveau SLA",
+    "securityPosture": "Posture de Sécurité"
+  },
+  "version": {
+    "history": "Historique des Versions",
+    "current": "Actuelle",
+    "newVersion": "Nouvelle Version"
+  },
+  "table": {
+    "version": "Version",
+    "validFrom": "Valide Depuis",
+    "validTo": "Valide Jusqu'au",
+    "current": "Actuelle",
+    "parameters": "Paramètres"
+  },
+  "params": {
+    "rf": "FR",
+    "rm": "MR",
+    "bpf": "FPP",
+    "mttr": "MTTR",
+    "threshold": "Seuil",
+    "min": "Min",
+    "max": "Max"
+  },
+  "empty": {
+    "noEntries": "Aucune entrée {{type}} trouvée"
+  },
+  "dialog": {
+    "newVersionTitle": "Nouvelle Version — {{type}}",
+    "createTitle": "Créer {{type}}",
+    "newVersionDescription": "Création d'une nouvelle version pour {{code}}. La version actuelle sera clôturée.",
+    "createDescription": "Ajouter une nouvelle entrée {{type}}",
+    "code": "Code",
+    "codePlaceholder": "ex. TECH",
+    "name": "Nom",
+    "namePlaceholder": "ex. Technologie",
+    "description": "Description",
+    "descriptionPlaceholder": "Description facultative",
+    "riskFactor": "Facteur de Risque",
+    "riskFactorPlaceholder": "ex. 1.2500",
+    "riskFactorHint": "Multiplicateur appliqué lors du calcul de la prime",
+    "minTurnover": "CA Min (TND)",
+    "maxTurnover": "CA Max (TND)",
+    "basePremiumFactor": "Facteur de Prime de Base",
+    "basePremiumFactorPlaceholder": "ex. 1.0000",
+    "mttrHours": "MTTR (Heures)",
+    "mttrHoursPlaceholder": "ex. 4.0",
+    "thresholdHours": "Seuil (Heures)",
+    "thresholdHoursPlaceholder": "ex. 2.0",
+    "riskMultiplier": "Multiplicateur de Risque",
+    "riskMultiplierPlaceholder": "ex. 1.5000",
+    "riskMultiplierHint": "Multiplicateur pour la prime cyber basé sur la posture de sécurité",
+    "createEntry": "Créer l'Entrée",
+    "createNewVersion": "Créer une Nouvelle Version",
+    "saving": "Enregistrement..."
+  },
+  "toast": {
+    "versionCreated": "Nouvelle version créée avec succès",
+    "entryCreated": "Entrée créée avec succès",
+    "saveFailed": "Échec de l'enregistrement",
+    "required": "Le code et le nom sont obligatoires",
+    "requiredFields": "Veuillez remplir tous les champs obligatoires"
+  },
+  "versionTable": {
+    "current": "Actuelle",
+    "parameters": "Paramètres",
+    "validFrom": "Valide Depuis",
+    "validTo": "Valide Jusqu'au",
+    "version": "Version"
+  }
+}

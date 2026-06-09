@@ -1,0 +1,48 @@
+{
+  "title": "لوحة تحكم العميل",
+  "welcome": "مرحباً بعودتك، {{name}}!",
+  "traditional": {
+    "title": "التأمين التقليدي",
+    "availablePolicies": "السياسات المتاحة",
+    "appliedPolicies": "السياسات المُقدم لها",
+    "categories": "الفئات",
+    "myQuestions": "أسئلتي",
+    "approved": "موافق عليها",
+    "pending": "قيد الانتظار",
+    "disapproved": "مرفوضة"
+  },
+  "parametric": {
+    "sectionTitle": "تأمين انهيار الخدمات السحابية",
+    "cloudCoverage": "التغطية السحابية",
+    "parametricClaims": "المطالبات البارامترية",
+    "outageMonitor": "مراقب الانقطاعات",
+    "lastTrigger": "آخر تفعيل",
+    "viewPolicies": "عرض السياسات",
+    "viewHistory": "عرض السجل",
+    "monitor": "مراقبة",
+    "details": "التفاصيل",
+    "payout": "التعويض: {{amount}} TND",
+    "viewClaims": "عرض المطالبات",
+    "insuredHours": "Insured Hours"
+  },
+  "payouts": {
+    "totalReceived": "إجمالي التعويضات المستلمة",
+    "claimsPaid": "{{count}} مطالبات مدفوعة"
+  },
+  "lastTrigger": {
+    "insuredHours": "{{hours}}س مؤمنة — {{provider}}",
+    "payout": "التعويض: {{amount}} TND",
+    "viewClaims": "عرض المطالبات"
+  },
+  "onboarding": {
+    "title": "احصل على تأمين انهيار الخدمات السحابية",
+    "desc": "تعويضات تلقائية عندما يتعطل مزود الخدمة السحابية. بدون نماذج. بدون انتظار. دقيقتان للإعداد.",
+    "step1": "اختر المزود",
+    "step2": "حدد التغطية",
+    "step3": "احصل على الموافقة",
+    "step4": "تعويض تلقائي",
+    "applyNow": "قدّم الآن",
+    "description": "أكمل إعداد التأمين للحصول على الحماية ضد انقطاعات الخدمات السحابية"
+  },
+  "loading": "Loading dashboard…"
+}

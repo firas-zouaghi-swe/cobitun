@@ -1,0 +1,169 @@
+{
+  "hero": {
+    "title1": "Cloud Down?",
+    "title2": "You Still Get Protected",
+    "subtitle": "Tunisia's first parametric cloud outage insurance.",
+    "seeHowItWorks": "See How It Works",
+    "liveMonitoring": "Live Monitoring Active",
+    "badge": "PARAMETRIC",
+    "ancsCertified": "ANCS Certified",
+    "description": "Automatic payouts powered by real-time IODA monitoring — no forms, no adjusters, no waiting.",
+    "monitorTitle": "COBITUN Monitor",
+    "live": "LIVE",
+    "providers": "Providers",
+    "totalIps": "Total IPs",
+    "ancsCert": "ANCS Cert.",
+    "scroll": "Scroll",
+    "allOnline": "All Online",
+    "moreProviders": "more"
+  },
+  "stat": {
+    "monitoredProviders": "Monitored Providers",
+    "activeOutages": "Active Outages",
+    "totalPayouts": "Total Payouts",
+    "claimsForms": "Claims Forms"
+  },
+  "problem": {
+    "title": "Why Traditional Insurance Fails SMEs",
+    "cloudDependencyTitle": "Cloud Dependency Crisis",
+    "cloudDependencyDesc": "73% of Tunisian SMEs rely on cloud infrastructure. When it fails, revenue stops — but your costs don't. Salaries, rent, subscriptions keep draining cash while you wait for service to return.",
+    "paperworkTitle": "The Paperwork Trap",
+    "paperworkDesc": "Standard business interruption insurance requires months of financial records, proof of loss, adjuster visits, and legal review. By the time you get paid, you might be out of business. SMEs need speed, not bureaucracy.",
+    "solutionTitle": "The Parametric Solution",
+    "solutionDesc": "We use objective IODA data — not opinions. If Georgia Tech's Internet Intelligence detects your provider's outage exceeded their SLA MTTR, you get paid. Automatically. In minutes. No adjusters, no lawyers, no waiting.",
+    "recentOutages": "Recent Real Outages (IODA Data)",
+    "outageBadge": "Outage"
+  },
+  "formula": {
+    "title": "Actuarial Pricing Formula",
+    "lambda": "1.1212 events/year (observed Tunisian frequency)",
+    "expectedDuration": "107.07 hours (mean insured duration)",
+    "sectorFactors": "GM, CD, CR = Sector-specific factors (16 sectors)",
+    "resilience": "1/R = Resilience factor (High=2.0, Medium=1.33, Low=1.0)",
+    "businessModel": "BM = Business model factor (B2C=1.0, B2B=0.8)",
+    "loading": "1.32 = 32% loading (expenses + margin)",
+    "research": "Based on peer-reviewed actuarial research for Tunisian SMEs"
+  },
+  "ioda": {
+    "title": "What is IODA?",
+    "description": "The Internet Outage Data Aggregator (IODA) is a project by Georgia Tech and CAIDA that monitors global internet connectivity using BGP routing data (500+ monitors), active probing (CAIDA Ark), and network telescopes. It detects outages in real-time with no dependency on the provider's own reporting."
+  },
+  "howItWorks": {
+    "title": "How Parametric Insurance Works",
+    "subtitle": "Four simple steps to protect your business from cloud downtime. Zero paperwork, total automation.",
+    "step1Title": "Choose Provider",
+    "step1Desc": "Select from {{count}} monitored Tunisian cloud providers. Each has a defined SLA tier and MTTR threshold.",
+    "step2Title": "Set Coverage",
+    "step2Desc": "Enter your revenue, margin, and risk profile. The actuarial engine calculates your premium and payout rate.",
+    "step3Title": "Monitor 24/7",
+    "step3Desc": "IODA watches your provider via BGP, active probing, and network telescopes. Real outage data, not self-reported.",
+    "step4Title": "Auto-Pay",
+    "step4Desc": "Outage exceeds MTTR? Claim created, approved, and paid automatically. No forms, no waiting.",
+    "stepLabel": "Step {{n}}"
+  },
+  "automation": {
+    "title": "Automation Pipeline: IODA to Payout in 7 Steps",
+    "step1Label": "IODA Detects",
+    "step1Desc": "BGP monitors spot routing anomaly",
+    "step2Label": "Event Stored",
+    "step2Desc": "Outage event created in database",
+    "step3Label": "Events Merged",
+    "step3Desc": "Consecutive events within 2h gap joined",
+    "step4Label": "SLA Check",
+    "step4Desc": "Duration compared to provider MTTR",
+    "step5Label": "Trigger Fired",
+    "step5Desc": "Insured hours calculated",
+    "step6Label": "Claim Created",
+    "step6Desc": "Auto-claim for each policy",
+    "step7Label": "Payout Sent",
+    "step7Desc": "Funds disbursed automatically"
+  },
+  "providers": {
+    "sectionTitle": "15+ Monitored Tunisian Providers",
+    "sectionSubtitle": "Each provider is classified by SLA tier with a defined MTTR threshold. All monitored 24/7 via IODA. Data sourced from RIPE NCC and Georgia Tech.",
+    "liveMonitoring": "Live 24/7 Monitoring",
+    "monitoredViaIoda": "Monitored 24/7 via IODA",
+    "tagGovernment": "Government",
+    "tagAncsCertified": "ANCS Certified",
+    "previousProvider": "Previous provider",
+    "nextProvider": "Next provider",
+    "pauseAutoplay": "Pause auto-play",
+    "resumeAutoplay": "Resume auto-play",
+    "goToProvider": "Go to provider {{number}}",
+    "subtitle": "Monitored Cloud Providers in Tunisia",
+    "title": "{{count}}+ Monitored Providers",
+    "uptimeSLA": "Uptime SLA",
+    "ancsBadge": "ANCS",
+    "govBadge": "Gov."
+  },
+  "compare": {
+    "row1Feature": "Claims filing",
+    "row1Traditional": "Manual forms",
+    "row1Parametric": "Automatic",
+    "row2Feature": "Proof of loss",
+    "row2Traditional": "Financial records",
+    "row2Parametric": "IODA data",
+    "row3Feature": "Payout speed",
+    "row3Traditional": "30-90 days",
+    "row3Parametric": "15 minutes",
+    "row4Feature": "Transparency",
+    "row4Traditional": "Subjective",
+    "row4Parametric": "Algorithm + public data",
+    "row5Feature": "Provider disputes",
+    "row5Traditional": "Their word vs yours",
+    "row5Parametric": "Third party (Georgia Tech)",
+    "row6Feature": "Coverage trigger",
+    "row6Traditional": "Revenue proof",
+    "row6Parametric": "Outage > MTTR",
+    "row7Feature": "Recurring outages",
+    "row7Traditional": "Separate claim",
+    "row7Parametric": "Auto-trigger",
+    "row8Feature": "Cost predictability",
+    "row8Traditional": "Variable",
+    "row8Parametric": "Fixed premium",
+    "row9Feature": "Human error",
+    "row9Traditional": "Adjuster bias",
+    "row9Parametric": "Bias-free"
+  },
+  "compareSection": {
+    "title": "Traditional vs. Parametric Insurance",
+    "subtitle": "See why parametric insurance is the future of cloud outage protection.",
+    "featureHeader": "Feature",
+    "traditionalHeader": "Traditional",
+    "parametricHeader": "Parametric"
+  },
+  "control": {
+    "title": "3-Layer Hybrid Control",
+    "subtitle": "Automation for speed. Admin oversight for trust. Policy approval for quality. Three layers working together.",
+    "layer1Title": "Layer 1: Automation",
+    "layer1Desc": "Claims are auto-created when IODA detects an outage exceeding MTTR. Auto-approved and auto-paid for speed. Customers get paid in minutes, not months.",
+    "layer1Badge": "Speed Layer",
+    "layer2Title": "Layer 2: Admin Review",
+    "layer2Desc": "Admins can dispute any auto-claim within 48 hours. Disputed claims are held pending investigation. This prevents fraud while maintaining payout speed for legitimate claims.",
+    "layer2Badge": "Oversight Layer",
+    "layer3Title": "Layer 3: Policy Approval",
+    "layer3Desc": "Every parametric policy requires admin approval before activation. This ensures only legitimate businesses with verified providers get coverage. Quality gate before automation starts.",
+    "layer3Badge": "Quality Layer"
+  },
+  "video": {
+    "liveDemo": "Watch the technology in action",
+    "title": "See COBITUN in this short demo",
+    "subtitle": "Watch a short demonstration of how COBITUN's parametric insurance works — from simple subscription and 24/7 independent monitoring of your internet and cloud services to automatic payout when an outage exceeds your agreed delay, with transparent calculation and fast payment in just a few days.",
+    "clickToWatch": "Click to Watch",
+    "close": "Close video",
+    "unsupported": "Your browser does not support the video tag."
+  },
+  "cta": {
+    "title1": "Don't Let Downtime",
+    "title2": "Destroy Your Business",
+    "subtitle": "Join Tunisia's first parametric cloud outage insurance. Automatic payouts. Objective data. Zero paperwork.",
+    "apply": "Apply for Coverage",
+    "talkToAgent": "Talk to an Agent"
+  },
+  "footer": {
+    "platformDesc": "Tunisia's first parametric cloud outage insurance platform."
+  },
+  "newsletter": {
+    "ariaLabel": "Email newsletter"
+  }
+}

@@ -1,0 +1,44 @@
+# Render Build & Runtime environment variable entries
+# Instructions:
+# - In Render dashboard, open your Web Service > Environment.
+# - Add the Build Environment variables under "Build" (available during `npm run build`).
+# - Add the Runtime Environment variables under "Environment" (available when the service runs).
+# - Also add a Persistent Disk (Mount Path: /app/data, Size: 1 GB).
+
+--- BUILD ENVIRONMENT VARIABLES (set under Build env in Render) ---
+JWT_SECRET=your_jwt_secret_here
+JWT_REFRESH_SECRET=your_jwt_refresh_secret_here
+CSRF_SECRET=your_csrf_secret_here
+ENCRYPTION_KEY=your_encryption_key_here
+DATABASE_URL=file:/app/data/db.sqlite
+NEXT_PUBLIC_APP_URL=https://cyber-dbi.net
+NODE_OPTIONS=--max-old-space-size=512
+
+--- RUNTIME ENVIRONMENT VARIABLES (set under Environment in Render) ---
+DATABASE_URL=file:/app/data/db.sqlite
+NEXT_PUBLIC_APP_URL=https://cyber-dbi.net
+FRONTEND_URL=http://localhost:3000
+JWT_SECRET=your_jwt_secret_here
+JWT_REFRESH_SECRET=your_jwt_refresh_secret_here
+CSRF_SECRET=your_csrf_secret_here
+ENCRYPTION_KEY=your_encryption_key_here
+EMAIL_DELIVERY_MODE=smtp
+SMTP_HOST=smtp.office365.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=info@cyber-dbi.net
+SMTP_PASS=your_smtp_password_here
+EMAIL_FROM=info@cyber-dbi.net
+EMAIL_DEFAULT_FROM=info@cyber-dbi.net
+LOG_LEVEL=info
+SESSION_MAX_AGE=86400
+SESSION_IDLE_TIMEOUT=1800
+
+# Optional / advanced
+# REDIS_URL=
+# S3_ENDPOINT=
+# S3_REGION=
+# S3_BUCKET=
+# S3_ACCESS_KEY=
+# S3_SECRET_KEY=
+# NEXT_PUBLIC_SENTRY_DSN=

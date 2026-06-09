@@ -1,0 +1,84 @@
+{
+  "title": "Sinistres cyber",
+  "subtitle": "Enquêter, ajuster et régler les sinistres d'assurance cyber",
+  "stats": {
+    "totalClaims": "Total des sinistres",
+    "estLoss": "Sinistre estimé",
+    "approved": "Approuvé",
+    "paid": "Payé"
+  },
+  "filter": {
+    "status": "Statut :",
+    "allStatuses": "Tous les statuts",
+    "filterByStatus": "Filtrer par statut",
+    "claimCount": "{{count}} sinistre(s)"
+  },
+  "table": {
+    "claimId": "ID du sinistre",
+    "policyholder": "Assuré",
+    "incidentDate": "Date de l'incident",
+    "incidentType": "Type d'incident",
+    "estimatedLoss": "Sinistre estimé",
+    "status": "Statut",
+    "approvedAmount": "Montant approuvé",
+    "actions": "Actions",
+    "view": "Voir"
+  },
+  "empty": {
+    "noClaims": "Aucun sinistre trouvé",
+    "tryChangingFilter": "Essayez de modifier le filtre pour voir plus de résultats",
+    "newClaims": "Les nouveaux sinistres apparaîtront ici pour examen"
+  },
+  "incidentType": {
+    "BI": "Interruption d'activité",
+    "DR": "Récupération de données",
+    "CE": "Extorsion cyber",
+    "SR": "Réponse de sécurité",
+    "CM": "Gestion de crise",
+    "PL": "Responsabilité vie privée",
+    "RD": "Défense réglementaire",
+    "ML": "Responsabilité média",
+    "SE": "Ingénierie sociale",
+    "OTHER": "Autre"
+  },
+  "dialog": {
+    "title": "Détails du sinistre",
+    "claimDescription": "Sinistre {{id}} — {{name}}",
+    "fields": {
+      "claimId": "ID du sinistre",
+      "status": "Statut",
+      "policyholder": "Assuré",
+      "product": "Produit",
+      "incidentDate": "Date de l'incident",
+      "reportedDate": "Date de déclaration",
+      "incidentType": "Type d'incident",
+      "policyLimit": "Limite de police",
+      "estimatedLoss": "Sinistre estimé",
+      "deductibleSIR": "Franchise / SIR",
+      "approvedAmount": "Montant approuvé",
+      "paidDate": "Date de paiement"
+    },
+    "incidentDescription": "Description de l'incident",
+    "forensicReport": "Rapport forensique",
+    "existingAdjusterComment": "Commentaire existant de l'expert",
+    "claimActions": "Actions sur le sinistre",
+    "updateStatus": "Mettre à jour le statut",
+    "selectNewStatus": "Sélectionner un nouveau statut...",
+    "approvedAmountTnd": "Montant approuvé (TND)",
+    "estimatedLossLabel": "Sinistre estimé : {{amount}} TND",
+    "adjusterComment": "Commentaire de l'expert",
+    "adjusterPlaceholder": "Ajouter des notes d'enquête, constatations ou justifications...",
+    "updateTo": "Mettre à jour vers {{status}}",
+    "markAsPaid": "Marquer comme payé",
+    "denyClaim": "Refuser le sinistre",
+    "claimPaid": "Le sinistre a été payé",
+    "claimDenied": "Le sinistre a été refusé",
+    "on": "le"
+  },
+  "toast": {
+    "markPaidSuccess": "Sinistre marqué comme payé",
+    "updateSuccess": "Sinistre mis à jour avec succès",
+    "updateFailed": "Échec de la mise à jour du sinistre",
+    "actionFailed": "L'action a échoué"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "title": "Gestion de la Réassurance",
+  "subtitle": "Gérer les traités de réassurance et les primes cédées",
+  "createTreaty": "Créer un Traité",
+  "tabs": {
+    "treaties": "Traités",
+    "parametricCeded": "Cédé Paramétrique",
+    "cyberCeded": "Cédé Cyber"
+  },
+  "table": {
+    "treatyNumber": "Traité N°",
+    "name": "Nom",
+    "reinsurer": "Réassureur",
+    "type": "Type",
+    "cessionPct": "Taux de cession %",
+    "period": "Période",
+    "status": "Statut",
+    "policy": "Police",
+    "grossPremium": "Prime Brute",
+    "cededPremium": "Prime Cédée",
+    "netPremium": "Prime Nette",
+    "grossClaim": "Sinistre Brut",
+    "cededClaim": "Sinistre Cédé",
+    "recovery": "Recouvrement",
+    "treaty": "Traité"
+  },
+  "empty": {
+    "noTreaties": "Aucun traité de réassurance trouvé",
+    "noParametricCeded": "Aucune entrée cédée paramétrique trouvée",
+    "noCyberCeded": "Aucune entrée cédée cyber trouvée"
+  },
+  "dialog": {
+    "createTitle": "Créer un Traité de Réassurance",
+    "createDescription": "Ajouter un nouveau traité de réassurance à la plateforme",
+    "treatyNumber": "Numéro de Traité",
+    "treatyNumberPlaceholder": "ex. TR-2025-001",
+    "treatyName": "Nom du Traité",
+    "treatyNamePlaceholder": "ex. Traité Quote-Part 2025",
+    "reinsurerName": "Nom du Réassureur",
+    "reinsurerNamePlaceholder": "ex. Swiss Re",
+    "treatyType": "Type de Traité",
+    "selectType": "Sélectionner le type",
+    "cessionPct": "Taux de cession %",
+    "cessionPctPlaceholder": "ex. 40",
+    "startDate": "Date de Début",
+    "endDate": "Date de Fin",
+    "status": "Statut",
+    "creating": "Création..."
+  },
+  "status": {
+    "ACTIVE": "Actif",
+    "PENDING": "En Attente",
+    "EXPIRED": "Expiré",
+    "CANCELLED": "Annulé"
+  },
+  "types": {
+    "QUOTA_SHARE": "Quote-Part",
+    "SURPLUS": "Excédent",
+    "EXCESS_OF_LOSS": "Excédent de Sinistre",
+    "STOP_LOSS": "Stop Loss",
+    "FACULTATIVE": "Facultatif"
+  },
+  "toast": {
+    "created": "Traité créé avec succès",
+    "createFailed": "Échec de la création du traité",
+    "required": "Le numéro, le nom, le réassureur et le type du traité sont obligatoires",
+    "requiredFields": "Veuillez remplir tous les champs obligatoires"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "title": "طلب السياسة",
+  "progress": {
+    "title": "تقدم الطلب",
+    "contractUploaded": "تم رفع عقد المزود",
+    "adminReviewing": "قيد مراجعة الإدارة",
+    "policyGenerated": "تم إنشاء عقد السياسة",
+    "signAndPay": "التوقيع والدفع",
+    "finalApproval": "الموافقة النهائية",
+    "completed": "مكتمل"
+  },
+  "details": {
+    "title": "تفاصيل الطلب",
+    "created": "تاريخ الإنشاء",
+    "sector": "القطاع",
+    "annualTurnover": "حجم الأعمال السنوي",
+    "premium": "القسط",
+    "paidOn": "تاريخ الدفع",
+    "approvedOn": "تاريخ الموافقة"
+  },
+  "documents": {
+    "title": "المستندات",
+    "providerContract": "عقد المزود",
+    "providerContractDesc": "عقدك المرفوع",
+    "insurancePolicy": "عقد سياسة التأمين",
+    "insurancePolicyDesc": "مُنشأ بواسطة COBITUN",
+    "signedContract": "العقد الموقّع",
+    "signedContractDesc": "سياستك الموقّعة",
+    "download": "تنزيل",
+    "downloadFailed": "فشل تنزيل المستند",
+    "insurancePolicyContract": "عقد سياسة التأمين",
+    "insurancePolicyContractDesc": "وثيقة سياسة التأمين الرسمية الخاصة بك",
+    "downloadPolicyContract": "Download insurance policy contract",
+    "downloadProviderContract": "Download provider contract",
+    "downloadSignedContract": "Download signed contract"
+  },
+  "actions": {
+    "removeUploadedFile": "إزالة الملف المرفوع"
+  },
+  "sign": {
+    "title": "تنزيل وتوقيع عقد السياسة",
+    "desc": "قم بتنزيل عقد السياسة المُنشأ، ووقّعه، ثم ارفع ملف PDF الموقّع",
+    "downloadPdf": "تنزيل عقد السياسة PDF",
+    "uploadLabel": "رفع العقد الموقّع",
+    "uploadHint": "انقر لرفع ملف PDF الموقّع (10 ميغابايت كحد أقصى)",
+    "submitButton": "إرسال العقد الموقّع",
+    "uploading": "جارٍ رفع العقد الموقّع...",
+    "description": "وقّع عقد التأمين للمتابعة",
+    "failed": "فشل رفع العقد الموقّع",
+    "maxSize": "الحد الأقصى لحجم الملف: 10 ميغابايت",
+    "pdfOnly": "ملفات PDF فقط",
+    "submit": "رفع العقد الموقّع",
+    "success": "تم توقيع العقد بنجاح"
+  },
+  "pay": {
+    "title": "دفع القسط",
+    "desc": "تم استلام عقدك الموقّع. يرجى دفع القسط للمتابعة.",
+    "premiumAmount": "مبلغ القسط",
+    "paymentReference": "مرجع الدفع",
+    "paymentRefHint": "أدخل رقم مرجع التحويل البنكي أو الدفع",
+    "confirmButton": "تأكيد دفع القسط",
+    "processing": "جارٍ معالجة الدفع...",
+    "confirm": "تأكيد الدفع",
+    "description": "أكمل دفع القسط لتفعيل التغطية",
+    "failed": "فشل الدفع. يرجى المحاولة مرة أخرى.",
+    "paymentReferenceHint": "أدخل رقم مرجع الدفع",
+    "success": "تم تأكيد الدفع بنجاح"
+  },
+  "timeline": {
+    "title": "الجدول الزمني للنشاط"
+  },
+  "notFound": {
+    "title": "الطلب غير موجود",
+    "desc": "طلب السياسة الذي تبحث عنه غير موجود أو ليس لديك صلاحية الوصول إليه.",
+    "backToWorkflow": "العودة لسير العمل",
+    "description": "السياسة التي تبحث عنها غير موجودة أو تمت إزالتها",
+    "loadFailed": "فشل تحميل تفاصيل السياسة"
+  },
+  "rejected": {
+    "title": "الطلب مرفوض",
+    "reason": "السبب:"
+  },
+  "confirmSign": {
+    "title": "تأكيد توقيع العقد",
+    "description": "بتوقيع هذا العقد، أنت تدخل في اتفاقية ملزمة قانونيًا مع COBITUN Insurance. لا يمكن التراجع عن هذا الإجراء. يرجى التأكد من مراجعة عقد السياسة بدقة قبل التوقيع."
+  },
+  "confirmPay": {
+    "title": "تأكيد دفع القسط",
+    "description": "هذا الدفع غير قابل للإلغاء. بمجرد التأكيد، سيُسجّل مبلغ القسط كمدفوع ولا يمكن عكسه. يرجى التحقق من صحة مرجع الدفع قبل المتابعة."
+  },
+  "loading": "Loading policy details..."
+}

@@ -1,0 +1,91 @@
+{
+  "title": "Demander une Assurance Cyber Indemnité",
+  "subtitle": "Couverture cyber complète pour votre entreprise — la souscription prend 5 minutes",
+  "step1": {
+    "title": "Aperçu du Produit",
+    "policyTitle": "Police Cyber Indemnité Complète",
+    "type": "Type",
+    "masterLimit": "Limite Maîtresse",
+    "deductible": "Franchise",
+    "indemnityPeriod": "Période d'Indemnisation",
+    "coverageGrants": "Octrois de Couverture",
+    "masterExclusions": "Exclusions Maîtresses",
+    "conditionsApply": "Conditions applicables",
+    "hoursWait": "{{hours}}h d'attente",
+    "days": "jours",
+    "productTitle": "Produit Cyber Indemnité",
+    "wait": "Wait",
+    "label": "Aperçu du Produit"
+  },
+  "step2": {
+    "title": "Souscription",
+    "infoTip": "Répondez à toutes les questions avec précision. Des informations manquantes ou incorrectes peuvent affecter votre couverture ou entraîner le refus d'un sinistre.",
+    "waiverWarning": "Ce contrôle est attendu pour l'approbation de la souscription. Continuer peut entraîner le rejet de la demande ou une majoration de prime.",
+    "placeholderText": "Entrez votre réponse",
+    "placeholderNumber": "Entrez un nombre",
+    "placeholderSelect": "Sélectionnez une option",
+    "locationLabel": "Région / Emplacement",
+    "locationPlaceholder": "Ex : Tunis, Tunisie ou Gouvernorat de Sousse",
+    "locationHelper": "Sélectionnez un emplacement parmi les suggestions ou saisissez votre propre région.",
+    "loadingSuggestions": "Chargement des suggestions…",
+    "yes": "Oui",
+    "no": "Non",
+    "answerAccurately": "Veuillez répondre à toutes les questions avec précision",
+    "enterAnswer": "Entrez votre réponse",
+    "enterNumber": "Entrez un nombre",
+    "selectOption": "Sélectionnez une option",
+    "label": "Souscription"
+  },
+  "step3": {
+    "title": "Révision et Évaluation",
+    "summaryTitle": "Résumé de la Demande",
+    "yourAnswers": "Vos Réponses",
+    "waiverFlags": "Drapeaux de Dérogation ({count})",
+    "terms": "Je confirme que toutes les informations fournies sont exactes et complètes. Je comprends que toute fausse déclaration peut annuler ma couverture.",
+    "resultTitle": "Résultat de l'Évaluation des Risques",
+    "riskScore": "Score de Risque",
+    "securityPosture": "Posture de Sécurité",
+    "estimatedPremium": "Prime Annuelle Estimée",
+    "waiverFlagsDetected": "Drapeaux de Dérogation Détectés",
+    "awaitingReview": "En attente de révision admin",
+    "applicationSummary": "Résumé de la Demande",
+    "riskAssessmentResult": "Résultat de l'Évaluation des Risques",
+    "submitButton": "Soumettre la Demande",
+    "submitted": "Demande soumise avec succès !",
+    "submitting": "Soumission en cours...",
+    "label": "Révision et Évaluation",
+    "startNewApplication": "Customercyberapply:Step3 Startnewapplication"
+  },
+  "sidebar": {
+    "policyFacts": "Faits Rapides sur la Police",
+    "masterPolicyLimit": "Limite Maîtresse de Police",
+    "deductibleSir": "Franchise (SIR)",
+    "indemnityPeriod": "Période d'Indemnisation",
+    "coverageGrants": "Octrois de Couverture",
+    "exclusions": "Exclusions",
+    "minimumPremium": "Prime Minimum",
+    "premiumNote": "La prime est calculée en fonction de votre score de risque, de votre posture de sécurité et de vos limites de couverture. Prime finale soumise à la révision de souscription.",
+    "waiverCounter": "Drapeaux de Dérogation",
+    "waiverNote": "Contrôles non respectés — peut affecter la prime ou l'approbation",
+    "days": "jours",
+    "deductibleSIR": "Franchise (SIR)",
+    "policyQuickFacts": "Faits Rapides sur la Police",
+    "waiverFlags": "Drapeaux de Dérogation ({count})",
+    "waiverFlagsDesc": "Les drapeaux de dérogation indiquent des réponses à haut risque nécessitant une révision manuelle"
+  },
+  "toast": {
+    "missingInfo": "Informations requises manquantes",
+    "submitted": "Demande soumise avec succès !",
+    "submitFailed": "Échec de la soumission de la demande"
+  },
+  "productNotAvailable": "Le produit Cyber Indemnité n'est pas disponible pour le moment",
+  "productNotAvailableSubtitle": "Veuillez réessayer plus tard ou contacter le support",
+  "productUnavailable": "Produit Indisponible",
+  "productUnavailableDesc": "L'assurance cyber indemnité n'est pas disponible actuellement",
+  "step${step": {
+    "id}": {
+      "label": "Label"
+    }
+  },
+  "loading": "Loading product..."
+}

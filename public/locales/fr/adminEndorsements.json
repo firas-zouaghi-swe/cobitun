@@ -1,0 +1,67 @@
+{
+  "title": "Avenants",
+  "subtitle": "Gérer les avenants de police et les ajustements en cours de contrat",
+  "createEndorsement": "Créer un Avenant",
+  "tabs": {
+    "parametric": "Avenants Paramétriques",
+    "cyber": "Avenants Cyber"
+  },
+  "table": {
+    "endorsementNumber": "Avenant N°",
+    "policy": "Police",
+    "type": "Type",
+    "description": "Description",
+    "premiumAdj": "Ajust. Prime",
+    "effectiveDate": "Date d'Effet",
+    "status": "Statut"
+  },
+  "empty": {
+    "noParametric": "Aucun avenant paramétrique trouvé",
+    "noCyber": "Aucun avenant cyber trouvé",
+    "noCyberEndorsements": "Aucun avenant cyber trouvé"
+  },
+  "dialog": {
+    "createTitle": "Créer un Avenant Paramétrique",
+    "createDescription": "Ajouter un nouvel avenant à une police paramétrique",
+    "policyId": "ID Police",
+    "policyIdPlaceholder": "ex. 1",
+    "endorsementNumber": "Avenant N°",
+    "endorsementNumberPlaceholder": "ex. AVN-2025-001",
+    "type": "Type",
+    "selectType": "Sélectionner le type",
+    "premiumAdjustment": "Ajustement de Prime (TND)",
+    "effectiveDate": "Date d'Effet",
+    "changeDescription": "Description du Changement",
+    "changeDescriptionPlaceholder": "Décrire le changement de l'avenant",
+    "previousValues": "Valeurs Précédentes (JSON)",
+    "newValues": "Nouvelles Valeurs (JSON)",
+    "creating": "Création...",
+    "jsonPlaceholder": "Entrez la configuration JSON"
+  },
+  "types": {
+    "COVERAGE_CHANGE": "Modification de Couverture",
+    "PREMIUM_ADJUSTMENT": "Ajustement de Prime",
+    "POLICYHOLDER_CHANGE": "Changement d'Assuré",
+    "ENDORSEMENT_ADD": "Ajout d'Avenant",
+    "ENDORSEMENT_REMOVE": "Retrait d'Avenant",
+    "REINSTATEMENT": "Rétablissement",
+    "CANCELLATION": "Résiliation"
+  },
+  "status": {
+    "PENDING": "En Attente",
+    "APPROVED": "Approuvé",
+    "REJECTED": "Rejeté",
+    "PROCESSED": "Traité"
+  },
+  "cyber": {
+    "comingSoonTitle": "Avenants Cyber",
+    "comingSoonDescription": "La gestion des avenants cyber arrive bientôt. Vous pourrez créer et gérer des avenants pour les polices cyber.",
+    "contactSupport": "Contacter le support"
+  },
+  "toast": {
+    "created": "Avenant créé avec succès",
+    "createFailed": "Échec de la création de l'avenant",
+    "required": "L'ID police, le numéro, le type, la description et la date d'effet sont obligatoires",
+    "requiredFields": "Veuillez remplir tous les champs obligatoires"
+  }
+}

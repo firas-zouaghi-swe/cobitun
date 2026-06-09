@@ -1,0 +1,58 @@
+{
+  "title": "Coverage Gap Analyzer",
+  "subtitle": "Compare your parametric and cyber indemnity coverage across common scenarios",
+  "score": {
+    "coverageScore": "Coverage Score",
+    "coveredScenarios": "Covered Scenarios",
+    "of": "of",
+    "gapScenarios": "Gap Scenarios",
+    "requireAttention": "require attention",
+    "ofTotal": "Of Total"
+  },
+  "product": {
+    "parametric": "Parametric Cloud Insurance",
+    "cyber": "Cyber Indemnity Insurance",
+    "active": "Active",
+    "applyNow": "Apply Now",
+    "cyberTitle": "Cyber Indemnity Insurance",
+    "missing": "Not Purchased",
+    "notPurchased": "Not Purchased",
+    "parametricTitle": "Parametric Cloud Insurance"
+  },
+  "matrix": {
+    "title": "Coverage Gap Matrix",
+    "scenario": "Scenario",
+    "parametricProduct": "Parametric Product",
+    "cyberIndemnity": "Cyber Indemnity",
+    "gap": "Gap?",
+    "covered": "Covered",
+    "excluded": "Excluded",
+    "gapLabel": "Gap",
+    "na": "N/A",
+    "ok": "OK",
+    "legendCovered": "Covered",
+    "legendExcluded": "Excluded",
+    "legendGapPartial": "Gap / Partial",
+    "legendNa": "Not Applicable",
+    "gapBadge": "Coverage Gap",
+    "legendGap": "Gap (uncovered)",
+    "legendNA": "Not Applicable",
+    "okBadge": "Covered",
+    "partial": "Partial"
+  },
+  "details": {
+    "title": "Scenario Details",
+    "trigger": "Trigger:",
+    "parametricResponse": "Parametric Response",
+    "cyberResponse": "Cyber Response",
+    "gap": "Gap?"
+  },
+  "recommendations": {
+    "title": "Recommendations"
+  },
+  "unableToLoad": "Unable to load coverage gap analysis",
+  "tryAgain": "Please try again later",
+  "loadError": "Failed to load coverage analysis",
+  "loadErrorDesc": "Please try again later",
+  "loading": "Analyzing coverage gaps…"
+}

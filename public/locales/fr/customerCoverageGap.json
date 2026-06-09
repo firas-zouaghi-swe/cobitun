@@ -1,0 +1,58 @@
+{
+  "title": "Analyseur d'Écart de Couverture",
+  "subtitle": "Comparez votre couverture paramétrique et cyber indemnité à travers les scénarios courants",
+  "score": {
+    "coverageScore": "Score de Couverture",
+    "coveredScenarios": "Scénarios Couverts",
+    "of": "sur",
+    "gapScenarios": "Scénarios en Écart",
+    "requireAttention": "nécessitent attention",
+    "ofTotal": "Of Total"
+  },
+  "product": {
+    "parametric": "Assurance Cloud Paramétrique",
+    "cyber": "Assurance Cyber Indemnité",
+    "active": "Active",
+    "applyNow": "Demander Maintenant",
+    "cyberTitle": "Assurance Cyber Indemnité",
+    "missing": "Non Souscrit",
+    "notPurchased": "Non Souscrit",
+    "parametricTitle": "Assurance Cloud Paramétrique"
+  },
+  "matrix": {
+    "title": "Matrice d'Écart de Couverture",
+    "scenario": "Scénario",
+    "parametricProduct": "Produit Paramétrique",
+    "cyberIndemnity": "Cyber Indemnité",
+    "gap": "Écart ?",
+    "covered": "Couvert",
+    "excluded": "Exclu",
+    "gapLabel": "Écart",
+    "na": "S.O.",
+    "ok": "OK",
+    "legendCovered": "Couvert",
+    "legendExcluded": "Exclu",
+    "legendGapPartial": "Écart / Partiel",
+    "legendNa": "Non Applicable",
+    "gapBadge": "Écart de Couverture",
+    "legendGap": "Écart (non couvert)",
+    "legendNA": "Non Applicable",
+    "okBadge": "Couvert",
+    "partial": "Partial"
+  },
+  "details": {
+    "title": "Détails du Scénario",
+    "trigger": "Déclencheur :",
+    "parametricResponse": "Réponse Paramétrique",
+    "cyberResponse": "Réponse Cyber",
+    "gap": "Écart ?"
+  },
+  "recommendations": {
+    "title": "Recommandations"
+  },
+  "unableToLoad": "Impossible de charger l'analyse d'écart de couverture",
+  "tryAgain": "Veuillez réessayer plus tard",
+  "loadError": "Échec du chargement de l'analyse de couverture",
+  "loadErrorDesc": "Veuillez réessayer plus tard",
+  "loading": "Analyzing coverage gaps…"
+}

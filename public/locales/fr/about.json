@@ -1,0 +1,48 @@
+{
+  "hero": {
+    "title": "À Propos de COBITUN",
+    "subtitle": "Le premier portail d'assurance paramétrique contre les pannes cloud en Tunisie. Indemnisations automatiques alimentées par la surveillance IODA en temps réel — pas de formulaires, pas d'experts, pas d'attente.",
+    "description": "Le premier portail d'assurance paramétrique contre les pannes cloud en Tunisie. Indemnisations automatiques alimentées par la surveillance IODA en temps réel — pas de formulaires, pas d'experts, pas d'attente."
+  },
+  "mission": {
+    "title": "Notre Mission",
+    "p1": "Chez COBITUN, notre mission est de protéger les entreprises tunisiennes contre les pannes cloud. Nous croyons que chaque PME mérite une couverture automatique et transparente lorsque son fournisseur cloud défaille — pas de paperasse, pas de délais, pas de litiges.",
+    "p2": "Grâce à notre plateforme paramétrique innovante, nous surveillons les fournisseurs cloud 24/7 en utilisant les données IODA de Georgia Tech. Quand une panne dépasse le seuil MTTR du fournisseur, les sinistres sont automatiquement créés, approuvés et payés — en minutes, pas en mois.",
+    "description1": "Chez COBITUN, notre mission est de protéger les entreprises tunisiennes contre les pannes cloud. Nous croyons que chaque PME mérite une couverture automatique et transparente lorsque son fournisseur cloud défaille — pas de paperasse, pas de délais, pas de litiges.",
+    "description2": "Grâce à notre plateforme paramétrique innovante, nous surveillons les fournisseurs cloud 24/7 en utilisant les données IODA de Georgia Tech. Quand une panne dépasse le seuil MTTR du fournisseur, les sinistres sont automatiquement créés, approuvés et payés — en minutes, pas en mois."
+  },
+  "stats": {
+    "monitoredProviders": "Fournisseurs Surveillés",
+    "iodaMonitoring": "Surveillance IODA",
+    "payoutSpeed": "Vitesse d'Indemnisation",
+    "claimsForms": "Formulaires de Sinistre"
+  },
+  "values": {
+    "title": "Nos Valeurs",
+    "subtitle": "Les principes qui guident chacune de nos décisions dans la construction de l'assurance paramétrique pour les entreprises tunisiennes.",
+    "objectiveData": {
+      "title": "Données Objectives",
+      "desc": "Sinistres déclenchés par les données de surveillance IODA de Georgia Tech, pas par des opinions. Objectif, transparent, incontestable."
+    },
+    "tunisiaFirst": {
+      "title": "Tunisie d'Abord",
+      "desc": "Conçu spécifiquement pour les entreprises tunisiennes, avec des fournisseurs locaux, la certification ANCS et des indemnités en TND."
+    },
+    "actuarialRigor": {
+      "title": "Rigueur Actuarielle",
+      "desc": "Primes calculées à partir de modèles actuariels évalués par les pairs basés sur des données réelles de pannes de plus de 15 fournisseurs tunisiens."
+    },
+    "speedOfPayout": {
+      "title": "Rapidité d'Indemnisation",
+      "desc": "Sinistres auto-déclenchés payés en minutes, pas en mois. Quand votre cloud tombe, votre argent arrive vite."
+    },
+    "fullTransparency": {
+      "title": "Transparence Totale",
+      "desc": "Chaque déclencheur, chaque calcul, chaque indemnité est visible. Pas de frais cachés, pas de décisions boîte noire."
+    },
+    "hybridControl": {
+      "title": "Contrôle Hybride",
+      "desc": "Automatisation pour la rapidité, supervision admin pour la confiance, approbation politique pour la qualité. Trois couches pour vous protéger."
+    }
+  }
+}

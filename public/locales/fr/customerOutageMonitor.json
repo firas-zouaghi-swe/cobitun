@@ -1,0 +1,54 @@
+{
+  "title": "Moniteur de Pannes",
+  "subtitle": "Surveillance en temps réel de vos fournisseurs cloud assurés",
+  "activeOutages": "Pannes Actives",
+  "overMTTR": "Au-delà du MTTR",
+  "providersMonitored": "Fournisseurs Surveillés",
+  "tab": {
+    "liveSignals": "Signaux en Direct",
+    "alertsTable": "Tableau des Alertes",
+    "outageHistory": "Historique des Pannes",
+    "live": "En Direct",
+    "outageCount": "Customeroutagemonitor:Tab Outagecount"
+  },
+  "signals": {
+    "title": "Vos Fournisseurs Assurés — Signaux en Direct",
+    "subtitle": "Signaux de connectivité en temps réel pour les fournisseurs couverts par vos polices paramétriques",
+    "activeOutages": "Pannes Actives",
+    "chartSubtitle": "Signaux de connectivité en temps réel depuis IODA",
+    "chartTitle": "Moniteur de Signal",
+    "overMTTR": "Au-delà du MTTR",
+    "providersMonitored": "Fournisseurs Surveillés"
+  },
+  "alerts": {
+    "title": "Vos Fournisseurs Assurés — Alertes de Panne",
+    "subtitle": "Alertes de panne en temps réel pour les fournisseurs cloud couverts par vos polices paramétriques",
+    "tableSubtitle": "Alertes IODA récentes pour les fournisseurs surveillés",
+    "tableTitle": "Détails des Alertes"
+  },
+  "outages": {
+    "noRecent": "Aucune panne récente détectée pour vos fournisseurs assurés",
+    "goodNews": "C'est une bonne nouvelle ! Vos services cloud semblent stables.",
+    "recentOutages": "Pannes Récentes",
+    "tableProvider": "Fournisseur",
+    "tableStart": "Début",
+    "tableEnd": "Fin",
+    "tableDuration": "Durée",
+    "tableSeverity": "Sévérité",
+    "tableStatus": "Statut",
+    "mttrBadge": "> MTTR",
+    "duration": "Durée",
+    "end": "Heure de Fin",
+    "noOutages": "Aucune panne détectée",
+    "noOutagesDesc": "Tous les fournisseurs surveillés fonctionnent normalement",
+    "pending": "En Attente",
+    "processed": "Traité",
+    "provider": "Fournisseur",
+    "severity": "Sévérité",
+    "start": "Heure de Début",
+    "status": "Statut",
+    "asnMttr": "Asn Mttr",
+    "overMTTR": "Exceeds MTTR"
+  },
+  "loading": "Loading outage data…"
+}

@@ -1,0 +1,84 @@
+{
+  "title": "Cyber Indemnity Claims",
+  "subtitle": "Investigate, adjust, and settle cyber insurance claims",
+  "stats": {
+    "totalClaims": "Total Claims",
+    "estLoss": "Est. Loss",
+    "approved": "Approved",
+    "paid": "Paid"
+  },
+  "filter": {
+    "status": "Status:",
+    "allStatuses": "All Statuses",
+    "filterByStatus": "Filter by status",
+    "claimCount": "{{count}} claim(s)"
+  },
+  "table": {
+    "claimId": "Claim ID",
+    "policyholder": "Policyholder",
+    "incidentDate": "Incident Date",
+    "incidentType": "Incident Type",
+    "estimatedLoss": "Estimated Loss",
+    "status": "Status",
+    "approvedAmount": "Approved Amount",
+    "actions": "Actions",
+    "view": "View"
+  },
+  "empty": {
+    "noClaims": "No claims found",
+    "tryChangingFilter": "Try changing the filter to see more results",
+    "newClaims": "New claims will appear here for review"
+  },
+  "incidentType": {
+    "BI": "Business Interruption",
+    "DR": "Data Recovery",
+    "CE": "Cyber Extortion",
+    "SR": "Security Response",
+    "CM": "Crisis Management",
+    "PL": "Privacy Liability",
+    "RD": "Regulatory Defense",
+    "ML": "Media Liability",
+    "SE": "Social Engineering",
+    "OTHER": "Other"
+  },
+  "dialog": {
+    "title": "Claim Details",
+    "claimDescription": "Claim {{id}} — {{name}}",
+    "fields": {
+      "claimId": "Claim ID",
+      "status": "Status",
+      "policyholder": "Policyholder",
+      "product": "Product",
+      "incidentDate": "Incident Date",
+      "reportedDate": "Reported Date",
+      "incidentType": "Incident Type",
+      "policyLimit": "Policy Limit",
+      "estimatedLoss": "Estimated Loss",
+      "deductibleSIR": "Deductible / SIR",
+      "approvedAmount": "Approved Amount",
+      "paidDate": "Paid Date"
+    },
+    "incidentDescription": "Incident Description",
+    "forensicReport": "Forensic Report",
+    "existingAdjusterComment": "Existing Adjuster Comment",
+    "claimActions": "Claim Actions",
+    "updateStatus": "Update Status",
+    "selectNewStatus": "Select new status...",
+    "approvedAmountTnd": "Approved Amount (TND)",
+    "estimatedLossLabel": "Estimated loss: {{amount}} TND",
+    "adjusterComment": "Adjuster Comment",
+    "adjusterPlaceholder": "Add investigation notes, findings, or reasoning...",
+    "updateTo": "Update to {{status}}",
+    "markAsPaid": "Mark as Paid",
+    "denyClaim": "Deny Claim",
+    "claimPaid": "Claim has been paid",
+    "claimDenied": "Claim has been denied",
+    "on": "on"
+  },
+  "toast": {
+    "markPaidSuccess": "Claim marked as paid",
+    "updateSuccess": "Claim updated successfully",
+    "updateFailed": "Failed to update claim",
+    "actionFailed": "Action failed"
+  }
+}

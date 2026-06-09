@@ -1,0 +1,69 @@
+{
+  "title": "Reinsurance Management",
+  "subtitle": "Manage reinsurance treaties and ceded premiums",
+  "createTreaty": "Create Treaty",
+  "tabs": {
+    "treaties": "Treaties",
+    "parametricCeded": "Parametric Ceded",
+    "cyberCeded": "Cyber Ceded"
+  },
+  "table": {
+    "treatyNumber": "Treaty #",
+    "name": "Name",
+    "reinsurer": "Reinsurer",
+    "type": "Type",
+    "cessionPct": "Cession %",
+    "period": "Period",
+    "status": "Status",
+    "policy": "Policy",
+    "grossPremium": "Gross Premium",
+    "cededPremium": "Ceded Premium",
+    "netPremium": "Net Premium",
+    "grossClaim": "Gross Claim",
+    "cededClaim": "Ceded Claim",
+    "recovery": "Recovery",
+    "treaty": "Treaty"
+  },
+  "empty": {
+    "noTreaties": "No reinsurance treaties found",
+    "noParametricCeded": "No parametric ceded entries found",
+    "noCyberCeded": "No cyber ceded entries found"
+  },
+  "dialog": {
+    "createTitle": "Create Reinsurance Treaty",
+    "createDescription": "Add a new reinsurance treaty to the platform",
+    "treatyNumber": "Treaty Number",
+    "treatyNumberPlaceholder": "e.g. TR-2025-001",
+    "treatyName": "Treaty Name",
+    "treatyNamePlaceholder": "e.g. Quota Share Treaty 2025",
+    "reinsurerName": "Reinsurer Name",
+    "reinsurerNamePlaceholder": "e.g. Swiss Re",
+    "treatyType": "Treaty Type",
+    "selectType": "Select type",
+    "cessionPct": "Cession %",
+    "cessionPctPlaceholder": "e.g. 40",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "status": "Status",
+    "creating": "Creating..."
+  },
+  "status": {
+    "ACTIVE": "Active",
+    "PENDING": "Pending",
+    "EXPIRED": "Expired",
+    "CANCELLED": "Cancelled"
+  },
+  "types": {
+    "QUOTA_SHARE": "Quota Share",
+    "SURPLUS": "Surplus",
+    "EXCESS_OF_LOSS": "Excess of Loss",
+    "STOP_LOSS": "Stop Loss",
+    "FACULTATIVE": "Facultative"
+  },
+  "toast": {
+    "created": "Treaty created successfully",
+    "createFailed": "Failed to create treaty",
+    "required": "Treaty number, name, reinsurer name, and type are required",
+    "requiredFields": "Please fill in all required fields"
+  }
+}

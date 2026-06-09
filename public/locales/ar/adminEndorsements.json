@@ -1,0 +1,67 @@
+{
+  "title": "الملاحق",
+  "subtitle": "إدارة ملاحق الوثيقة والتعديلات خلال فترة التأمين",
+  "createEndorsement": "إنشاء ملحق",
+  "tabs": {
+    "parametric": "ملاحق حدودية",
+    "cyber": "ملاحق سيبرانية"
+  },
+  "table": {
+    "endorsementNumber": "رقم الملحق",
+    "policy": "الوثيقة",
+    "type": "النوع",
+    "description": "الوصف",
+    "premiumAdj": "تعديل القسط",
+    "effectiveDate": "تاريخ السريان",
+    "status": "الحالة"
+  },
+  "empty": {
+    "noParametric": "لم يتم العثور على ملاحق حدودية",
+    "noCyber": "لم يتم العثور على ملاحق سيبرانية",
+    "noCyberEndorsements": "لم يتم العثور على ملاحق سيبرانية"
+  },
+  "dialog": {
+    "createTitle": "إنشاء ملحق حدودي",
+    "createDescription": "إضافة ملحق جديد إلى وثيقة حدودية",
+    "policyId": "رقم الوثيقة",
+    "policyIdPlaceholder": "مثال: 1",
+    "endorsementNumber": "رقم الملحق",
+    "endorsementNumberPlaceholder": "مثال: END-2025-001",
+    "type": "النوع",
+    "selectType": "اختر النوع",
+    "premiumAdjustment": "تعديل القسط (د.ت)",
+    "effectiveDate": "تاريخ السريان",
+    "changeDescription": "وصف التغيير",
+    "changeDescriptionPlaceholder": "صف تغيير الملحق",
+    "previousValues": "القيم السابقة (JSON)",
+    "newValues": "القيم الجديدة (JSON)",
+    "creating": "جاري الإنشاء...",
+    "jsonPlaceholder": "أدخل تكوين JSON"
+  },
+  "types": {
+    "COVERAGE_CHANGE": "تغيير التغطية",
+    "PREMIUM_ADJUSTMENT": "تعديل القسط",
+    "POLICYHOLDER_CHANGE": "تغيير المؤمن له",
+    "ENDORSEMENT_ADD": "إضافة ملحق",
+    "ENDORSEMENT_REMOVE": "إزالة ملحق",
+    "REINSTATEMENT": "إعادة التفعيل",
+    "CANCELLATION": "إلغاء"
+  },
+  "status": {
+    "PENDING": "قيد الانتظار",
+    "APPROVED": "موافق عليه",
+    "REJECTED": "مرفوض",
+    "PROCESSED": "مُعالج"
+  },
+  "cyber": {
+    "comingSoonTitle": "ملحقات الأمن السيبراني",
+    "comingSoonDescription": "إدارة ملحقات الأمن السيبراني قادمة قريباً. ستتمكن من إنشاء وإدارة الملحقات لسياسات الأمن السيبراني.",
+    "contactSupport": "اتصل بالدعم"
+  },
+  "toast": {
+    "created": "تم إنشاء الملحق بنجاح",
+    "createFailed": "فشل إنشاء الملحق",
+    "required": "رقم الوثيقة ورقم الملحق والنوع والوصف وتاريخ السريان مطلوبون",
+    "requiredFields": "يرجى ملء جميع الحقول المطلوبة"
+  }
+}

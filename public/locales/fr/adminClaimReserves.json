@@ -1,0 +1,59 @@
+{
+  "title": "Provisions pour Sinistres",
+  "subtitle": "Gérer les provisions pour sinistres et suivre l'historique des ajustements",
+  "tabs": {
+    "parametric": "Provisions Paramétriques",
+    "cyber": "Provisions Cyber"
+  },
+  "addReserve": "Ajouter une Provision",
+  "table": {
+    "type": "Type",
+    "amount": "Montant",
+    "previous": "Précédent",
+    "adjustment": "Ajustement",
+    "method": "Méthode",
+    "confidence": "Confiance",
+    "reason": "Raison",
+    "date": "Date"
+  },
+  "empty": {
+    "noClaims": "Aucune sinistre trouvé",
+    "noReserves": "Aucune provision enregistrée pour ce sinistre"
+  },
+  "dialog": {
+    "addTitle": "Ajouter une Provision",
+    "addDescription": "Ajouter une nouvelle provision au sinistre {{claimType}} n°{{claimId}}",
+    "reserveType": "Type de Provision",
+    "selectType": "Sélectionner le type",
+    "reserveAmount": "Montant de la Provision (TND)",
+    "actuarialMethod": "Méthode Actuarielle",
+    "selectMethod": "Sélectionner la méthode",
+    "confidenceLevel": "Niveau de Confiance",
+    "adjustmentReason": "Raison de l'Ajustement",
+    "reasonPlaceholder": "Raison de cette provision",
+    "saving": "Enregistrement...",
+    "adjustmentReasonPlaceholder": "ex. Révision trimestrielle des provisions",
+    "confidenceLevelPlaceholder": "ex. Élevé, Moyen, Faible",
+    "defaultReason": "Ajustement standard de provision"
+  },
+  "reserveTypes": {
+    "CASE": "Cas",
+    "IBNR": "IBNR",
+    "INCURRED": "Encouru",
+    "PAID": "Payé",
+    "RECOVERED": "Recouvré"
+  },
+  "actuarialMethods": {
+    "CHAIN_LADDER": "Chain Ladder",
+    "BORNHUETTER_FERGUSON": "Bornhuetter-Ferguson",
+    "CAPE_COD": "Cape Cod",
+    "MACK": "Mack",
+    "BF_MODIFIED": "BF Modifié"
+  },
+  "toast": {
+    "added": "Provision ajoutée avec succès",
+    "addFailed": "Échec de l'ajout de la provision",
+    "required": "Le type et le montant de la provision sont obligatoires",
+    "requiredFields": "Veuillez remplir tous les champs obligatoires"
+  }
+}

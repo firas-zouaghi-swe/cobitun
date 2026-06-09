@@ -1,0 +1,91 @@
+{
+  "title": "Apply for Cyber Indemnity Insurance",
+  "subtitle": "Comprehensive cyber coverage for your business — underwriting takes 5 minutes",
+  "step1": {
+    "title": "Product Overview",
+    "policyTitle": "Comprehensive Cyber Indemnity Policy",
+    "type": "Type",
+    "masterLimit": "Master Limit",
+    "deductible": "Deductible",
+    "indemnityPeriod": "Indemnity Period",
+    "coverageGrants": "Coverage Grants",
+    "masterExclusions": "Master Exclusions",
+    "conditionsApply": "Conditions apply",
+    "hoursWait": "{{hours}}h wait",
+    "days": "days",
+    "productTitle": "Cyber Indemnity Product",
+    "wait": "Wait",
+    "label": "Product Overview"
+  },
+  "step2": {
+    "title": "Underwriting",
+    "infoTip": "Answer all questions accurately. Missing or incorrect information may affect your coverage or result in claim denial.",
+    "waiverWarning": "This control is expected for underwriting approval. Proceeding may result in application rejection or premium loading.",
+    "placeholderText": "Enter your answer",
+    "placeholderNumber": "Enter a number",
+    "placeholderSelect": "Select an option",
+    "locationLabel": "Region / Location",
+    "locationPlaceholder": "e.g. Tunis, Tunisia or Sousse Governorate",
+    "locationHelper": "Select a location from the suggestions or enter your own region.",
+    "loadingSuggestions": "Loading suggestions…",
+    "yes": "Yes",
+    "no": "No",
+    "answerAccurately": "Please answer all questions accurately",
+    "enterAnswer": "Enter your answer",
+    "enterNumber": "Enter a number",
+    "selectOption": "Select an option",
+    "label": "Underwriting"
+  },
+  "step3": {
+    "title": "Review & Assess",
+    "summaryTitle": "Application Summary",
+    "yourAnswers": "Your Answers",
+    "waiverFlags": "Waiver Flags ({count})",
+    "terms": "I confirm that all information provided is accurate and complete. I understand that any misrepresentation may void my coverage.",
+    "resultTitle": "Risk Assessment Result",
+    "riskScore": "Risk Score",
+    "securityPosture": "Security Posture",
+    "estimatedPremium": "Estimated Annual Premium",
+    "waiverFlagsDetected": "Waiver Flags Detected",
+    "awaitingReview": "Awaiting admin review",
+    "applicationSummary": "Application Summary",
+    "riskAssessmentResult": "Risk Assessment Result",
+    "submitButton": "Submit Application",
+    "submitted": "Application submitted successfully!",
+    "submitting": "Submitting...",
+    "label": "Review & Assess",
+    "startNewApplication": "Customercyberapply:Step3 Startnewapplication"
+  },
+  "sidebar": {
+    "policyFacts": "Policy Quick Facts",
+    "masterPolicyLimit": "Master Policy Limit",
+    "deductibleSir": "Deductible (SIR)",
+    "indemnityPeriod": "Indemnity Period",
+    "coverageGrants": "Coverage Grants",
+    "exclusions": "Exclusions",
+    "minimumPremium": "Minimum Premium",
+    "premiumNote": "Premium is calculated based on your risk score, security posture, and coverage limits. Final premium subject to underwriting review.",
+    "waiverCounter": "Waiver Flags",
+    "waiverNote": "Controls not met — may affect premium or approval",
+    "days": "days",
+    "deductibleSIR": "Deductible (SIR)",
+    "policyQuickFacts": "Policy Quick Facts",
+    "waiverFlags": "Waiver Flags ({count})",
+    "waiverFlagsDesc": "Waiver flags indicate high-risk answers that require manual review"
+  },
+  "toast": {
+    "missingInfo": "Missing required information",
+    "submitted": "Application submitted successfully!",
+    "submitFailed": "Failed to submit application"
+  },
+  "productNotAvailable": "Cyber Indemnity product is not available at this time",
+  "productNotAvailableSubtitle": "Please check back later or contact support",
+  "productUnavailable": "Product Unavailable",
+  "productUnavailableDesc": "Cyber indemnity insurance is not currently available",
+  "step${step": {
+    "id}": {
+      "label": "Label"
+    }
+  },
+  "loading": "Loading product..."
+}

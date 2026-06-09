@@ -1,0 +1,74 @@
+{
+  "title": "دوال الدفع",
+  "subtitle": "تكوين معلمات وأنواع دوال الدفع",
+  "createConfig": "إنشاء تكوين",
+  "table": {
+    "name": "الاسم",
+    "code": "الرمز",
+    "type": "النوع",
+    "description": "الوصف",
+    "parameters": "المعلمات",
+    "status": "الحالة"
+  },
+  "empty": {
+    "noConfigs": "لم يتم العثور على تكوينات دوال الدفع"
+  },
+  "params": {
+    "multiplier": "المضاعف",
+    "steps": "الخطوات: مكوّنة",
+    "baseRate": "معدل الأساس",
+    "base": "الأساس",
+    "exponent": "الأس"
+  },
+  "status": {
+    "active": "نشط",
+    "inactive": "غير نشط"
+  },
+  "dialog": {
+    "createTitle": "إنشاء تكوين دالة الدفع",
+    "createDescription": "تعريف تكوين جديد لدالة الدفع",
+    "configName": "اسم التكوين",
+    "configNamePlaceholder": "مثال: دفع خطي 1.5x",
+    "configCode": "رمز التكوين",
+    "configCodePlaceholder": "مثال: LINEAR_1_5X",
+    "functionType": "نوع الدالة",
+    "selectType": "اختر النوع",
+    "description": "الوصف",
+    "descriptionPlaceholder": "وصف اختياري",
+    "linearMultiplier": "المضاعف الخطي",
+    "linearMultiplierPlaceholder": "مثال: 1.5",
+    "linearFormula": "الدفع = المضاعف × ساعات_الانقطاع × المعدل_الساعي",
+    "stepConfigJson": "تكوين الخطوات (JSON)",
+    "stepConfigPlaceholder": "[{\"minHours\":0,\"maxHours\":4,\"payoutPct\":0}]",
+    "stepDescription": "تحديد نسب الدفع حسب مدة الانقطاع",
+    "hybridBaseRate": "معدل الأساس",
+    "hybridBaseRatePlaceholder": "مثال: 0.5",
+    "hybridStepConfigJson": "تكوين الخطوات (JSON)",
+    "hybridStepPlaceholder": "[{\"minHours\":4,\"payoutPct\":25}]",
+    "hybridDescription": "يجمع معدل أساس مع تعديلات خطية",
+    "exponentialBase": "الأساس",
+    "exponentialBasePlaceholder": "مثال: 1.05",
+    "exponentialExponent": "الأس",
+    "exponentialExponentPlaceholder": "مثال: 1.2",
+    "exponentialFormula": "الدفع = الأساس^(الأس × الساعات)",
+    "creating": "جاري الإنشاء...",
+    "exponentialHint": "الصيغة: الأساس × القيمة^الأس",
+    "hybridStepConfigJsonHint": "مصفوفة JSON لعتبات ومعدلات الخطوات",
+    "hybridStepConfigJsonPlaceholder": "[{\"threshold\": 0, \"rate\": 0.5}]",
+    "linearMultiplierHint": "التعويض = المضاعف × ساعات الانقطاع",
+    "stepConfigJsonHint": "مصفوفة JSON تحدد عتبات الدالة المتدرجة",
+    "stepConfigJsonPlaceholder": "[{\"from\": 0, \"to\": 24, \"rate\": 0.5}]"
+  },
+  "types": {
+    "LINEAR": "خطي",
+    "STEP": "متدرج",
+    "HYBRID": "هجين",
+    "EXPONENTIAL": "أسي"
+  },
+  "toast": {
+    "created": "تم إنشاء تكوين دالة الدفع بنجاح",
+    "createFailed": "فشل إنشاء التكوين",
+    "required": "اسم التكوين والرمز ونوع الدالة مطلوبون",
+    "requiredFields": "يرجى ملء جميع الحقول المطلوبة"
+  }
+}

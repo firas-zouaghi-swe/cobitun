@@ -1,0 +1,67 @@
+{
+  "title": "Demandes d'indemnité cyber",
+  "subtitle": "Examiner, approuver ou rejeter les demandes d'assurance cyber",
+  "filter": {
+    "status": "Statut :",
+    "allStatuses": "Tous les statuts",
+    "filterByStatus": "Filtrer par statut",
+    "applicationCount": "{{count}} demande(s)"
+  },
+  "table": {
+    "applicant": "Demandeur",
+    "companySector": "Entreprise / Secteur",
+    "revenue": "Chiffre d'affaires",
+    "riskScore": "Score de risque",
+    "securityPosture": "Posture de sécurité",
+    "premium": "Prime",
+    "status": "Statut",
+    "submitted": "Soumis"
+  },
+  "empty": {
+    "noApplications": "Aucune demande trouvée",
+    "tryChangingFilter": "Essayez de modifier le filtre pour voir plus de résultats",
+    "newApplications": "Les nouvelles demandes apparaîtront ici pour examen"
+  },
+  "expanded": {
+    "underwritingAnswers": "Réponses de souscription",
+    "noAnswers": "Aucune réponse enregistrée",
+    "waiverFlags": "Indicateurs de dérogation",
+    "waiverDescription": "Ces questions ont reçu des réponses contraires aux attentes, réduisant le score de risque.",
+    "adminComment": "Commentaire de l'administrateur",
+    "coverageGrants": "Garanties accordées",
+    "noCoverageGrants": "Aucune garantie définie",
+    "premiumBreakdown": "Décomposition de la prime",
+    "product": "Produit",
+    "policyLimit": "Limite de police",
+    "deductibleSIR": "Franchise / SIR",
+    "indemnityPeriod": "Période d'indemnisation",
+    "baseRatePer1000": "Taux de base / 1000",
+    "minimumPremium": "Prime minimale",
+    "calculatedPremium": "Prime calculée",
+    "exclusions": "Exclusions",
+    "applicationApproved": "Demande approuvée",
+    "applicationRejected": "Demande rejetée",
+    "on": "le",
+    "days": "jours"
+  },
+  "dialog": {
+    "approveTitle": "Approuver la demande",
+    "rejectTitle": "Rejeter la demande",
+    "applicationFrom": "Demande de {{name}} — {{product}}",
+    "riskScore": "Score de risque",
+    "securityPosture": "Posture de sécurité",
+    "premium": "Prime",
+    "waiverFlags": "Indicateurs de dérogation",
+    "adminComment": "Commentaire de l'administrateur",
+    "rejectPlaceholder": "Raison du rejet (obligatoire)...",
+    "optionalPlaceholder": "Commentaire facultatif...",
+    "cancel": "Annuler",
+    "confirmApproval": "Confirmer l'approbation",
+    "confirmRejection": "Confirmer le rejet",
+    "processing": "Traitement en cours..."
+  },
+  "toast": {
+    "actionFailed": "L'action a échoué",
+    "failedToAction": "Impossible de {{action}} la demande"
+  }
+}

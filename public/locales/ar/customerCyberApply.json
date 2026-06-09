@@ -1,0 +1,91 @@
+{
+  "title": "طلب تأمين سيبراني",
+  "subtitle": "تغطية سيبرانية شاملة لعملك — التسوية تستغرق 5 دقائق",
+  "step1": {
+    "title": "نظرة عامة على المنتج",
+    "policyTitle": "سياسة التأمين السيبراني الشاملة",
+    "type": "النوع",
+    "masterLimit": "الحد الأقصى",
+    "deductible": "التحمل",
+    "indemnityPeriod": "فترة التعويض",
+    "coverageGrants": "منح التغطية",
+    "masterExclusions": "الاستثناءات الرئيسية",
+    "conditionsApply": "تسري الشروط",
+    "hoursWait": "{{hours}}س انتظار",
+    "days": "أيام",
+    "productTitle": "منتج التعويض السيبراني",
+    "wait": "Wait",
+    "label": "نظرة عامة على المنتج"
+  },
+  "step2": {
+    "title": "التسوية",
+    "infoTip": "أجب عن جميع الأسئلة بدقة. المعلومات المفقودة أو غير الصحيحة قد تؤثر على تغطيتك أو تؤدي إلى رفض المطالبة.",
+    "waiverWarning": "هذا الرقابة متوقعة لموافقة التسوية. المتابعة قد تؤدي إلى رفض الطلب أو زيادة القسط.",
+    "placeholderText": "أدخل إجابتك",
+    "placeholderNumber": "أدخل رقماً",
+    "placeholderSelect": "اختر خياراً",
+    "locationLabel": "المنطقة / الموقع",
+    "locationPlaceholder": "مثال: تونس، تونس أو ولاية سوسة",
+    "locationHelper": "اختر موقعًا من الاقتراحات أو أدخل منطقتك الخاصة.",
+    "loadingSuggestions": "جارٍ تحميل الاقتراحات...",
+    "yes": "نعم",
+    "no": "لا",
+    "answerAccurately": "يرجى الإجابة على جميع الأسئلة بدقة",
+    "enterAnswer": "أدخل إجابتك",
+    "enterNumber": "أدخل رقماً",
+    "selectOption": "اختر خياراً",
+    "label": "التسوية"
+  },
+  "step3": {
+    "title": "المراجعة والتقييم",
+    "summaryTitle": "ملخص الطلب",
+    "yourAnswers": "إجاباتك",
+    "waiverFlags": "علامات التنازل ({count})",
+    "terms": "أؤكد أن جميع المعلومات المقدمة دقيقة وكاملة. أفهم أن أي تحريف قد يبطل تغطيتي.",
+    "resultTitle": "نتيجة تقييم المخاطر",
+    "riskScore": "نقاط المخاطر",
+    "securityPosture": "موقف الأمان",
+    "estimatedPremium": "القسط السنوي المقدّر",
+    "waiverFlagsDetected": "تم اكتشاف علامات تنازل",
+    "awaitingReview": "بانتظار مراجعة المسؤول",
+    "applicationSummary": "ملخص الطلب",
+    "riskAssessmentResult": "نتيجة تقييم المخاطر",
+    "submitButton": "إرسال الطلب",
+    "submitted": "تم إرسال الطلب بنجاح!",
+    "submitting": "جارٍ الإرسال...",
+    "label": "المراجعة والتقييم",
+    "startNewApplication": "Customercyberapply:Step3 Startnewapplication"
+  },
+  "sidebar": {
+    "policyFacts": "حقائق سريعة عن السياسة",
+    "masterPolicyLimit": "الحد الأقصى للسياسة",
+    "deductibleSir": "التحمل (SIR)",
+    "indemnityPeriod": "فترة التعويض",
+    "coverageGrants": "منح التغطية",
+    "exclusions": "الاستثناءات",
+    "minimumPremium": "الحد الأدنى للقسط",
+    "premiumNote": "يُحسب القسط بناءً على نقاط مخاطرك وموقف أمانك وحدود تغطيتك. القسط النهائي يخضع لمراجعة التسوية.",
+    "waiverCounter": "علامات التنازل",
+    "waiverNote": "رقابات غير مستوفاة — قد تؤثر على القسط أو الموافقة",
+    "days": "أيام",
+    "deductibleSIR": "التحمل (SIR)",
+    "policyQuickFacts": "حقائق سريعة عن السياسة",
+    "waiverFlags": "علامات التنازل ({count})",
+    "waiverFlagsDesc": "تشير علامات التنازل إلى إجابات عالية المخاطر تتطلب مراجعة يدوية"
+  },
+  "toast": {
+    "missingInfo": "معلومات مطلوبة مفقودة",
+    "submitted": "تم إرسال الطلب بنجاح!",
+    "submitFailed": "فشل إرسال الطلب"
+  },
+  "productNotAvailable": "منتج التأمين السيبراني غير متاح حالياً",
+  "productNotAvailableSubtitle": "يرجى المحاولة لاحقاً أو الاتصال بالدعم",
+  "productUnavailable": "المنتج غير متاح",
+  "productUnavailableDesc": "تأمين التعويض السيبراني غير متاح حالياً",
+  "step${step": {
+    "id}": {
+      "label": "Label"
+    }
+  },
+  "loading": "Loading product..."
+}

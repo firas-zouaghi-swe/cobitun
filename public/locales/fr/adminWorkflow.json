@@ -1,0 +1,54 @@
+{
+  "title": "Tableau de bord des flux de travail",
+  "subtitle": "Examiner les demandes de police et gérer les sinistres",
+  "summary": {
+    "totalApplications": "Total des demandes",
+    "pendingReview": "En attente d'examen",
+    "awaitingFinalSign": "En attente de signature finale",
+    "totalClaims": "Total des sinistres",
+    "pendingClaims": "Sinistres en attente"
+  },
+  "tab": {
+    "policyApplications": "Demandes de police",
+    "claims": "Sinistres"
+  },
+  "policyTable": {
+    "customerName": "Nom du client",
+    "sector": "Secteur",
+    "status": "Statut",
+    "createdDate": "Date de création",
+    "actions": "Actions",
+    "unknownCustomer": "Client inconnu",
+    "review": "Examiner"
+  },
+  "claimTable": {
+    "customerName": "Nom du client",
+    "policyRef": "Réf. police",
+    "lossAmount": "Montant du sinistre",
+    "status": "Statut",
+    "actions": "Actions",
+    "unknownCustomer": "Client inconnu",
+    "review": "Examiner"
+  },
+  "empty": {
+    "noPoliciesTitle": "Aucune demande de police",
+    "noPoliciesSubtitle": "Les nouvelles demandes de police des clients apparaîtront ici pour examen.",
+    "noClaimsTitle": "Aucun sinistre",
+    "noClaimsSubtitle": "Les sinistres des clients apparaîtront ici pour examen et traitement."
+  },
+  "status": {
+    "contractUploaded": "Contrat téléchargé",
+    "adminReviewing": "Examen administrateur",
+    "policyGenerated": "Police générée",
+    "awaitingSignatureAndPayment": "En attente de signature et paiement",
+    "readyForFinalApproval": "Prêt pour approbation finale",
+    "underwritingCompleted": "Souscription terminée",
+    "rejected": "Rejeté",
+    "open": "Ouvert",
+    "submitted": "Soumis",
+    "completed": "Terminé"
+  },
+  "toast": {
+    "loadFailed": "Échec du chargement des données du flux de travail"
+  }
+}

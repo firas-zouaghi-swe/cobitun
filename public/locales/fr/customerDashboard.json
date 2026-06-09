@@ -1,0 +1,48 @@
+{
+  "title": "Tableau de Bord Client",
+  "welcome": "Bon retour, {{name}} !",
+  "traditional": {
+    "title": "Assurance Traditionnelle",
+    "availablePolicies": "Polices Disponibles",
+    "appliedPolicies": "Polices Souscrites",
+    "categories": "Catégories",
+    "myQuestions": "Mes Questions",
+    "approved": "Approuvées",
+    "pending": "En attente",
+    "disapproved": "Désapprouvées"
+  },
+  "parametric": {
+    "sectionTitle": "Assurance Panne Cloud",
+    "cloudCoverage": "Couverture Cloud",
+    "parametricClaims": "Sinistres Paramétriques",
+    "outageMonitor": "Moniteur de Pannes",
+    "lastTrigger": "Dernier Déclenchement",
+    "viewPolicies": "Voir les Polices",
+    "viewHistory": "Voir l'Historique",
+    "monitor": "Surveiller",
+    "details": "Détails",
+    "payout": "Indemnité : {{amount}} TND",
+    "viewClaims": "Voir les Sinistres",
+    "insuredHours": "Insured Hours"
+  },
+  "payouts": {
+    "totalReceived": "Total Indemnités Reçues",
+    "claimsPaid": "{{count}} sinistres payés"
+  },
+  "lastTrigger": {
+    "insuredHours": "{{hours}}h assurées — {{provider}}",
+    "payout": "Indemnité : {{amount}} TND",
+    "viewClaims": "Voir les Sinistres"
+  },
+  "onboarding": {
+    "title": "Obtenez l'Assurance Panne Cloud",
+    "desc": "Indemnisations automatiques quand votre fournisseur cloud tombe. Pas de formulaires. Pas d'attente. 2 minutes pour configurer.",
+    "step1": "Choisir le Fournisseur",
+    "step2": "Définir la Couverture",
+    "step3": "Obtenir l'Approbation",
+    "step4": "Indemnisation Auto",
+    "applyNow": "Demander Maintenant",
+    "description": "Complétez votre configuration d'assurance pour être protégé contre les pannes cloud"
+  },
+  "loading": "Loading dashboard…"
+}

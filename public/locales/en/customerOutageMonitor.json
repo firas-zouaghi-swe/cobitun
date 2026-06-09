@@ -1,0 +1,54 @@
+{
+  "title": "Outage Monitor",
+  "subtitle": "Real-time monitoring for your insured cloud providers",
+  "activeOutages": "Active Outages",
+  "overMTTR": "Over MTTR",
+  "providersMonitored": "Providers Monitored",
+  "tab": {
+    "liveSignals": "Live Signals",
+    "alertsTable": "Alerts Table",
+    "outageHistory": "Outage History",
+    "live": "Live",
+    "outageCount": "Customeroutagemonitor:Tab Outagecount"
+  },
+  "signals": {
+    "title": "Your Insured Providers — Live Signals",
+    "subtitle": "Real-time connectivity signals for providers covered by your parametric policies",
+    "activeOutages": "Active Outages",
+    "chartSubtitle": "Real-time connectivity signals from IODA",
+    "chartTitle": "Signal Monitor",
+    "overMTTR": "Over MTTR",
+    "providersMonitored": "Providers Monitored"
+  },
+  "alerts": {
+    "title": "Your Insured Providers — Outage Alerts",
+    "subtitle": "Real-time outage alerts for cloud providers covered by your parametric policies",
+    "tableSubtitle": "Recent IODA alerts for monitored providers",
+    "tableTitle": "Alert Details"
+  },
+  "outages": {
+    "noRecent": "No recent outages detected for your insured providers",
+    "goodNews": "This is good news! Your cloud services appear stable.",
+    "recentOutages": "Recent Outages",
+    "tableProvider": "Provider",
+    "tableStart": "Start",
+    "tableEnd": "End",
+    "tableDuration": "Duration",
+    "tableSeverity": "Severity",
+    "tableStatus": "Status",
+    "mttrBadge": "> MTTR",
+    "duration": "Duration",
+    "end": "End Time",
+    "noOutages": "No outages detected",
+    "noOutagesDesc": "All monitored providers are operating normally",
+    "pending": "Pending",
+    "processed": "Processed",
+    "provider": "Provider",
+    "severity": "Severity",
+    "start": "Start Time",
+    "status": "Status",
+    "asnMttr": "Asn Mttr",
+    "overMTTR": "Exceeds MTTR"
+  },
+  "loading": "Loading outage data…"
+}

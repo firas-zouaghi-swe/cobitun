@@ -1,0 +1,92 @@
+{
+  "title": "Demande de Police",
+  "progress": {
+    "title": "Progression de la Demande",
+    "contractUploaded": "Contrat fournisseur téléversé",
+    "adminReviewing": "En cours de revue par l'administration",
+    "policyGenerated": "Contrat de police généré",
+    "signAndPay": "Signer & Payer",
+    "finalApproval": "Approbation finale",
+    "completed": "Terminé"
+  },
+  "details": {
+    "title": "Détails de la Demande",
+    "created": "Créée le",
+    "sector": "Secteur",
+    "annualTurnover": "Chiffre d'Affaires Annuel",
+    "premium": "Prime",
+    "paidOn": "Payée le",
+    "approvedOn": "Approuvée le"
+  },
+  "documents": {
+    "title": "Documents",
+    "providerContract": "Contrat Fournisseur",
+    "providerContractDesc": "Votre contrat téléversé",
+    "insurancePolicy": "Contrat de Police d'Assurance",
+    "insurancePolicyDesc": "Généré par COBITUN",
+    "signedContract": "Contrat Signé",
+    "signedContractDesc": "Votre police signée",
+    "download": "Télécharger",
+    "downloadFailed": "Échec du téléchargement du document",
+    "insurancePolicyContract": "Contrat de Police d'Assurance",
+    "insurancePolicyContractDesc": "Votre document officiel de police d'assurance",
+    "downloadPolicyContract": "Download insurance policy contract",
+    "downloadProviderContract": "Download provider contract",
+    "downloadSignedContract": "Download signed contract"
+  },
+  "actions": {
+    "removeUploadedFile": "Supprimer le fichier téléchargé"
+  },
+  "sign": {
+    "title": "Télécharger et Signer le Contrat de Police",
+    "desc": "Téléchargez le contrat de police généré, signez-le et téléversez le PDF signé",
+    "downloadPdf": "Télécharger le Contrat de Police PDF",
+    "uploadLabel": "Téléverser le Contrat Signé",
+    "uploadHint": "Cliquez pour téléverser le PDF signé (max 10 Mo)",
+    "submitButton": "Soumettre le Contrat Signé",
+    "uploading": "Téléversement du Contrat Signé...",
+    "description": "Signez votre contrat d'assurance pour continuer",
+    "failed": "Échec du téléversement du contrat signé",
+    "maxSize": "Taille maximale du fichier : 10 Mo",
+    "pdfOnly": "Fichiers PDF uniquement",
+    "submit": "Téléverser le Contrat Signé",
+    "success": "Contrat signé avec succès"
+  },
+  "pay": {
+    "title": "Payer la Prime",
+    "desc": "Votre contrat signé a été reçu. Veuillez payer la prime pour continuer.",
+    "premiumAmount": "Montant de la Prime",
+    "paymentReference": "Référence de Paiement",
+    "paymentRefHint": "Entrez votre numéro de référence de virement ou de paiement",
+    "confirmButton": "Confirmer le Paiement de la Prime",
+    "processing": "Traitement du Paiement...",
+    "confirm": "Confirmer le Paiement",
+    "description": "Effectuez le paiement de votre prime pour activer la couverture",
+    "failed": "Le paiement a échoué. Veuillez réessayer.",
+    "paymentReferenceHint": "Entrez le numéro de référence du paiement",
+    "success": "Paiement confirmé avec succès"
+  },
+  "timeline": {
+    "title": "Chronologie d'Activité"
+  },
+  "notFound": {
+    "title": "Demande Non Trouvée",
+    "desc": "La demande de police que vous cherchez n'existe pas ou vous n'y avez pas accès.",
+    "backToWorkflow": "Retour au Workflow",
+    "description": "La police que vous cherchez n'existe pas ou a été supprimée",
+    "loadFailed": "Échec du chargement des détails de la police"
+  },
+  "rejected": {
+    "title": "Demande Rejetée",
+    "reason": "Motif :"
+  },
+  "confirmSign": {
+    "title": "Confirmer la Signature du Contrat",
+    "description": "En signant ce contrat, vous concluez un accord juridiquement contraignant avec COBITUN Insurance. Cette action est irréversible. Veuillez vous assurer d'avoir examiné attentivement le contrat de police avant de signer."
+  },
+  "confirmPay": {
+    "title": "Confirmer le Paiement de la Prime",
+    "description": "Ce paiement est irrévocable. Une fois confirmé, le montant de la prime sera enregistré comme payé et ne pourra être inversé. Veuillez vérifier que la référence de paiement est correcte avant de continuer."
+  },
+  "loading": "Loading policy details..."
+}

@@ -1,0 +1,49 @@
+{
+  "title": "Demandes de police paramétrique",
+  "subtitle": "Examiner et approuver les demandes d'assurance paramétrique en attente",
+  "table": {
+    "customer": "Client",
+    "provider": "Fournisseur",
+    "sector": "Secteur",
+    "turnoverTnd": "Chiffre d'affaires (TND)",
+    "finalPremium": "Prime finale",
+    "rate": "Taux",
+    "uwDecision": "Décision de souscription",
+    "applied": "Demandé",
+    "actions": "Actions",
+    "policyNumber": "Police N°"
+  },
+  "empty": {
+    "noPending": "Aucune demande de police en attente",
+    "newApplications": "Les nouvelles demandes apparaîtront ici pour examen"
+  },
+  "dialog": {
+    "approveTitle": "Approuver la police",
+    "rejectTitle": "Rejeter la police",
+    "policyFor": "Police pour {{name}} — {{provider}}",
+    "fields": {
+      "sector": "Secteur",
+      "businessModel": "Modèle économique",
+      "resilienceProfile": "Profil de résilience",
+      "annualTurnover": "Chiffre d'affaires annuel",
+      "hourlyRevenue": "Revenu horaire",
+      "purePremium": "Prime pure",
+      "commercialPremium": "Prime commerciale",
+      "finalPremium": "Prime finale",
+      "payoutPerHour": "Paiement/heure",
+      "rate": "Taux",
+      "providerFactor": "Facteur fournisseur",
+      "uwDecision": "Décision de souscription"
+    },
+    "adminComment": "Commentaire de l'administrateur (facultatif)",
+    "rejectPlaceholder": "Raison du rejet...",
+    "optionalPlaceholder": "Commentaire facultatif...",
+    "cancel": "Annuler",
+    "confirmApproval": "Confirmer l'approbation",
+    "confirmRejection": "Confirmer le rejet",
+    "processing": "Traitement en cours..."
+  },
+  "toast": {
+    "actionFailed": "L'action a échoué"
+  }
+}

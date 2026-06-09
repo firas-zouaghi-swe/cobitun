@@ -1,0 +1,67 @@
+{
+  "title": "Cyber Indemnity Applications",
+  "subtitle": "Review, approve, or reject cyber insurance applications",
+  "filter": {
+    "status": "Status:",
+    "allStatuses": "All Statuses",
+    "filterByStatus": "Filter by status",
+    "applicationCount": "{{count}} application(s)"
+  },
+  "table": {
+    "applicant": "Applicant",
+    "companySector": "Company / Sector",
+    "revenue": "Revenue",
+    "riskScore": "Risk Score",
+    "securityPosture": "Security Posture",
+    "premium": "Premium",
+    "status": "Status",
+    "submitted": "Submitted"
+  },
+  "empty": {
+    "noApplications": "No applications found",
+    "tryChangingFilter": "Try changing the filter to see more results",
+    "newApplications": "New applications will appear here for review"
+  },
+  "expanded": {
+    "underwritingAnswers": "Underwriting Answers",
+    "noAnswers": "No answers recorded",
+    "waiverFlags": "Waiver Flags",
+    "waiverDescription": "These questions were answered contrary to expectations, reducing the risk score.",
+    "adminComment": "Admin Comment",
+    "coverageGrants": "Coverage Grants",
+    "noCoverageGrants": "No coverage grants defined",
+    "premiumBreakdown": "Premium Breakdown",
+    "product": "Product",
+    "policyLimit": "Policy Limit",
+    "deductibleSIR": "Deductible / SIR",
+    "indemnityPeriod": "Indemnity Period",
+    "baseRatePer1000": "Base Rate / 1000",
+    "minimumPremium": "Minimum Premium",
+    "calculatedPremium": "Calculated Premium",
+    "exclusions": "Exclusions",
+    "applicationApproved": "Application approved",
+    "applicationRejected": "Application rejected",
+    "on": "on",
+    "days": "days"
+  },
+  "dialog": {
+    "approveTitle": "Approve Application",
+    "rejectTitle": "Reject Application",
+    "applicationFrom": "Application from {{name}} — {{product}}",
+    "riskScore": "Risk Score",
+    "securityPosture": "Security Posture",
+    "premium": "Premium",
+    "waiverFlags": "Waiver Flags",
+    "adminComment": "Admin Comment",
+    "rejectPlaceholder": "Reason for rejection (required)...",
+    "optionalPlaceholder": "Optional comment...",
+    "cancel": "Cancel",
+    "confirmApproval": "Confirm Approval",
+    "confirmRejection": "Confirm Rejection",
+    "processing": "Processing..."
+  },
+  "toast": {
+    "actionFailed": "Action failed",
+    "failedToAction": "Failed to {{action}} application"
+  }
+}

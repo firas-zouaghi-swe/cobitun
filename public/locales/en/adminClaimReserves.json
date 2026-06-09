@@ -1,0 +1,59 @@
+{
+  "title": "Claim Reserves",
+  "subtitle": "Manage claim reserves and track adjustment history",
+  "tabs": {
+    "parametric": "Parametric Reserves",
+    "cyber": "Cyber Reserves"
+  },
+  "addReserve": "Add Reserve",
+  "table": {
+    "type": "Type",
+    "amount": "Amount",
+    "previous": "Previous",
+    "adjustment": "Adjustment",
+    "method": "Method",
+    "confidence": "Confidence",
+    "reason": "Reason",
+    "date": "Date"
+  },
+  "empty": {
+    "noClaims": "No claims found",
+    "noReserves": "No reserves recorded for this claim"
+  },
+  "dialog": {
+    "addTitle": "Add Reserve Entry",
+    "addDescription": "Add a new reserve to {{claimType}} claim #{{claimId}}",
+    "reserveType": "Reserve Type",
+    "selectType": "Select type",
+    "reserveAmount": "Reserve Amount (TND)",
+    "actuarialMethod": "Actuarial Method",
+    "selectMethod": "Select method",
+    "confidenceLevel": "Confidence Level",
+    "adjustmentReason": "Adjustment Reason",
+    "reasonPlaceholder": "Reason for this reserve",
+    "saving": "Saving...",
+    "adjustmentReasonPlaceholder": "e.g., Quarterly reserve review",
+    "confidenceLevelPlaceholder": "e.g., High, Medium, Low",
+    "defaultReason": "Standard reserve adjustment"
+  },
+  "reserveTypes": {
+    "CASE": "Case",
+    "IBNR": "IBNR",
+    "INCURRED": "Incurred",
+    "PAID": "Paid",
+    "RECOVERED": "Recovered"
+  },
+  "actuarialMethods": {
+    "CHAIN_LADDER": "Chain Ladder",
+    "BORNHUETTER_FERGUSON": "Bornhuetter-Ferguson",
+    "CAPE_COD": "Cape Cod",
+    "MACK": "Mack",
+    "BF_MODIFIED": "BF Modified"
+  },
+  "toast": {
+    "added": "Reserve added successfully",
+    "addFailed": "Failed to add reserve",
+    "required": "Reserve type and amount are required",
+    "requiredFields": "Please fill in all required fields"
+  }
+}

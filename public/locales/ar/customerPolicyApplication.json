@@ -1,0 +1,39 @@
+{
+  "title": "طلب وثيقة جديدة",
+  "subtitle": "قم برفع عقد مزود الخدمة السحابية لبدء عملية التسعير",
+  "backToWorkflow": "العودة إلى سير العمل",
+  "step1": {
+    "title": "الخطوة 1: رفع عقد المزود",
+    "requirement": "مطلوب: صيغة PDF، بحد أقصى 10 ميغابايت",
+    "label": "الخطوة 1: رفع عقد المزود"
+  },
+  "upload": {
+    "dragDrop": "اسحب وأفلت ملف PDF هنا",
+    "orBrowse": "أو انقر لتصفح الملفات",
+    "remove": "إزالة"
+  },
+  "optional": {
+    "title": "تفاصيل اختيارية",
+    "businessSector": "قطاع الأعمال",
+    "selectSector": "اختر القطاع",
+    "annualTurnover": "حجم الأعمال السنوي (TND)",
+    "turnoverPlaceholder": "مثال: 500000",
+    "cloudProvider": "مزود الخدمة السحابية",
+    "selectProvider": "اختر المزود"
+  },
+  "submit": {
+    "creating": "جاري إنشاء الطلب...",
+    "submitApplication": "إرسال الطلب"
+  },
+  "validation": {
+    "uploadContract": "يرجى رفع عقد المزود بصيغة PDF",
+    "onlyPdf": "يتم قبول ملفات PDF فقط",
+    "maxSize": "يجب أن يكون حجم الملف أقل من 10 ميغابايت",
+    "customerNotFound": "لم يتم العثور على ملف العميل. يرجى تسجيل الدخول مرة أخرى."
+  },
+  "toast": {
+    "createFailed": "فشل إنشاء الطلب",
+    "createSuccess": "تم إنشاء طلب الوثيقة بنجاح!",
+    "somethingWentWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  }
+}

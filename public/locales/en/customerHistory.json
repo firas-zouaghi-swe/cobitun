@@ -1,0 +1,17 @@
+{
+  "title": "Policy History",
+  "table": {
+    "policyName": "Policy Name",
+    "category": "Category",
+    "sumAssurance": "Sum Assurance",
+    "premium": "Premium",
+    "tenure": "Tenure",
+    "status": "Status",
+    "appliedOn": "Applied On"
+  },
+  "empty": {
+    "noApplications": "No policy applications yet",
+    "noApplicationsDesc": "You have not applied to any policies yet."
+  },
+  "loading": "Loading history…"
+}

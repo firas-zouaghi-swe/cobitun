@@ -1,0 +1,58 @@
+{
+  "validation": {
+    "turnoverMin": "Annual turnover must be at least 50,000 TND",
+    "turnoverMax": "Annual turnover exceeds 15,000,000 TND — out of SME scope",
+    "sectorRequired": "Sector is required",
+    "businessModelRequired": "Business model is required",
+    "resilienceRequired": "Resilience profile is required",
+    "preventCalc": "Validation errors prevent calculation"
+  },
+  "underwriting": {
+    "autoAccept": "Premium rate {{rate}}% is below Q25 ({{q25}}%) — auto-accept",
+    "manualReview": "Premium rate {{rate}}% is between Q25 ({{q25}}%) and Q75 ({{q75}}%) — manual underwriting review",
+    "surcharge": "Premium rate {{rate}}% is between Q75 ({{q75}}%) and 1.5×Q75 ({{threshold}}%) — surcharge 50% or decline (case-by-case)",
+    "decline": "Premium rate {{rate}}% is at or above 1.5×Q75 ({{threshold}}%) — automatic decline",
+    "belowSoftBound": ". Warning: below soft lower bound (0.05%) — triggers manual review",
+    "aboveSoftBound": ". Warning: above soft upper bound (2.0%) — triggers manual review"
+  },
+  "turnoverBands": {
+    "under500k": "< 500,000 TND",
+    "500kTo2m": "500K – 2M TND",
+    "2mTo5m": "2M – 5M TND",
+    "5mTo10m": "5M – 10M TND",
+    "10mTo15m": "10M – 15M TND"
+  },
+  "resilience": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "highDesc": "Strong disaster recovery, redundancy, and failover systems",
+    "mediumDesc": "Basic backup and recovery procedures in place",
+    "lowDesc": "Minimal recovery capability, single points of failure"
+  },
+  "businessModels": {
+    "b2c": "B2C",
+    "b2b": "B2B",
+    "b2b2c": "B2B2C",
+    "mixed": "Mixed (B2B/B2C)",
+    "other": "Other"
+  },
+  "sectors": {
+    "ecommerce": "E-commerce",
+    "edtech": "EdTech",
+    "businessSoftware": "Business Software",
+    "ai": "AI & Machine Learning",
+    "fintech": "FinTech",
+    "healthtech": "HealthTech",
+    "saas": "SaaS",
+    "media": "Media & Streaming",
+    "gaming": "Gaming",
+    "iot": "IoT & Smart Devices",
+    "logistics": "Logistics & Delivery",
+    "travel": "Travel & Hospitality",
+    "realestate": "Real Estate (PropTech)",
+    "agritech": "AgriTech",
+    "legal": "Legal & Compliance",
+    "government": "Government & Public Sector"
+  }
+}

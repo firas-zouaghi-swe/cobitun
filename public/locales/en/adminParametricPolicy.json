@@ -1,0 +1,49 @@
+{
+  "title": "Parametric Policy Requests",
+  "subtitle": "Review and approve pending parametric insurance applications",
+  "table": {
+    "customer": "Customer",
+    "provider": "Provider",
+    "sector": "Sector",
+    "turnoverTnd": "Turnover (TND)",
+    "finalPremium": "Final Premium",
+    "rate": "Rate",
+    "uwDecision": "UW Decision",
+    "applied": "Applied",
+    "actions": "Actions",
+    "policyNumber": "Policy #"
+  },
+  "empty": {
+    "noPending": "No pending policy requests",
+    "newApplications": "New applications will appear here for review"
+  },
+  "dialog": {
+    "approveTitle": "Approve Policy",
+    "rejectTitle": "Reject Policy",
+    "policyFor": "Policy for {{name}} — {{provider}}",
+    "fields": {
+      "sector": "Sector",
+      "businessModel": "Business Model",
+      "resilienceProfile": "Resilience Profile",
+      "annualTurnover": "Annual Turnover",
+      "hourlyRevenue": "Hourly Revenue",
+      "purePremium": "Pure Premium",
+      "commercialPremium": "Commercial Premium",
+      "finalPremium": "Final Premium",
+      "payoutPerHour": "Payout/Hour",
+      "rate": "Rate",
+      "providerFactor": "Provider Factor",
+      "uwDecision": "UW Decision"
+    },
+    "adminComment": "Admin Comment (optional)",
+    "rejectPlaceholder": "Reason for rejection...",
+    "optionalPlaceholder": "Optional comment...",
+    "cancel": "Cancel",
+    "confirmApproval": "Confirm Approval",
+    "confirmRejection": "Confirm Rejection",
+    "processing": "Processing..."
+  },
+  "toast": {
+    "actionFailed": "Action failed"
+  }
+}

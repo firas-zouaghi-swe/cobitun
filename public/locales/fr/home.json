@@ -1,0 +1,169 @@
+{
+  "hero": {
+    "title1": "Le Cloud est Down ?",
+    "title2": "Vous Êtes Quand Même Protégé",
+    "subtitle": "La première assurance paramétrique contre les pannes cloud en Tunisie.",
+    "seeHowItWorks": "Voir Comment ça Marche",
+    "liveMonitoring": "Surveillance en Direct Active",
+    "badge": "PARAMÉTRIQUE",
+    "ancsCertified": "Certifié ANCS",
+    "description": "Indemnisations automatiques alimentées par la surveillance IODA en temps réel — pas de formulaires, pas d'experts, pas d'attente.",
+    "monitorTitle": "Moniteur COBITUN",
+    "live": "EN DIRECT",
+    "providers": "Fournisseurs",
+    "totalIps": "IPs Totales",
+    "ancsCert": "Cert. ANCS",
+    "scroll": "Défiler",
+    "allOnline": "All Online",
+    "moreProviders": "more"
+  },
+  "stat": {
+    "monitoredProviders": "Fournisseurs Surveillés",
+    "activeOutages": "Pannes Actives",
+    "totalPayouts": "Indemnisations Totales",
+    "claimsForms": "Formulaires de Sinistre"
+  },
+  "problem": {
+    "title": "Pourquoi l'Assurance Traditionnelle Échoue avec les PME",
+    "cloudDependencyTitle": "La Crise de la Dépendance Cloud",
+    "cloudDependencyDesc": "73 % des PME tunisiennes dépendent de l'infrastructure cloud. Quand elle tombe en panne, les revenus s'arrêtent — mais pas vos coûts. Salaires, loyer, abonnements continuent de drainer votre trésorerie pendant que vous attendez le retour du service.",
+    "paperworkTitle": "Le Piège de la Paperasse",
+    "paperworkDesc": "L'assurance traditionnelle contre les pertes d'exploitation exige des mois de documents financiers, des preuves de perte, des visites d'experts et des avis juridiques. Au moment où vous êtes indemnisé, vous pourriez avoir cessé votre activité. Les PME ont besoin de rapidité, pas de bureaucratie.",
+    "solutionTitle": "La Solution Paramétrique",
+    "solutionDesc": "Nous utilisons les données objectives d'IODA — pas des opinions. Si l'Internet Intelligence de Georgia Tech détecte que la panne de votre fournisseur a dépassé son MTTR SLA, vous êtes indemnisé. Automatiquement. En minutes. Pas d'experts, pas d'avocats, pas d'attente.",
+    "recentOutages": "Pannes Réelles Récentes (Données IODA)",
+    "outageBadge": "Panne"
+  },
+  "formula": {
+    "title": "Formule de Tarification Actuarielle",
+    "lambda": "1,1212 événements/an (fréquence tunisienne observée)",
+    "expectedDuration": "107,07 heures (durée moyenne assurée)",
+    "sectorFactors": "GM, CD, CR = Facteurs spécifiques au secteur (16 secteurs)",
+    "resilience": "1/R = Facteur de résilience (Élevé=2,0, Moyen=1,33, Faible=1,0)",
+    "businessModel": "BM = Facteur modèle économique (B2C=1,0, B2B=0,8)",
+    "loading": "1,32 = Chargement de 32 % (frais + marge)",
+    "research": "Basé sur la recherche actuarielle évaluée par les pairs pour les PME tunisiennes"
+  },
+  "ioda": {
+    "title": "Qu'est-ce qu'IODA ?",
+    "description": "L'Internet Outage Data Aggregator (IODA) est un projet de Georgia Tech et CAIDA qui surveille la connectivité Internet mondiale en utilisant les données de routage BGP (500+ moniteurs), le sondage actif (CAIDA Ark) et les télescopes réseau. Il détecte les pannes en temps réel sans dépendre des déclarations du fournisseur lui-même."
+  },
+  "howItWorks": {
+    "title": "Comment Fonctionne l'Assurance Paramétrique",
+    "subtitle": "Quatre étapes simples pour protéger votre entreprise contre les pannes cloud. Zéro paperasse, automatisation totale.",
+    "step1Title": "Choisir le Fournisseur",
+    "step1Desc": "Sélectionnez parmi {{count}} fournisseurs cloud tunisiens surveillés. Chacun a un niveau SLA défini et un seuil MTTR.",
+    "step2Title": "Définir la Couverture",
+    "step2Desc": "Entrez vos revenus, marges et profil de risque. Le moteur actuariel calcule votre prime et votre taux d'indemnisation.",
+    "step3Title": "Surveillance 24/7",
+    "step3Desc": "IODA surveille votre fournisseur via BGP, sondage actif et télescopes réseau. Données de panne réelles, pas auto-déclarées.",
+    "step4Title": "Indemnisation Auto",
+    "step4Desc": "La panne dépasse le MTTR ? Sinistre créé, approuvé et payé automatiquement. Pas de formulaires, pas d'attente.",
+    "stepLabel": "Étape {{n}}"
+  },
+  "automation": {
+    "title": "Pipeline d'Automatisation : d'IODA à l'Indemnisation en 7 Étapes",
+    "step1Label": "IODA Détecte",
+    "step1Desc": "Les moniteurs BGP repèrent une anomalie de routage",
+    "step2Label": "Événement Stocké",
+    "step2Desc": "Événement de panne créé dans la base",
+    "step3Label": "Événements Fusionnés",
+    "step3Desc": "Événements consécutifs dans un intervalle de 2h regroupés",
+    "step4Label": "Vérification SLA",
+    "step4Desc": "Durée comparée au MTTR du fournisseur",
+    "step5Label": "Déclenchement",
+    "step5Desc": "Heures assurées calculées",
+    "step6Label": "Sinistre Créé",
+    "step6Desc": "Sinistre automatique pour chaque police",
+    "step7Label": "Indemnisation Envoyée",
+    "step7Desc": "Fonds décaissés automatiquement"
+  },
+  "providers": {
+    "sectionTitle": "{{count}}+ Fournisseurs Tunisiens Surveillés",
+    "sectionSubtitle": "Chaque fournisseur est classé par niveau SLA avec un seuil MTTR défini. Tous surveillés 24/7 via IODA. Données issues de RIPE NCC et Georgia Tech.",
+    "liveMonitoring": "Surveillance 24/7 en Direct",
+    "monitoredViaIoda": "Surveillé 24/7 via IODA",
+    "tagGovernment": "Gouvernemental",
+    "tagAncsCertified": "Certifié ANCS",
+    "previousProvider": "Fournisseur précédent",
+    "nextProvider": "Fournisseur suivant",
+    "pauseAutoplay": "Pause lecture auto",
+    "resumeAutoplay": "Reprendre lecture auto",
+    "goToProvider": "Aller au fournisseur {{number}}",
+    "subtitle": "Fournisseurs Cloud Surveillés en Tunisie",
+    "title": "{{count}}+ Fournisseurs Surveillés",
+    "uptimeSLA": "SLA Disponibilité",
+    "ancsBadge": "ANCS",
+    "govBadge": "Gouv."
+  },
+  "compare": {
+    "row1Feature": "Déclaration de sinistre",
+    "row1Traditional": "Formulaires manuels",
+    "row1Parametric": "Automatique",
+    "row2Feature": "Preuve de perte",
+    "row2Traditional": "Documents financiers",
+    "row2Parametric": "Données IODA",
+    "row3Feature": "Vitesse d'indemnisation",
+    "row3Traditional": "30-90 jours",
+    "row3Parametric": "15 minutes",
+    "row4Feature": "Transparence",
+    "row4Traditional": "Subjectif",
+    "row4Parametric": "Algorithme + données publiques",
+    "row5Feature": "Litiges fournisseur",
+    "row5Traditional": "Leur parole vs la vôtre",
+    "row5Parametric": "Tiers (Georgia Tech)",
+    "row6Feature": "Déclenchement",
+    "row6Traditional": "Preuve de revenus",
+    "row6Parametric": "Panne > MTTR",
+    "row7Feature": "Pannes récurrentes",
+    "row7Traditional": "Sinistre séparé",
+    "row7Parametric": "Auto-déclenchement",
+    "row8Feature": "Prévisibilité des coûts",
+    "row8Traditional": "Variable",
+    "row8Parametric": "Prime fixe",
+    "row9Feature": "Erreur humaine",
+    "row9Traditional": "Biais de l'expert",
+    "row9Parametric": "Sans biais"
+  },
+  "compareSection": {
+    "title": "Assurance Traditionnelle vs. Paramétrique",
+    "subtitle": "Découvrez pourquoi l'assurance paramétrique est l'avenir de la protection contre les pannes cloud.",
+    "featureHeader": "Caractéristique",
+    "traditionalHeader": "Traditionnelle",
+    "parametricHeader": "Paramétrique"
+  },
+  "control": {
+    "title": "Contrôle Hybride à 3 Couches",
+    "subtitle": "Automatisation pour la rapidité. Supervision admin pour la confiance. Approbation des polices pour la qualité. Trois couches qui travaillent ensemble.",
+    "layer1Title": "Couche 1 : Automatisation",
+    "layer1Desc": "Les sinistres sont créés automatiquement quand IODA détecte une panne dépassant le MTTR. Auto-approuvés et auto-payés pour la rapidité. Les clients sont indemnisés en minutes, pas en mois.",
+    "layer1Badge": "Couche Rapidité",
+    "layer2Title": "Couche 2 : Révision Admin",
+    "layer2Desc": "Les administrateurs peuvent contester tout sinistre automatique dans les 48 heures. Les sinistres contestés sont mis en attente d'enquête. Cela empêche la fraude tout en maintenant la vitesse d'indemnisation pour les sinistres légitimes.",
+    "layer2Badge": "Couche Supervision",
+    "layer3Title": "Couche 3 : Approbation des Polices",
+    "layer3Desc": "Chaque police paramétrique nécessite l'approbation d'un administrateur avant activation. Cela garantit que seules les entreprises légitimes avec des fournisseurs vérifiés obtiennent une couverture. Porte de qualité avant le démarrage de l'automatisation.",
+    "layer3Badge": "Couche Qualité"
+  },
+  "video": {
+    "liveDemo": "Regardez la technologie en action",
+    "title": "Voyez COBITUN dans cette courte démo",
+    "subtitle": "Regardez une courte démonstration du fonctionnement de l'assurance paramétrique COBITUN — de l'abonnement simple et de la surveillance indépendante 24/7 de vos services Internet et cloud à l'indemnisation automatique lorsqu'une panne dépasse le délai convenu, avec un calcul transparent et un paiement rapide en quelques jours seulement.",
+    "clickToWatch": "Cliquez pour Regarder",
+    "close": "Fermer la vidéo",
+    "unsupported": "Votre navigateur ne prend pas en charge la balise vidéo."
+  },
+  "cta": {
+    "title1": "Ne Laissez Pas les Pannes",
+    "title2": "Détruire Votre Entreprise",
+    "subtitle": "Rejoignez la première assurance paramétrique contre les pannes cloud en Tunisie. Indemnisations automatiques. Données objectives. Zéro paperasse.",
+    "apply": "Demander une Couverture",
+    "talkToAgent": "Parler à un Agent"
+  },
+  "footer": {
+    "platformDesc": "La première plateforme d'assurance paramétrique contre les pannes cloud en Tunisie."
+  },
+  "newsletter": {
+    "ariaLabel": "Email newsletter"
+  }
+}

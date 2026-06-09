@@ -1,0 +1,40 @@
+{
+  "title": "Tableau de Bord Admin",
+  "subtitle": "COBITUN — Couverture Interruption d'Activité par Panne Cloud Tunisie | Toutes les données proviennent de la base",
+  "traditional": {
+    "title": "Assurance Traditionnelle",
+    "totalUsers": "Total Utilisateurs",
+    "totalPolicies": "Total Polices",
+    "totalCategories": "Total Catégories",
+    "totalQuestions": "Total des questions",
+    "policyHolders": "Titulaires de Police",
+    "approved": "Approuvées",
+    "pending": "En attente",
+    "disapproved": "Désapprouvées"
+  },
+  "parametric": {
+    "sectionTitle": "Assurance Panne Cloud (Données IODA Réelles)",
+    "activeProviders": "Fournisseurs Actifs",
+    "unprocessedOutages": "Pannes Non Traitées",
+    "parametricClaims": "Sinistres Paramétriques",
+    "autoTriggers": "Auto-Déclenchements (24h)",
+    "manage": "Gérer",
+    "monitor": "Surveiller",
+    "details": "Détails",
+    "total": "{{count}} au total",
+    "totalEvents": "{{count}} événements au total",
+    "claimsSub": "{{paid}} payés · {{disputed}} contestés"
+  },
+  "finance": {
+    "totalPremiums": "Total Primes Collectées",
+    "totalPayouts": "Total Indemnités",
+    "activePolicies": "polices actives",
+    "claimsPaid": "sinistres payés",
+    "policyRequests": "Demandes de Police",
+    "pending": "en attente"
+  },
+  "outage": {
+    "unprocessedEvents": "Événements de Panne Non Traités",
+    "eventsRequireProcessing": "{{count}} événements nécessitent un traitement"
+  }
+}

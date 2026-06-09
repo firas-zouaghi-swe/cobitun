@@ -1,0 +1,67 @@
+{
+  "title": "Examen des sinistres",
+  "notFound": {
+    "title": "Sinistre introuvable",
+    "description": "Le sinistre que vous recherchez n'existe pas ou vous n'y avez pas accès."
+  },
+  "backToWorkflow": "Retour au tableau de bord des flux de travail",
+  "details": {
+    "title": "Détails de la Réclamation",
+    "customer": "Client",
+    "email": "E-mail",
+    "policyReference": "Référence de police",
+    "lossAmount": "Montant du sinistre",
+    "lossStartDate": "Date de début du sinistre",
+    "lossEndDate": "Date de fin du sinistre",
+    "created": "Créé",
+    "description": "Description"
+  },
+  "progress": {
+    "title": "Avancement du sinistre",
+    "steps": {
+      "open": "Ouvert",
+      "submitted": "Soumis",
+      "completed": "Terminé",
+      "${stepKey}": "${step Key}"
+    }
+  },
+  "openStatus": {
+    "title": "En attente de la déclaration du client",
+    "description": "Le sinistre est ouvert. En attente de la déclaration de sinistre du client avec les détails."
+  },
+  "submittedStatus": {
+    "title": "Examiner et compléter le sinistre",
+    "description": "Le client a soumis sa déclaration de sinistre. Examinez et complétez le sinistre pour déclencher le paiement.",
+    "downloadDeclaration": "Télécharger la déclaration de sinistre PDF",
+    "lossDetails": "Détails du Sinistre",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "markCompleted": "Marquer le sinistre comme terminé et déclencher le paiement"
+  },
+  "completedStatus": {
+    "title": "Sinistre terminé",
+    "payoutDetails": "Détails du paiement",
+    "transactionId": "ID de transaction",
+    "payoutDate": "Date de paiement",
+    "payoutAmount": "Montant du paiement",
+    "downloadDeclaration": "Télécharger la déclaration de sinistre PDF"
+  },
+  "audit": {
+    "title": "Chronologie d'audit",
+    "by": "par"
+  },
+  "dialog": {
+    "title": "Compléter le sinistre et déclencher le paiement",
+    "description": "Cela marquera le sinistre comme terminé et déclenchera le processus de paiement. Le client sera notifié du paiement. Cette action est irréversible.",
+    "claimId": "ID du sinistre",
+    "lossAmount": "Montant du sinistre",
+    "customer": "Client",
+    "confirmAndTrigger": "Confirmer et déclencher le paiement"
+  },
+  "toast": {
+    "notFound": "Sinistre introuvable",
+    "loadFailed": "Échec du chargement des détails du sinistre",
+    "completeFailed": "Échec de la complétion du sinistre",
+    "downloadFailed": "Échec du téléchargement de la déclaration PDF"
+  }
+}

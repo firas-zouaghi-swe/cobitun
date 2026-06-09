@@ -1,0 +1,26 @@
+{
+  "title": "Policy Holders",
+  "tabs": {
+    "all": "All",
+    "pending": "Pending",
+    "approved": "Approved",
+    "disapproved": "Disapproved"
+  },
+  "table": {
+    "customer": "Customer",
+    "policy": "Policy",
+    "category": "Category",
+    "sumAssurance": "Sum Assurance",
+    "premium": "Premium",
+    "status": "Status",
+    "applied": "Applied",
+    "actions": "Actions"
+  },
+  "empty": {
+    "noPolicyHolders": "No policy holders found"
+  },
+  "toast": {
+    "statusSuccess": "Policy {{status}} successfully",
+    "updateFailed": "Update failed"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "title": "تجديد الوثائق",
+  "subtitle": "مراجعة ومعالجة عروض تجديد الوثائق",
+  "tabs": {
+    "parametric": "تجديدات حدودية",
+    "cyber": "تجديدات سيبرانية"
+  },
+  "table": {
+    "renewalNumber": "رقم التجديد",
+    "policy": "الوثيقة",
+    "termMonths": "المدة (أشهر)",
+    "previousPremium": "القسط السابق",
+    "newPremium": "القسط الجديد",
+    "claimsInPeriod": "المطالبات في الفترة",
+    "status": "الحالة",
+    "actions": "الإجراءات"
+  },
+  "empty": {
+    "noParametric": "لم يتم العثور على تجديدات حدودية",
+    "noCyber": "لم يتم العثور على تجديدات سيبرانية",
+    "noCyberRenewals": "لم يتم العثور على تجديدات سيبرانية"
+  },
+  "action": {
+    "accept": "قبول",
+    "decline": "رفض",
+    "accepted": "مقبول",
+    "declined": "مرفوض"
+  },
+  "dialog": {
+    "declineTitle": "رفض التجديد",
+    "declineDescription": "يرجى تقديم سبب رفض هذا التجديد",
+    "declineReason": "سبب الرفض",
+    "declineReasonPlaceholder": "سبب رفض التجديد",
+    "processing": "جاري المعالجة...",
+    "declineRenewal": "رفض التجديد"
+  },
+  "status": {
+    "PENDING": "قيد الانتظار",
+    "ACCEPTED": "مقبول",
+    "DECLINED": "مرفوض"
+  },
+  "cyber": {
+    "comingSoonTitle": "تجديدات الأمن السيبراني",
+    "comingSoonDescription": "إدارة تجديدات سياسات الأمن السيبراني قادمة قريباً. ستتمكن من مراجعة ومعالجة التجديدات لسياسات الأمن السيبراني.",
+    "contactSupport": "اتصل بالدعم"
+  },
+  "toast": {
+    "accepted": "تم قبول التجديد",
+    "declined": "تم رفض التجديد",
+    "acceptFailed": "فشل قبول التجديد",
+    "declineFailed": "فشل رفض التجديد"
+  }
+}

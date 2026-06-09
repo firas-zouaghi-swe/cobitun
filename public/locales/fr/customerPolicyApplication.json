@@ -1,0 +1,39 @@
+{
+  "title": "Demander une nouvelle police",
+  "subtitle": "Téléchargez votre contrat de fournisseur cloud pour commencer le processus de souscription",
+  "backToWorkflow": "Retour aux flux de travail",
+  "step1": {
+    "title": "Étape 1 : Télécharger le contrat fournisseur",
+    "requirement": "Obligatoire : format PDF, max 10 Mo",
+    "label": "Étape 1 : Télécharger le contrat fournisseur"
+  },
+  "upload": {
+    "dragDrop": "Glissez-déposez votre PDF ici",
+    "orBrowse": "ou cliquez pour parcourir les fichiers",
+    "remove": "Supprimer"
+  },
+  "optional": {
+    "title": "Détails facultatifs",
+    "businessSector": "Secteur d'activité",
+    "selectSector": "Sélectionner un secteur",
+    "annualTurnover": "Chiffre d'affaires annuel (TND)",
+    "turnoverPlaceholder": "ex. 500000",
+    "cloudProvider": "Fournisseur cloud",
+    "selectProvider": "Sélectionner un fournisseur"
+  },
+  "submit": {
+    "creating": "Création de la demande...",
+    "submitApplication": "Soumettre la demande"
+  },
+  "validation": {
+    "uploadContract": "Veuillez télécharger un contrat fournisseur en PDF",
+    "onlyPdf": "Seuls les fichiers PDF sont acceptés",
+    "maxSize": "La taille du fichier doit être inférieure à 10 Mo",
+    "customerNotFound": "Profil client introuvable. Veuillez vous reconnecter."
+  },
+  "toast": {
+    "createFailed": "Échec de la création de la demande",
+    "createSuccess": "Demande de police créée avec succès !",
+    "somethingWentWrong": "Une erreur est survenue. Veuillez réessayer."
+  }
+}

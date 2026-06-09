@@ -1,0 +1,66 @@
+{
+  "title": "Surveillance des pannes cloud",
+  "subtitle": "Surveillance en temps réel via IODA + Georgia Tech",
+  "runIodaCheck": "Exécuter une vérification IODA",
+  "runningIodaCheck": "Vérification IODA en cours...",
+  "stats": {
+    "activeProviders": "Fournisseurs actifs",
+    "activeOutages": "Pannes actives",
+    "triggers24h": "Déclencheurs (24h)",
+    "totalPayoutsTnd": "Paiements totaux (TND)"
+  },
+  "tabs": {
+    "liveSignals": "Signaux en direct",
+    "alertsTable": "Tableau des alertes",
+    "outageEvents": "Événements de panne",
+    "triggers": "Déclencheurs",
+    "claims": "Sinistres"
+  },
+  "events": {
+    "title": "Événements de panne non traités",
+    "table": {
+      "provider": "Fournisseur",
+      "start": "Début",
+      "durationH": "Durée (h)",
+      "source": "Source",
+      "score": "Score",
+      "statusCol": "Statut"
+    },
+    "processed": "Traité",
+    "unprocessed": "Non traité",
+    "empty": "Aucun événement de panne non traité"
+  },
+  "triggersTab": {
+    "title": "Événements déclencheurs récents",
+    "table": {
+      "provider": "Fournisseur",
+      "slaTier": "Niveau SLA",
+      "mttrH": "MTTR (h)",
+      "insuredHours": "Heures assurées",
+      "claimsCreated": "Sinistres créés",
+      "date": "Date"
+    },
+    "yes": "Oui",
+    "no": "Non",
+    "empty": "Aucun déclencheur récent"
+  },
+  "claimsTab": {
+    "title": "Sinistres récents",
+    "table": {
+      "customer": "Client",
+      "provider": "Fournisseur",
+      "outageH": "Panne (h)",
+      "insuredH": "Assuré (h)",
+      "payoutTnd": "Paiement (TND)",
+      "statusCol": "Statut",
+      "type": "Type"
+    },
+    "auto": "Auto",
+    "manual": "Manuel",
+    "empty": "Aucun sinistre récent"
+  },
+  "toast": {
+    "iodaCheckCompleted": "Vérification IODA terminée : {{triggers}} déclencheur(s), {{claims}} sinistre(s) créé(s)",
+    "iodaCheckFailed": "Échec de l'exécution de la vérification IODA"
+  }
+}

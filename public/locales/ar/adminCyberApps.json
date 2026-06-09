@@ -1,0 +1,67 @@
+{
+  "title": "طلبات التعويض السيبراني",
+  "subtitle": "مراجعة طلبات التأمين السيبراني وقبولها أو رفضها",
+  "filter": {
+    "status": "الحالة:",
+    "allStatuses": "جميع الحالات",
+    "filterByStatus": "تصفية حسب الحالة",
+    "applicationCount": "{{count}} طلب/طلبات"
+  },
+  "table": {
+    "applicant": "مقدم الطلب",
+    "companySector": "الشركة / القطاع",
+    "revenue": "الإيرادات",
+    "riskScore": "درجة المخاطر",
+    "securityPosture": "الوضع الأمني",
+    "premium": "القسط",
+    "status": "الحالة",
+    "submitted": "تاريخ التقديم"
+  },
+  "empty": {
+    "noApplications": "لم يتم العثور على طلبات",
+    "tryChangingFilter": "حاول تغيير عامل التصفية لعرض المزيد من النتائج",
+    "newApplications": "ستظهر الطلبات الجديدة هنا للمراجعة"
+  },
+  "expanded": {
+    "underwritingAnswers": "إجابات التسعير",
+    "noAnswers": "لم يتم تسجيل أي إجابات",
+    "waiverFlags": "علامات التنازل",
+    "waiverDescription": "تمت الإجابة على هذه الأسئلة بخلاف المتوقع، مما أدى إلى خفض درجة المخاطر.",
+    "adminComment": "تعليق المسؤول",
+    "coverageGrants": "منح التغطية",
+    "noCoverageGrants": "لم يتم تحديد منح تغطية",
+    "premiumBreakdown": "تفصيل القسط",
+    "product": "المنتج",
+    "policyLimit": "حد الوثيقة",
+    "deductibleSIR": "المتحمل / SIR",
+    "indemnityPeriod": "فترة التعويض",
+    "baseRatePer1000": "المعدل الأساسي / 1000",
+    "minimumPremium": "الحد الأدنى للقسط",
+    "calculatedPremium": "القسط المحسوب",
+    "exclusions": "الاستثناءات",
+    "applicationApproved": "تم قبول الطلب",
+    "applicationRejected": "تم رفض الطلب",
+    "on": "في",
+    "days": "أيام"
+  },
+  "dialog": {
+    "approveTitle": "قبول الطلب",
+    "rejectTitle": "رفض الطلب",
+    "applicationFrom": "طلب من {{name}} — {{product}}",
+    "riskScore": "درجة المخاطر",
+    "securityPosture": "الوضع الأمني",
+    "premium": "القسط",
+    "waiverFlags": "علامات التنازل",
+    "adminComment": "تعليق المسؤول",
+    "rejectPlaceholder": "سبب الرفض (مطلوب)...",
+    "optionalPlaceholder": "تعليق اختياري...",
+    "cancel": "إلغاء",
+    "confirmApproval": "تأكيد القبول",
+    "confirmRejection": "تأكيد الرفض",
+    "processing": "جاري المعالجة..."
+  },
+  "toast": {
+    "actionFailed": "فشل تنفيذ الإجراء",
+    "failedToAction": "فشل {{action}} الطلب"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Admin Dashboard",
+  "subtitle": "COBITUN — Cloud Outage Business Interruption Tunisia Cover ",
+  "traditional": {
+    "title": "Traditional Insurance",
+    "totalUsers": "Total Users",
+    "totalPolicies": "Total Policies",
+    "totalCategories": "Total Categories",
+    "totalQuestions": "Total Questions",
+    "policyHolders": "Policy Holders",
+    "approved": "Approved",
+    "pending": "Pending",
+    "disapproved": "Disapproved"
+  },
+  "parametric": {
+    "sectionTitle": "Cloud Outage Insurance (Real IODA Data)",
+    "activeProviders": "Active Providers",
+    "unprocessedOutages": "Unprocessed Outages",
+    "parametricClaims": "Parametric Claims",
+    "autoTriggers": "Auto-Triggers (24h)",
+    "manage": "Manage",
+    "monitor": "Monitor",
+    "details": "Details",
+    "total": "{{count}} total",
+    "totalEvents": "{{count}} total events",
+    "claimsSub": "{{paid}} paid · {{disputed}} disputed"
+  },
+  "finance": {
+    "totalPremiums": "Total Premiums Collected",
+    "totalPayouts": "Total Payouts",
+    "activePolicies": "active policies",
+    "claimsPaid": "claims paid",
+    "policyRequests": "Policy Requests",
+    "pending": "pending"
+  },
+  "outage": {
+    "unprocessedEvents": "Unprocessed Outage Events",
+    "eventsRequireProcessing": "{{count}} events require processing"
+  }
+}

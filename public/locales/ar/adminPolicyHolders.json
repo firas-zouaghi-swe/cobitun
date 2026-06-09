@@ -1,0 +1,26 @@
+{
+  "title": "حاملو الوثائق",
+  "tabs": {
+    "all": "الكل",
+    "pending": "معلقة",
+    "approved": "مقبولة",
+    "disapproved": "مرفوضة"
+  },
+  "table": {
+    "customer": "العميل",
+    "policy": "الوثيقة",
+    "category": "الفئة",
+    "sumAssurance": "مبلغ التأمين",
+    "premium": "القسط",
+    "status": "الحالة",
+    "applied": "تاريخ التقديم",
+    "actions": "الإجراءات"
+  },
+  "empty": {
+    "noPolicyHolders": "لم يتم العثور على حاملي وثائق"
+  },
+  "toast": {
+    "statusSuccess": "تم {{status}} الوثيقة بنجاح",
+    "updateFailed": "فشل التحديث"
+  }
+}

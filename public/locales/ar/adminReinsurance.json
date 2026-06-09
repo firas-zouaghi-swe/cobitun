@@ -1,0 +1,69 @@
+{
+  "title": "إدارة إعادة التأمين",
+  "subtitle": "إدارة معاهدات إعادة التأمين والأقساط المسلمة",
+  "createTreaty": "إنشاء معاهدة",
+  "tabs": {
+    "treaties": "المعاهدات",
+    "parametricCeded": "المسلم حدودي",
+    "cyberCeded": "المسلم سيبراني"
+  },
+  "table": {
+    "treatyNumber": "رقم المعاهدة",
+    "name": "الاسم",
+    "reinsurer": "معيد التأمين",
+    "type": "النوع",
+    "cessionPct": "نسبة التنازل %",
+    "period": "الفترة",
+    "status": "الحالة",
+    "policy": "الوثيقة",
+    "grossPremium": "القسط الإجمالي",
+    "cededPremium": "القسط المسلم",
+    "netPremium": "القسط الصافي",
+    "grossClaim": "المطالبة الإجمالية",
+    "cededClaim": "المطالبة المسلمة",
+    "recovery": "الاسترداد",
+    "treaty": "المعاهدة"
+  },
+  "empty": {
+    "noTreaties": "لم يتم العثور على معاهدات إعادة تأمين",
+    "noParametricCeded": "لم يتم العثور على إدخالات حدودية مسلمة",
+    "noCyberCeded": "لم يتم العثور على إدخالات سيبرانية مسلمة"
+  },
+  "dialog": {
+    "createTitle": "إنشاء معاهدة إعادة تأمين",
+    "createDescription": "إضافة معاهدة إعادة تأمين جديدة إلى المنصة",
+    "treatyNumber": "رقم المعاهدة",
+    "treatyNumberPlaceholder": "مثال: TR-2025-001",
+    "treatyName": "اسم المعاهدة",
+    "treatyNamePlaceholder": "مثال: معاهدة الحصة النسبية 2025",
+    "reinsurerName": "اسم معيد التأمين",
+    "reinsurerNamePlaceholder": "مثال: Swiss Re",
+    "treatyType": "نوع المعاهدة",
+    "selectType": "اختر النوع",
+    "cessionPct": "نسبة التنازل %",
+    "cessionPctPlaceholder": "مثال: 40",
+    "startDate": "تاريخ البداية",
+    "endDate": "تاريخ الانتهاء",
+    "status": "الحالة",
+    "creating": "جاري الإنشاء..."
+  },
+  "status": {
+    "ACTIVE": "نشط",
+    "PENDING": "قيد الانتظار",
+    "EXPIRED": "منتهي الصلاحية",
+    "CANCELLED": "ملغى"
+  },
+  "types": {
+    "QUOTA_SHARE": "الحصة النسبية",
+    "SURPLUS": "الفائض",
+    "EXCESS_OF_LOSS": "فائض الخسارة",
+    "STOP_LOSS": "وقف الخسارة",
+    "FACULTATIVE": "اختياري"
+  },
+  "toast": {
+    "created": "تم إنشاء المعاهدة بنجاح",
+    "createFailed": "فشل إنشاء المعاهدة",
+    "required": "رقم المعاهدة واسمها ومعيد التأمين والنوع مطلوبون",
+    "requiredFields": "يرجى ملء جميع الحقول المطلوبة"
+  }
+}

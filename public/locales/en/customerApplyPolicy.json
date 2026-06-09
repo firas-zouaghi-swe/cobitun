@@ -1,0 +1,26 @@
+{
+  "title": "Apply for Policy",
+  "filterByCategory": "Filter by category",
+  "allCategories": "All Categories",
+  "empty": {
+    "noPolicies": "No policies available",
+    "noPoliciesDesc": "No policies are currently available for application."
+  },
+  "card": {
+    "sumAssurance": "Sum Assurance:",
+    "premium": "Premium:",
+    "tenure": "Tenure:",
+    "applyNow": "Apply Now",
+    "applying": "Applying..."
+  },
+  "confirm": {
+    "title": "Confirm Policy Application",
+    "description": "By applying for this policy, you are initiating a formal insurance application with COBITUN Insurance. This will begin the underwriting process and may involve financial commitments. Please confirm you wish to proceed."
+  },
+  "toast": {
+    "applicationFailed": "Application failed",
+    "submitSuccess": "Policy application submitted successfully!",
+    "somethingWentWrong": "Something went wrong"
+  },
+  "loading": "Loading policies…"
+}

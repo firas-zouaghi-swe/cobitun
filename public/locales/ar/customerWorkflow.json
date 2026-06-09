@@ -1,0 +1,57 @@
+{
+  "title": "سير عمل التأمين الخاص بي",
+  "subtitle": "إدارة طلبات السياسات والمطالبات",
+  "applyNewPolicy": "طلب سياسة جديدة",
+  "fileClaim": "تقديم مطالبة",
+  "stats": {
+    "totalPolicies": "إجمالي السياسات",
+    "actionRequired": "إجراء مطلوب",
+    "completed": "مكتملة",
+    "openClaims": "مطالبات مفتوحة"
+  },
+  "tab": {
+    "policyApplications": "طلبات السياسات",
+    "claims": "المطالبات"
+  },
+  "empty": {
+    "noPolicyApplications": "لا توجد طلبات سياسات بعد",
+    "startJourney": "ابدأ رحلة التأمين بتقديم طلب سياسة جديدة.",
+    "noClaims": "لا توجد مطالبات بعد",
+    "fileClaimIfLoss": "قدم مطالبة إذا تعرضت لحدث خسارة.",
+    "needActivePolicy": "تحتاج سياسة نشطة قبل التمكن من تقديم مطالبة.",
+    "noClaimSubtitleNoPolicy": "تحتاج سياسة نشطة لتقديم مطالبة",
+    "noClaimSubtitleWithPolicy": "قدّم مطالبة لإحدى سياساتك النشطة",
+    "noClaimTitle": "لا توجد مطالبات",
+    "noPolicySubtitle": "قدّم طلب سياسة للبدء",
+    "noPolicyTitle": "لا توجد طلبات سياسات"
+  },
+  "status": {
+    "contractUploaded": "تم رفع العقد",
+    "adminReviewing": "مراجعة المسؤول",
+    "policyGenerated": "تم إنشاء السياسة",
+    "awaitingSignaturePayment": "بانتظار التوقيع والدفع",
+    "readyForFinalApproval": "جاهز للموافقة النهائية",
+    "underwritingCompleted": "تمت التسوية",
+    "rejected": "مرفوض",
+    "created": "تم الإنشاء",
+    "loss": "خسارة مُبلّغة",
+    "premium": "القسط",
+    "sector": "القطاع"
+  },
+  "action": {
+    "awaitingReview": "بانتظار المراجعة",
+    "inReview": "قيد المراجعة",
+    "signContract": "توقيع العقد",
+    "payPremium": "دفع القسط",
+    "awaitingApproval": "بانتظار الموافقة",
+    "viewPolicy": "عرض السياسة",
+    "viewDetails": "عرض التفاصيل",
+    "fillDeclaration": "ملء الإقرار",
+    "underReview": "تحت المراجعة",
+    "viewPayout": "عرض التعويض"
+  },
+  "error": {
+    "loadFailed": "فشل تحميل بيانات سير العمل"
+  },
+  "loading": "Loading workflow..."
+}

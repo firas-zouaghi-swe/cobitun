@@ -1,0 +1,955 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-montserrat);
+  --font-mono: var(--font-inter);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Tunis Re Brand Color Tokens */
+  --color-tunis-blue: #2E5A9D;
+  --color-tunis-blue-dark: #1E3A6B;
+  --color-tunis-blue-light: #4A7EC4;
+  --color-tunis-blue-pale: #E8EFF8;
+  --color-tunis-orange: #E5693A;
+  --color-tunis-orange-dark: #C44D20;
+  --color-tunis-orange-light: #F08B65;
+  --color-tunis-orange-pale: #FDEAE3;
+  --color-tunis-navy: #1A1A2E;
+  --color-tunis-navy-light: #16213E;
+  --color-tunis-navy-mid: #0F3460;
+  --color-square-blue: #3C68A9;
+  --color-square-blue-start: #456CAA;
+  --color-square-blue-end: #304879;
+}
+
+/* =================================================================
+   TUNIS RE — COBITUN DESIGN SYSTEM
+   Light Mode: White backgrounds, blue primary, orange CTA
+   Dark Mode: Navy backgrounds, blue primary, orange CTA
+   ================================================================= */
+
+:root {
+  --radius: 0.625rem;
+
+  /* === PRIMARY: Tunis Blue #2E5A9D === */
+  --primary: #2E5A9D;
+  --primary-foreground: #FFFFFF;
+
+  /* === SECONDARY: Pale Blue === */
+  --secondary: #E8EFF8;
+  --secondary-foreground: #1E3A6B;
+
+  /* === ACCENT: Tunis Orange #E5693A (CTA) === */
+  --accent: #E5693A;
+  --accent-foreground: #FFFFFF;
+
+  /* === BACKGROUND / FOREGROUND === */
+  --background: #F8F8FA;
+  --foreground: #1A1A2E;
+
+  /* === CARD === */
+  --card: #FFFFFF;
+  --card-foreground: #1A1A2E;
+
+  /* === POPOVER === */
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A2E;
+
+  /* === MUTED === */
+  --muted: #F0F0F4;
+  --muted-foreground: #4A4A5A;
+
+  /* === DESTRUCTIVE === */
+  --destructive: #DC3545;
+
+  /* === BORDER / INPUT / RING === */
+  --border: #C8C8D0;
+  --input: #C8C8D0;
+  --ring: #2E5A9D;
+
+  /* === CHART COLORS (Tunis Re palette) === */
+  --chart-1: #2E5A9D;
+  --chart-2: #E5693A;
+  --chart-3: #3C68A9;
+  --chart-4: #4A7EC4;
+  --chart-5: #F08B65;
+
+  /* === SIDEBAR (Tunis Re dark navy) === */
+  --sidebar: #1A1A2E;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #2E5A9D;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #16213E;
+  --sidebar-accent-foreground: #E5693A;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #E5693A;
+
+  /* === TUNIS RE BRAND VARIABLES (Extended) === */
+  --tunis-blue: #2E5A9D;
+  --tunis-blue-dark: #1E3A6B;
+  --tunis-blue-light: #4A7EC4;
+  --tunis-blue-pale: #E8EFF8;
+
+  --tunis-orange: #E5693A;
+  --tunis-orange-dark: #C44D20;
+  --tunis-orange-light: #F08B65;
+  --tunis-orange-pale: #FDEAE3;
+
+  --square-blue: #3C68A9;
+  --square-blue-start: #456CAA;
+  --square-blue-end: #304879;
+
+  --success: #28A745;
+  --danger: #DC3545;
+  --warning: #FFC107;
+  --info: #17A2B8;
+
+  --dark: #1A1A2E;
+  --gray-900: #1A1A2E;
+  --gray-700: #4A4A5A;
+  --gray-500: #8A8A9A;
+  --gray-300: #C8C8D0;
+  --gray-100: #F0F0F4;
+  --gray-50: #F8F8FA;
+
+  --font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-secondary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --shadow-sm: 0 1px 2px rgba(26,26,46,0.05);
+  --shadow-md: 0 4px 6px rgba(26,26,46,0.07);
+  --shadow-lg: 0 10px 15px rgba(26,26,46,0.1);
+  --shadow-xl: 0 20px 25px rgba(26,26,46,0.12);
+}
+
+/* Shared design tokens for runtime tweaking (used by StyleSettings) */
+:root {
+  --card-radius: var(--radius);
+  --card-shadow-css: var(--shadow-md);
+  --card-padding-vertical: 1.5rem; /* used where py-6 used previously */
+  --menu-radius: 0.5rem;
+  --menu-shadow-css: var(--shadow-lg);
+  --primary-color: var(--primary);
+}
+
+/* Utility classes applied across the app to standardize cards and menus */
+.app-card {
+  background: var(--card);
+  color: var(--card-foreground);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow-css);
+  border: 1px solid var(--border);
+  padding-top: var(--card-padding-vertical);
+  padding-bottom: var(--card-padding-vertical);
+}
+
+.app-card .card-content {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.app-menu {
+  background: var(--popover);
+  color: var(--popover-foreground);
+  border-radius: var(--menu-radius);
+  box-shadow: var(--menu-shadow-css);
+  border: 1px solid var(--border);
+}
+
+/* small helper to ensure icon badges and pill buttons use primary color variable */
+.primary-fill { background: var(--primary-color); color: var(--primary-foreground); }
+
+.dark {
+  /* === PRIMARY: Lighter blue for dark mode contrast === */
+  --primary: #4A7EC4;
+  --primary-foreground: #FFFFFF;
+
+  /* === SECONDARY === */
+  --secondary: #16213E;
+  --secondary-foreground: #E8EFF8;
+
+  /* === ACCENT: Tunis Orange stays === */
+  --accent: #E5693A;
+  --accent-foreground: #FFFFFF;
+
+  /* === BACKGROUND / FOREGROUND === */
+  --background: #0F1729;
+  --foreground: #F0F0F4;
+
+  /* === CARD === */
+  --card: #16213E;
+  --card-foreground: #F0F0F4;
+
+  /* === POPOVER === */
+  --popover: #1A1A2E;
+  --popover-foreground: #F0F0F4;
+
+  /* === MUTED === */
+  --muted: #1E2A45;
+  --muted-foreground: #B0B0C4;
+
+  /* === DESTRUCTIVE === */
+  --destructive: #E5693A;
+
+  /* === BORDER / INPUT / RING === */
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #4A7EC4;
+
+  /* === CHART COLORS === */
+  --chart-1: #4A7EC4;
+  --chart-2: #E5693A;
+  --chart-3: #3C68A9;
+  --chart-4: #F08B65;
+  --chart-5: #2E5A9D;
+
+  /* === SIDEBAR === */
+  --sidebar: #0F1729;
+  --sidebar-foreground: #F0F0F4;
+  --sidebar-primary: #4A7EC4;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #16213E;
+  --sidebar-accent-foreground: #E5693A;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #E5693A;
+
+  /* === Dark mode brand overrides === */
+  --tunis-blue-pale: #16213E;
+  --tunis-orange-pale: #2A1A12;
+}
+
+/* =================================================================
+   BASE STYLES
+   ================================================================= */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-primary);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    color: var(--foreground);
+  }
+}
+
+/* =================================================================
+   TUNIS RE ANIMATIONS
+   ================================================================= */
+
+@keyframes tunis-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(229, 105, 58, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(229, 105, 58, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(229, 105, 58, 0); }
+}
+
+.pulse-dot-tunis {
+  width: 12px;
+  height: 12px;
+  background: #E5693A;
+  border-radius: 50%;
+  display: inline-block;
+  animation: tunis-pulse 2s infinite;
+}
+
+/* =================================================================
+   TUNIS RE GRADIENT UTILITIES
+   ================================================================= */
+
+.gradient-blue-square {
+  background: linear-gradient(135deg, var(--square-blue-start) 0%, var(--square-blue-end) 100%);
+}
+
+.gradient-hero-tunis {
+  background: linear-gradient(135deg, var(--dark) 0%, #16213E 50%, #0F3460 100%);
+}
+
+.gradient-tunis-blue {
+  background: linear-gradient(135deg, #2E5A9D 0%, #4A7EC4 100%);
+}
+
+.gradient-tunis-orange {
+  background: linear-gradient(135deg, #E5693A 0%, #F08B65 100%);
+}
+
+.gradient-tunis-navy {
+  background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+}
+
+/* =================================================================
+   TUNIS RE BUTTON STYLES
+   ================================================================= */
+
+.btn-tunis-primary {
+  background: var(--tunis-orange);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.btn-tunis-primary:hover {
+  background: var(--tunis-orange-dark);
+  transform: translateY(-1px);
+}
+
+.btn-tunis-secondary {
+  background: transparent;
+  color: var(--tunis-blue);
+  border: 2px solid var(--tunis-blue);
+  border-radius: 4px;
+  padding: 10px 22px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.btn-tunis-secondary:hover {
+  background: var(--tunis-blue-pale);
+}
+
+/* =================================================================
+   CUSTOM SCROLLBAR
+   ================================================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(46, 90, 157, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(46, 90, 157, 0.4);
+}
+
+/* Custom thin scrollbar for monitor cards */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.2);
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 255, 0.4);
+}
+
+/* =================================================================
+   KEYFRAME ANIMATIONS
+   ================================================================= */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInFromBottom {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.2; }
+  100% { transform: scale(0.9); opacity: 0.5; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(229, 105, 58, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(229, 105, 58, 0.4); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =================================================================
+   ANIMATION UTILITY CLASSES
+   ================================================================= */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out both;
+}
+.animate-fade-in-down {
+  animation: fadeInDown 0.5s ease-out both;
+}
+.animate-fade-in-left {
+  animation: fadeInLeft 0.6s ease-out both;
+}
+.animate-fade-in-right {
+  animation: fadeInRight 0.6s ease-out both;
+}
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out both;
+}
+.animate-slide-up {
+  animation: slideInFromBottom 0.5s ease-out both;
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+.animate-count-up {
+  animation: count-up 0.4s ease-out both;
+}
+
+/* Staggered delays */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.4s; }
+
+/* =================================================================
+   GLASSMORPHISM
+   ================================================================= */
+
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* =================================================================
+   CARD ENHANCEMENTS
+   ================================================================= */
+
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(46, 90, 157, 0.15);
+}
+
+.card-hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -8px rgba(46, 90, 157, 0.12);
+}
+
+/* =================================================================
+   GRADIENT TEXT
+   ================================================================= */
+
+.gradient-text {
+  background: linear-gradient(135deg, #E5693A, #4A7EC4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #2E5A9D, #4A7EC4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =================================================================
+   TABLE ENHANCEMENTS
+   ================================================================= */
+
+.table-row-hover {
+  transition: all 0.15s ease;
+}
+.table-row-hover:hover {
+  background-color: rgba(46, 90, 157, 0.04);
+}
+.dark .table-row-hover:hover {
+  background-color: rgba(74, 126, 196, 0.08);
+}
+
+/* =================================================================
+   STAT CARD SHIMMER
+   ================================================================= */
+
+.stat-card-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.stat-card-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  animation: shimmer 3s infinite;
+}
+
+/* =================================================================
+   BADGE ENHANCEMENTS
+   ================================================================= */
+
+.badge-pulse {
+  position: relative;
+}
+.badge-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+/* =================================================================
+   PAGE TRANSITIONS
+   ================================================================= */
+
+.page-enter {
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+/* =================================================================
+   SIDEBAR ACTIVE INDICATOR
+   ================================================================= */
+
+.sidebar-active-indicator {
+  position: relative;
+}
+.sidebar-active-indicator::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  border-radius: 0 4px 4px 0;
+  background: #E5693A;
+}
+
+/* =================================================================
+   CUSTOM FOCUS RING
+   ================================================================= */
+
+.focus-ring {
+  transition: box-shadow 0.2s ease;
+}
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 3px rgba(229, 105, 58, 0.3);
+}
+
+/* =================================================================
+   TUNIS RE STATUS CARDS
+   ================================================================= */
+
+.card-tunis-status-pending { border-left: 4px solid var(--warning); }
+.card-tunis-status-approved { border-left: 4px solid var(--success); }
+.card-tunis-status-rejected { border-left: 4px solid var(--danger); }
+.card-tunis-status-paid { border-left: 4px solid var(--success); }
+.card-tunis-status-disputed { border-left: 4px solid var(--danger); }
+
+/* =================================================================
+   TUNIS RE BADGE STYLES
+   ================================================================= */
+
+.badge-tunis {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badge-tunis-pending { background: #FFF3CD; color: #856404; }
+.badge-tunis-approved { background: #D4EDDA; color: #155724; }
+.badge-tunis-rejected { background: #F8D7DA; color: #721C24; }
+.badge-tunis-paid { background: #D4EDDA; color: #155724; }
+.badge-tunis-disputed { background: #F8D7DA; color: #721C24; }
+.badge-tunis-detected { background: #E8EFF8; color: #2E5A9D; }
+
+/* Dark mode badge overrides */
+.dark .badge-tunis-pending { background: #3D3200; color: #FFD54F; }
+.dark .badge-tunis-approved { background: #1B3D20; color: #81C784; }
+.dark .badge-tunis-rejected { background: #3D1B1B; color: #EF9A9A; }
+.dark .badge-tunis-paid { background: #1B3D20; color: #81C784; }
+.dark .badge-tunis-disputed { background: #3D1B1B; color: #EF9A9A; }
+.dark .badge-tunis-detected { background: #16213E; color: #4A7EC4; }
+
+/* =================================================================
+   TUNIS RE FORM ELEMENTS
+   ================================================================= */
+
+.input-tunis {
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-family: var(--font-secondary);
+  font-size: 16px;
+  color: var(--gray-900);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--card);
+}
+
+.input-tunis:focus {
+  outline: none;
+  border-color: var(--tunis-blue);
+  box-shadow: 0 0 0 3px rgba(46, 90, 157, 0.15);
+}
+
+.dark .input-tunis {
+  color: var(--foreground);
+  border-color: var(--border);
+  background: var(--card);
+}
+
+.dark .input-tunis:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(74, 126, 196, 0.2);
+}
+
+/* =================================================================
+   DARK MODE SCROLLBAR
+   ================================================================= */
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(74, 126, 196, 0.3);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 126, 196, 0.5);
+}
+
+/* =================================================================
+   DARK MODE CARD HOVER ENHANCEMENTS
+   ================================================================= */
+
+.dark .card-hover:hover {
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+}
+
+.dark .card-hover-lift:hover {
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.4);
+}
+
+/* =================================================================
+   PROVIDER SLIDER ANIMATIONS
+   ================================================================= */
+
+@keyframes slider-card-enter {
+  from { opacity: 0; transform: scale(0.92) translateX(40px); }
+  to { opacity: 1; transform: scale(1) translateX(0); }
+}
+
+@keyframes slider-card-enter-left {
+  from { opacity: 0; transform: scale(0.92) translateX(-40px); }
+  to { opacity: 1; transform: scale(1) translateX(0); }
+}
+
+@keyframes slider-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes slider-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(229, 105, 58, 0.1), 0 0 60px rgba(46, 90, 157, 0.05); }
+  50% { box-shadow: 0 0 30px rgba(229, 105, 58, 0.2), 0 0 80px rgba(46, 90, 157, 0.1); }
+}
+
+@keyframes slider-dot-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.animate-slider-enter {
+  animation: slider-card-enter 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-slider-enter-left {
+  animation: slider-card-enter-left 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-slider-glow {
+  animation: slider-glow 3s ease-in-out infinite;
+}
+
+.animate-slider-progress {
+  animation: slider-progress 5s linear both;
+}
+
+.slider-card-shadow {
+  box-shadow:
+    0 4px 6px -1px rgba(46, 90, 157, 0.08),
+    0 10px 15px -3px rgba(46, 90, 157, 0.06),
+    0 20px 40px -8px rgba(26, 26, 46, 0.08);
+}
+
+.dark .slider-card-shadow {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 10px 15px -3px rgba(0, 0, 0, 0.25),
+    0 20px 40px -8px rgba(0, 0, 0, 0.3);
+}
+
+/* =================================================================
+   RTL SUPPORT
+   ================================================================= */
+
+[dir="rtl"] {
+  font-family: var(--font-arabic), 'Noto Sans Arabic', sans-serif;
+}
+
+[dir="rtl"] .gradient-text {
+  background: linear-gradient(225deg, #E5693A, #4A7EC4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* RTL-aware margin/padding utilities using logical properties (fallback for any remaining physical classes) */
+[dir="rtl"] .ml-1 { margin-inline-start: 0.25rem; margin-inline-end: 0; }
+[dir="rtl"] .ml-2 { margin-inline-start: 0.5rem; margin-inline-end: 0; }
+[dir="rtl"] .ml-3 { margin-inline-start: 0.75rem; margin-inline-end: 0; }
+[dir="rtl"] .ml-4 { margin-inline-start: 1rem; margin-inline-end: 0; }
+[dir="rtl"] .ml-6 { margin-inline-start: 1.5rem; margin-inline-end: 0; }
+[dir="rtl"] .ml-8 { margin-inline-start: 2rem; margin-inline-end: 0; }
+[dir="rtl"] .ml-auto { margin-inline-start: auto; margin-inline-end: 0; }
+[dir="rtl"] .ms-auto { margin-inline-start: auto; }
+[dir="rtl"] .mr-1 { margin-inline-end: 0.25rem; margin-inline-start: 0; }
+[dir="rtl"] .mr-2 { margin-inline-end: 0.5rem; margin-inline-start: 0; }
+[dir="rtl"] .mr-3 { margin-inline-end: 0.75rem; margin-inline-start: 0; }
+[dir="rtl"] .mr-4 { margin-inline-end: 1rem; margin-inline-start: 0; }
+[dir="rtl"] .mr-6 { margin-inline-end: 1.5rem; margin-inline-start: 0; }
+[dir="rtl"] .mr-8 { margin-inline-end: 2rem; margin-inline-start: 0; }
+[dir="rtl"] .mr-auto { margin-inline-end: auto; margin-inline-start: 0; }
+
+/* Flip directional icons in RTL */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* Ensure text alignment is logical (fallback for any remaining physical classes) */
+[dir="rtl"] .text-left {
+  text-align: start;
+}
+[dir="rtl"] .text-right {
+  text-align: end;
+}
+
+/* Border-left becomes border-inline-start in RTL (fallback) */
+[dir="rtl"] .border-l-2 {
+  border-inline-start-width: 2px;
+  border-inline-end-width: 0;
+}
+[dir="rtl"] .border-l-4 {
+  border-inline-start-width: 4px;
+  border-inline-end-width: 0;
+}
+
+/* Status card borders use logical properties in RTL */
+[dir="rtl"] .card-tunis-status-pending { border-inline-start: 4px solid var(--warning); border-left: none; }
+[dir="rtl"] .card-tunis-status-approved { border-inline-start: 4px solid var(--success); border-left: none; }
+[dir="rtl"] .card-tunis-status-rejected { border-inline-start: 4px solid var(--danger); border-left: none; }
+[dir="rtl"] .card-tunis-status-paid { border-inline-start: 4px solid var(--success); border-left: none; }
+[dir="rtl"] .card-tunis-status-disputed { border-inline-start: 4px solid var(--danger); border-left: none; }
+
+/* Sidebar active indicator uses logical properties in RTL */
+[dir="rtl"] .sidebar-active-indicator::before {
+  inset-inline-start: 0;
+  left: auto;
+  border-radius: 4px 0 0 4px;
+}
+
+/* =================================================================
+   FLASH PREVENTION: Ensure no FOUC on theme change
+   ================================================================= */
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* =================================================================
+   QUANTUM SHIELD DESIGN SYSTEM ANIMATIONS
+   ================================================================= */
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes glow-pulse-soft {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.3); }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(0, 212, 255, 0.3); }
+  50% { border-color: rgba(229, 105, 58, 0.3); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-ring-quantum {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes dot-grid {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.06; }
+}
+
+@keyframes count-up-quantum {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes line-fill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes shimmer-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-glow-pulse-soft {
+  animation: glow-pulse-soft 3s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: border-glow 4s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring-quantum 2s ease-out infinite;
+}
+
+.animate-dot-grid {
+  animation: dot-grid 4s ease-in-out infinite;
+}
+
+.animate-line-fill {
+  animation: line-fill 1.5s ease-out forwards;
+}
+
+.animate-shimmer-slide {
+  animation: shimmer-slide 2s ease-in-out infinite;
+}

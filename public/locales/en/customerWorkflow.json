@@ -1,0 +1,57 @@
+{
+  "title": "My Insurance Workflow",
+  "subtitle": "Manage your policy applications and claims",
+  "applyNewPolicy": "Apply for New Policy",
+  "fileClaim": "File a Claim",
+  "stats": {
+    "totalPolicies": "Total Policies",
+    "actionRequired": "Action Required",
+    "completed": "Completed",
+    "openClaims": "Open Claims"
+  },
+  "tab": {
+    "policyApplications": "Policy Applications",
+    "claims": "Claims"
+  },
+  "empty": {
+    "noPolicyApplications": "No Policy Applications Yet",
+    "startJourney": "Start your insurance journey by applying for a new policy.",
+    "noClaims": "No Claims Yet",
+    "fileClaimIfLoss": "File a claim if you have experienced a loss event.",
+    "needActivePolicy": "You need an active policy before you can file a claim.",
+    "noClaimSubtitleNoPolicy": "You need an active policy to file a claim",
+    "noClaimSubtitleWithPolicy": "File a claim for one of your active policies",
+    "noClaimTitle": "No Claims",
+    "noPolicySubtitle": "Apply for a policy to get started",
+    "noPolicyTitle": "No Policy Applications"
+  },
+  "status": {
+    "contractUploaded": "Contract Uploaded",
+    "adminReviewing": "Admin Reviewing",
+    "policyGenerated": "Policy Generated",
+    "awaitingSignaturePayment": "Awaiting Signature & Payment",
+    "readyForFinalApproval": "Ready for Final Approval",
+    "underwritingCompleted": "Underwriting Completed",
+    "rejected": "Rejected",
+    "created": "Created",
+    "loss": "Loss Reported",
+    "premium": "Premium",
+    "sector": "Sector"
+  },
+  "action": {
+    "awaitingReview": "Awaiting Review",
+    "inReview": "In Review",
+    "signContract": "Sign Contract",
+    "payPremium": "Pay Premium",
+    "awaitingApproval": "Awaiting Approval",
+    "viewPolicy": "View Policy",
+    "viewDetails": "View Details",
+    "fillDeclaration": "Fill Declaration",
+    "underReview": "Under Review",
+    "viewPayout": "View Payout"
+  },
+  "error": {
+    "loadFailed": "Failed to load workflow data"
+  },
+  "loading": "Loading workflow..."
+}

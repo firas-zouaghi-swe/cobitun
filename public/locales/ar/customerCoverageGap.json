@@ -1,0 +1,58 @@
+{
+  "title": "محلل فجوة التغطية",
+  "subtitle": "قارن تغطيتك البارامترية والسيبرانية عبر السيناريوهات الشائعة",
+  "score": {
+    "coverageScore": "نقاط التغطية",
+    "coveredScenarios": "سيناريوهات مغطاة",
+    "of": "من",
+    "gapScenarios": "سيناريوهات الفجوة",
+    "requireAttention": "تتطلب اهتماماً",
+    "ofTotal": "Of Total"
+  },
+  "product": {
+    "parametric": "التأمين السحابي البارامتري",
+    "cyber": "التأمين السيبراني",
+    "active": "نشط",
+    "applyNow": "قدّم الآن",
+    "cyberTitle": "تأمين التعويض السيبراني",
+    "missing": "غير مشترى",
+    "notPurchased": "غير مشترى",
+    "parametricTitle": "التأمين السحابي البارامتري"
+  },
+  "matrix": {
+    "title": "مصفوفة فجوة التغطية",
+    "scenario": "السيناريو",
+    "parametricProduct": "المنتج البارامتري",
+    "cyberIndemnity": "التعويض السيبراني",
+    "gap": "فجوة؟",
+    "covered": "مغطى",
+    "excluded": "مستبعد",
+    "gapLabel": "فجوة",
+    "na": "غ/م",
+    "ok": "حسناً",
+    "legendCovered": "مغطى",
+    "legendExcluded": "مستبعد",
+    "legendGapPartial": "فجوة / جزئي",
+    "legendNa": "غير قابل للتطبيق",
+    "gapBadge": "فجوة التغطية",
+    "legendGap": "فجوة (غير مغطاة)",
+    "legendNA": "غير قابل للتطبيق",
+    "okBadge": "مغطى",
+    "partial": "Partial"
+  },
+  "details": {
+    "title": "تفاصيل السيناريو",
+    "trigger": "التفعيل:",
+    "parametricResponse": "الاستجابة البارامترية",
+    "cyberResponse": "الاستجابة السيبرانية",
+    "gap": "فجوة؟"
+  },
+  "recommendations": {
+    "title": "التوصيات"
+  },
+  "unableToLoad": "تعذر تحميل تحليل فجوة التغطية",
+  "tryAgain": "يرجى المحاولة مرة أخرى لاحقاً",
+  "loadError": "فشل تحليل التغطية",
+  "loadErrorDesc": "يرجى المحاولة مرة أخرى لاحقاً",
+  "loading": "Analyzing coverage gaps…"
+}

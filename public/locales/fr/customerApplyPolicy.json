@@ -1,0 +1,26 @@
+{
+  "title": "Demander une police",
+  "filterByCategory": "Filtrer par catégorie",
+  "allCategories": "Toutes les catégories",
+  "empty": {
+    "noPolicies": "Aucune police disponible",
+    "noPoliciesDesc": "No policies are currently available for application."
+  },
+  "card": {
+    "sumAssurance": "Capital assuré :",
+    "premium": "Prime :",
+    "tenure": "Durée :",
+    "applyNow": "Demander maintenant",
+    "applying": "Demande en cours..."
+  },
+  "confirm": {
+    "title": "Confirmer la Demande de Police",
+    "description": "En demandant cette police, vous initiez une demande d'assurance formelle auprès de COBITUN Insurance. Cela lancera le processus de souscription et peut impliquer des engagements financiers. Veuillez confirmer que vous souhaitez continuer."
+  },
+  "toast": {
+    "applicationFailed": "La demande a échoué",
+    "submitSuccess": "Demande de police soumise avec succès !",
+    "somethingWentWrong": "Une erreur est survenue"
+  },
+  "loading": "Loading policies…"
+}

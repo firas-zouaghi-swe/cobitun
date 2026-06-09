@@ -1,0 +1,74 @@
+{
+  "title": "Payout Functions",
+  "subtitle": "Configure payout function parameters and types",
+  "createConfig": "Create Config",
+  "table": {
+    "name": "Name",
+    "code": "Code",
+    "type": "Type",
+    "description": "Description",
+    "parameters": "Parameters",
+    "status": "Status"
+  },
+  "empty": {
+    "noConfigs": "No payout function configs found"
+  },
+  "params": {
+    "multiplier": "Multiplier",
+    "steps": "Steps: configured",
+    "baseRate": "Base Rate",
+    "base": "Base",
+    "exponent": "Exponent"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "dialog": {
+    "createTitle": "Create Payout Function Config",
+    "createDescription": "Define a new payout function configuration",
+    "configName": "Config Name",
+    "configNamePlaceholder": "e.g. Linear Payout 1.5x",
+    "configCode": "Config Code",
+    "configCodePlaceholder": "e.g. LINEAR_1_5X",
+    "functionType": "Function Type",
+    "selectType": "Select type",
+    "description": "Description",
+    "descriptionPlaceholder": "Optional description",
+    "linearMultiplier": "Linear Multiplier",
+    "linearMultiplierPlaceholder": "e.g. 1.5",
+    "linearFormula": "Payout = multiplier × outage_hours × hourly_rate",
+    "stepConfigJson": "Step Configuration (JSON)",
+    "stepConfigPlaceholder": "[{\"minHours\":0,\"maxHours\":4,\"payoutPct\":0}]",
+    "stepDescription": "Define payout percentage steps based on outage duration",
+    "hybridBaseRate": "Base Rate",
+    "hybridBaseRatePlaceholder": "e.g. 0.5",
+    "hybridStepConfigJson": "Step Configuration (JSON)",
+    "hybridStepPlaceholder": "[{\"minHours\":4,\"payoutPct\":25}]",
+    "hybridDescription": "Combines a base rate with step-function adjustments",
+    "exponentialBase": "Base",
+    "exponentialBasePlaceholder": "e.g. 1.05",
+    "exponentialExponent": "Exponent",
+    "exponentialExponentPlaceholder": "e.g. 1.2",
+    "exponentialFormula": "Payout = base^(exponent × hours)",
+    "creating": "Creating...",
+    "exponentialHint": "Formula: base × value^exponent",
+    "hybridStepConfigJsonHint": "JSON array of step thresholds and rates",
+    "hybridStepConfigJsonPlaceholder": "[{\"threshold\": 0, \"rate\": 0.5}]",
+    "linearMultiplierHint": "Payout = multiplier × outage hours",
+    "stepConfigJsonHint": "JSON array defining step function thresholds",
+    "stepConfigJsonPlaceholder": "[{\"from\": 0, \"to\": 24, \"rate\": 0.5}]"
+  },
+  "types": {
+    "LINEAR": "Linear",
+    "STEP": "Step",
+    "HYBRID": "Hybrid",
+    "EXPONENTIAL": "Exponential"
+  },
+  "toast": {
+    "created": "Payout function config created successfully",
+    "createFailed": "Failed to create config",
+    "required": "Config name, code, and function type are required",
+    "requiredFields": "Please fill in all required fields"
+  }
+}

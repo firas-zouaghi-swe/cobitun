@@ -1,0 +1,54 @@
+{
+  "title": "Workflow Dashboard",
+  "subtitle": "Review policy applications and manage claims",
+  "summary": {
+    "totalApplications": "Total Applications",
+    "pendingReview": "Pending Review",
+    "awaitingFinalSign": "Awaiting Final Sign",
+    "totalClaims": "Total Claims",
+    "pendingClaims": "Pending Claims"
+  },
+  "tab": {
+    "policyApplications": "Policy Applications",
+    "claims": "Claims"
+  },
+  "policyTable": {
+    "customerName": "Customer Name",
+    "sector": "Sector",
+    "status": "Status",
+    "createdDate": "Created Date",
+    "actions": "Actions",
+    "unknownCustomer": "Unknown Customer",
+    "review": "Review"
+  },
+  "claimTable": {
+    "customerName": "Customer Name",
+    "policyRef": "Policy Ref",
+    "lossAmount": "Loss Amount",
+    "status": "Status",
+    "actions": "Actions",
+    "unknownCustomer": "Unknown Customer",
+    "review": "Review"
+  },
+  "empty": {
+    "noPoliciesTitle": "No Policy Applications",
+    "noPoliciesSubtitle": "New policy applications from customers will appear here for review.",
+    "noClaimsTitle": "No Claims",
+    "noClaimsSubtitle": "Customer claims will appear here for review and processing."
+  },
+  "status": {
+    "contractUploaded": "Contract Uploaded",
+    "adminReviewing": "Admin Reviewing",
+    "policyGenerated": "Policy Generated",
+    "awaitingSignatureAndPayment": "Awaiting Signature & Payment",
+    "readyForFinalApproval": "Ready for Final Approval",
+    "underwritingCompleted": "Underwriting Completed",
+    "rejected": "Rejected",
+    "open": "Open",
+    "submitted": "Submitted",
+    "completed": "Completed"
+  },
+  "toast": {
+    "loadFailed": "Failed to load workflow data"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "title": "مراجعة المطالبات",
+  "notFound": {
+    "title": "المطالبة غير موجودة",
+    "description": "المطالبة التي تبحث عنها غير موجودة أو ليس لديك صلاحية الوصول إليها."
+  },
+  "backToWorkflow": "العودة إلى لوحة سير العمل",
+  "details": {
+    "title": "تفاصيل المطالبة",
+    "customer": "العميل",
+    "email": "البريد الإلكتروني",
+    "policyReference": "مرجع الوثيقة",
+    "lossAmount": "مبلغ الخسارة",
+    "lossStartDate": "تاريخ بدء الخسارة",
+    "lossEndDate": "تاريخ انتهاء الخسارة",
+    "created": "تاريخ الإنشاء",
+    "description": "الوصف"
+  },
+  "progress": {
+    "title": "تقدم المطالبة",
+    "steps": {
+      "open": "مفتوحة",
+      "submitted": "مقدمة",
+      "completed": "مكتملة",
+      "${stepKey}": "${step Key}"
+    }
+  },
+  "openStatus": {
+    "title": "في انتظار إقرار العميل",
+    "description": "المطالبة مفتوحة. في انتظار تقديم العميل لإقرار الخسارة مع التفاصيل."
+  },
+  "submittedStatus": {
+    "title": "مراجعة وإتمام المطالبة",
+    "description": "قدم العميل إقرار الخسارة. راجع وأتم المطالبة لتفعيل الدفع.",
+    "downloadDeclaration": "تحميل إقرار الخسارة PDF",
+    "lossDetails": "تفاصيل الخسارة",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
+    "markCompleted": "تحديد المطالبة كمكتملة وتفعيل الدفع"
+  },
+  "completedStatus": {
+    "title": "المطالبة مكتملة",
+    "payoutDetails": "تفاصيل الدفع",
+    "transactionId": "معرّف المعاملة",
+    "payoutDate": "تاريخ الدفع",
+    "payoutAmount": "مبلغ الدفع",
+    "downloadDeclaration": "تحميل إقرار الخسارة PDF"
+  },
+  "audit": {
+    "title": "الجدول الزمني للمراجعة",
+    "by": "بواسطة"
+  },
+  "dialog": {
+    "title": "إتمام المطالبة وتفعيل الدفع",
+    "description": "سيتم تحديد المطالبة كمكتملة وتفعيل عملية الدفع. سي يتم إشعار العميل بالدفع. لا يمكن التراجع عن هذا الإجراء.",
+    "claimId": "معرّف المطالبة",
+    "lossAmount": "مبلغ الخسارة",
+    "customer": "العميل",
+    "confirmAndTrigger": "تأكيد وتفعيل الدفع"
+  },
+  "toast": {
+    "notFound": "المطالبة غير موجودة",
+    "loadFailed": "فشل تحميل تفاصيل المطالبة",
+    "completeFailed": "فشل إتمام المطالبة",
+    "downloadFailed": "فشل تحميل إقرار الخسارة PDF"
+  }
+}

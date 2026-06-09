@@ -1,0 +1,67 @@
+{
+  "title": "Claim Review",
+  "notFound": {
+    "title": "Claim Not Found",
+    "description": "The claim you are looking for does not exist or you don't have access."
+  },
+  "backToWorkflow": "Back to Workflow Dashboard",
+  "details": {
+    "title": "Claim Details",
+    "customer": "Customer",
+    "email": "Email",
+    "policyReference": "Policy Reference",
+    "lossAmount": "Loss Amount",
+    "lossStartDate": "Loss Start Date",
+    "lossEndDate": "Loss End Date",
+    "created": "Created",
+    "description": "Description"
+  },
+  "progress": {
+    "title": "Claim Progress",
+    "steps": {
+      "open": "Open",
+      "submitted": "Submitted",
+      "completed": "Completed",
+      "${stepKey}": "${step Key}"
+    }
+  },
+  "openStatus": {
+    "title": "Waiting for Customer Declaration",
+    "description": "The claim is open. Waiting for the customer to submit their declaration of loss with details."
+  },
+  "submittedStatus": {
+    "title": "Review & Complete Claim",
+    "description": "The customer has submitted their declaration of loss. Review and complete the claim to trigger payout.",
+    "downloadDeclaration": "Download Declaration of Loss PDF",
+    "lossDetails": "Loss Details",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "markCompleted": "Mark Claim as Completed & Trigger Payout"
+  },
+  "completedStatus": {
+    "title": "Claim Completed",
+    "payoutDetails": "Payout Details",
+    "transactionId": "Transaction ID",
+    "payoutDate": "Payout Date",
+    "payoutAmount": "Payout Amount",
+    "downloadDeclaration": "Download Declaration of Loss PDF"
+  },
+  "audit": {
+    "title": "Audit Timeline",
+    "by": "by"
+  },
+  "dialog": {
+    "title": "Complete Claim & Trigger Payout",
+    "description": "This will mark the claim as completed and trigger the payout process. The customer will be notified about the payout. This action cannot be undone.",
+    "claimId": "Claim ID",
+    "lossAmount": "Loss Amount",
+    "customer": "Customer",
+    "confirmAndTrigger": "Confirm & Trigger Payout"
+  },
+  "toast": {
+    "notFound": "Claim not found",
+    "loadFailed": "Failed to load claim details",
+    "completeFailed": "Failed to complete claim",
+    "downloadFailed": "Failed to download declaration PDF"
+  }
+}

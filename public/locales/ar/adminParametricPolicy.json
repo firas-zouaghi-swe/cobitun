@@ -1,0 +1,49 @@
+{
+  "title": "طلبات الوثائق المعلمية",
+  "subtitle": "مراجعة وقبول طلبات التأمين المعلمي المعلقة",
+  "table": {
+    "customer": "العميل",
+    "provider": "المزود",
+    "sector": "القطاع",
+    "turnoverTnd": "حجم الأعمال (TND)",
+    "finalPremium": "القسط النهائي",
+    "rate": "المعدل",
+    "uwDecision": "قرار التسعير",
+    "applied": "تاريخ التقديم",
+    "actions": "الإجراءات",
+    "policyNumber": "وثيقة رقم"
+  },
+  "empty": {
+    "noPending": "لا توجد طلبات وثائق معلقة",
+    "newApplications": "ستظهر الطلبات الجديدة هنا للمراجعة"
+  },
+  "dialog": {
+    "approveTitle": "قبول الوثيقة",
+    "rejectTitle": "رفض الوثيقة",
+    "policyFor": "وثيقة لـ {{name}} — {{provider}}",
+    "fields": {
+      "sector": "القطاع",
+      "businessModel": "نموذج الأعمال",
+      "resilienceProfile": "ملف المرونة",
+      "annualTurnover": "حجم الأعمال السنوي",
+      "hourlyRevenue": "الإيرادات بالساعة",
+      "purePremium": "القسط الصافي",
+      "commercialPremium": "القسط التجاري",
+      "finalPremium": "القسط النهائي",
+      "payoutPerHour": "الدفع/ساعة",
+      "rate": "المعدل",
+      "providerFactor": "معامل المزود",
+      "uwDecision": "قرار التسعير"
+    },
+    "adminComment": "تعليق المسؤول (اختياري)",
+    "rejectPlaceholder": "سبب الرفض...",
+    "optionalPlaceholder": "تعليق اختياري...",
+    "cancel": "إلغاء",
+    "confirmApproval": "تأكيد القبول",
+    "confirmRejection": "تأكيد الرفض",
+    "processing": "جاري المعالجة..."
+  },
+  "toast": {
+    "actionFailed": "فشل تنفيذ الإجراء"
+  }
+}
