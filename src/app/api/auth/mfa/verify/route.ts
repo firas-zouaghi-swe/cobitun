@@ -16,7 +16,12 @@ import { createAuthResponse, isSecureRequest } from '@/lib/session';
 const verifyMfaSchema = z.object({
   code: z.string().length(6, 'Code must be 6 digits').regex(/^\d{6}$/, 'Code must be numeric'),
   purpose: z.enum(['setup', 'login']).default('setup'),
-  userId: z.number().int().positive().optional(), // Required for login MFA (no session yet)
+  userId: z.preprocess((value) => {
+    if (typeof value === 'string' && /^[0-9]+$/.test(value)) {
+      return Number(value);
+    }
+    return value;
+  }, z.number().int().positive().optional()), // Required for login MFA (no session yet)
 });
 
 export async function POST(request: NextRequest) {

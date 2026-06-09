@@ -105,7 +105,8 @@ export async function POST(request: NextRequest) {
     const mfaEnabledGlobally = process.env.MFA_ENABLED === 'true';
     const mfaRequireForAdmins = process.env.MFA_REQUIRE_FOR_ADMINS === 'true';
     const mfaMethod = (process.env.MFA_METHOD || 'email_otp').toLowerCase();
-    const isAdminUser = ['ADMIN', 'SUPER_ADMIN'].includes(user.role.roleCode);
+    const roleCode = user.role?.roleCode || '';
+    const isAdminUser = ['ADMIN', 'SUPER_ADMIN'].includes(roleCode);
     const mfaRequired =
       user.mfaEnabled === 1 ||
       (mfaMethod === 'email_otp' &&
@@ -156,6 +157,8 @@ export async function POST(request: NextRequest) {
       requestPath: '/api/auth/login',
     });
 
+    const userRoleCode = user.role?.roleCode || 'CUSTOMER';
+
     return await createAuthResponse(
       {
         user: {
@@ -164,7 +167,7 @@ export async function POST(request: NextRequest) {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          role: user.role.roleCode,
+          role: userRoleCode,
           roleId: user.roleId,
           customerId: user.customer?.id ?? undefined,
           mfaEnabled: user.mfaEnabled,

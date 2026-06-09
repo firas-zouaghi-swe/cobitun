@@ -15,7 +15,12 @@ import { logAction } from '@/lib/services/audit-service';
 import { createHmac } from 'crypto';
 
 const challengeSchema = z.object({
-  userId: z.number().int().positive(),
+  userId: z.preprocess((value) => {
+    if (typeof value === 'string' && /^[0-9]+$/.test(value)) {
+      return Number(value);
+    }
+    return value;
+  }, z.number().int().positive()),
   // Pre-auth token: proves the user passed password check
   // This is a HMAC of the userId to prevent arbitrary OTP requests
   preAuthToken: z.string().optional(),
@@ -26,8 +31,17 @@ function verifyPreAuthToken(userId: number, token: string): boolean {
   if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET environment variable is required');
   const secret = process.env.JWT_SECRET!;
   const expected = createHmac('sha256', secret).update(`mfa-pre-auth:${userId}`).digest('hex');
-  return Buffer.from(token).length === Buffer.from(expected).length &&
-    Buffer.from(token).equals(Buffer.from(expected));
+  const tokenBuf = Buffer.from(token, 'utf8');
+  const expectedBuf = Buffer.from(expected, 'utf8');
+  return tokenBuf.length === expectedBuf.length && tokenBuf.equals(expectedBuf);
+}
+
+function resolvePreAuthToken(request: NextRequest, bodyToken?: string): string | null {
+  if (bodyToken && typeof bodyToken === 'string' && bodyToken.trim().length > 0) {
+    return bodyToken;
+  }
+  const headerToken = request.headers.get('x-pre-auth-token');
+  return headerToken && headerToken.trim().length > 0 ? headerToken : null;
 }
 
 export async function POST(request: NextRequest) {
@@ -38,7 +52,13 @@ export async function POST(request: NextRequest) {
   if ('error' in result) return result.error;
 
   try {
-    const { userId, preAuthToken } = result.data;
+    const { userId, preAuthToken: bodyPreAuthToken } = result.data;
+    const preAuthToken = resolvePreAuthToken(request, bodyPreAuthToken);
+
+    console.info('[MFA] challenge request', {
+      userId,
+      tokenSource: bodyPreAuthToken ? 'body' : request.headers.get('x-pre-auth-token') ? 'header' : 'none',
+    });
 
     // Verify pre-auth token to prevent arbitrary OTP requests
     if (!preAuthToken || !verifyPreAuthToken(userId, preAuthToken)) {

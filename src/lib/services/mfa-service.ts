@@ -238,8 +238,9 @@ export async function isMfaRequired(userId: number): Promise<boolean> {
 
   if (!user) return false;
 
+  const roleCode = user.role?.roleCode || '';
   // MFA required if explicitly enabled OR if user is admin/super-admin
-  return user.mfaEnabled === 1 || ['ADMIN', 'SUPER_ADMIN'].includes(user.role?.roleCode || '');
+  return user.mfaEnabled === 1 || ['ADMIN', 'SUPER_ADMIN'].includes(roleCode);
 }
 
 /**
