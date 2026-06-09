@@ -72,9 +72,10 @@ export async function POST(request: NextRequest) {
     });
 
     const secure = isSecureRequest(request);
+    const sameSite = secure ? 'none' : 'lax';
     const response = NextResponse.json({ message: 'Refreshed' });
-    response.cookies.set({ name: JWT_COOKIE_NAME, value: jwt, httpOnly: true, secure, sameSite: 'lax', path: '/', maxAge: JWT_MAX_AGE });
-    response.cookies.set({ name: REFRESH_COOKIE_NAME, value: newRefresh, httpOnly: true, secure, sameSite: 'lax', path: '/', maxAge: REFRESH_MAX_AGE });
+    response.cookies.set({ name: JWT_COOKIE_NAME, value: jwt, httpOnly: true, secure, sameSite, path: '/', maxAge: JWT_MAX_AGE });
+    response.cookies.set({ name: REFRESH_COOKIE_NAME, value: newRefresh, httpOnly: true, secure, sameSite, path: '/', maxAge: REFRESH_MAX_AGE });
 
     return response;
   } catch (err) {
