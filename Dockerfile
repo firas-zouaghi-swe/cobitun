@@ -30,7 +30,10 @@ RUN npm run build
 # 10. After successful build, set NODE_ENV to production for runtime
 ENV NODE_ENV=production
 
-# 10. Document that the container will listen on port 3000
+# 11. Allow Render to connect through the runtime port variable if provided
+ENV PORT=3000
+
+# 12. Document that the container will listen on port 3000
 EXPOSE 3000
 
 # 11. Start the production server when the container runs
