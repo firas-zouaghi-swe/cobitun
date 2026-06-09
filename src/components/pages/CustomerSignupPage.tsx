@@ -147,7 +147,7 @@ export default function CustomerSignupPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-tunis-blue-light to-tunis-blue flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.06]">
+      <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
         <div className="absolute top-20 end-20 w-80 h-80 bg-tunis-orange rounded-full blur-3xl" />
         <div className="absolute bottom-20 start-20 w-64 h-64 bg-white rounded-full blur-3xl" />
       </div>
