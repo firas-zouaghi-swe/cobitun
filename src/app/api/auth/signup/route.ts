@@ -56,16 +56,25 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const customerRole =
-      (await db.enumUserRole.findFirst({ where: { roleCode: Roles.CUSTOMER, isCurrent: 1 } })) ??
-      (await db.enumUserRole.findUnique({ where: { roleCode: Roles.CUSTOMER } }));
-
-    if (!customerRole) {
-      return new Response(JSON.stringify({ error: 'Customer role not found in system' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+    const customerRole = await db.enumUserRole.upsert({
+      where: { roleCode: Roles.CUSTOMER },
+      update: { isActive: 1, isCurrent: 1 },
+      create: {
+        roleCode: Roles.CUSTOMER,
+        roleName: 'Customer',
+        description: 'Standard customer access — purchase policies, file claims, manage own profile',
+        permissionsJson: JSON.stringify([
+          'dashboard:view',
+          'policies:own',
+          'claims:own',
+          'applications:own',
+          'profile:manage',
+          'questions:submit',
+          'endorsements:own',
+          'renewals:own',
+        ]),
+      },
+    });
 
     const hashedPassword = await hashPassword(password);
     const { passwordSalt: salt, passwordHash: hash } = splitPasswordHash(hashedPassword);
