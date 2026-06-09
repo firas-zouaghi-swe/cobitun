@@ -46,10 +46,9 @@ export function middleware(request: NextRequest) {
   // CORS headers for API routes
   if (pathname.startsWith('/api/')) {
     const origin = request.headers.get('origin');
-    const allowedOrigins = [
-      process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-    ];
-    if (origin && allowedOrigins.includes(origin)) {
+    const allowedOrigins = [process.env.NEXT_PUBLIC_APP_URL].filter(Boolean) as string[];
+    const isSameOrigin = origin === request.nextUrl.origin;
+    if (origin && (allowedOrigins.includes(origin) || isSameOrigin)) {
       response.headers.set('Access-Control-Allow-Origin', origin);
       response.headers.set('Access-Control-Allow-Credentials', 'true');
       response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');

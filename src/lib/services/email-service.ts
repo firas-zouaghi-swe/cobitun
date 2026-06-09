@@ -4,13 +4,24 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 
 const DEFAULT_FROM = process.env.EMAIL_DEFAULT_FROM || 'no-reply@cobitun.tn';
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 const DELIVERY_MODE = (process.env.EMAIL_DELIVERY_MODE || 'file').toLowerCase();
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.office365.com';
 const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
 const SMTP_SECURE = process.env.SMTP_SECURE === 'true';
+
+function getFrontendUrl(): string {
+  if (process.env.FRONTEND_URL) {
+    return process.env.FRONTEND_URL;
+  }
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('FRONTEND_URL environment variable is required in production');
+  }
+  return 'http://localhost:3000';
+}
+
+const FRONTEND_URL = getFrontendUrl();
 function getOutboxDir(): string { return path.join(process.cwd(), 'upload', 'email-outbox'); }
 
 export interface EmailPayload {

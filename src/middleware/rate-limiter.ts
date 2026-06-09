@@ -36,16 +36,22 @@ export interface RateLimitConfig {
 }
 
 const DEFAULT_KEY_GENERATOR = (request: NextRequest): string => {
-  // Use IP address from headers or connection
+  // Prefer real client IP if available behind proxies.
   const forwarded = request.headers.get('x-forwarded-for');
-  const ip = forwarded?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || 'unknown';
-  return ip;
+  const ip = forwarded?.split(',')[0]?.trim() || request.headers.get('x-real-ip')?.trim();
+  if (ip) return ip;
+
+  // Fallback to header fingerprinting when IP is unavailable in production.
+  const userAgent = request.headers.get('user-agent')?.trim() || 'unknown-agent';
+  const acceptLanguage = request.headers.get('accept-language')?.trim() || 'unknown-language';
+  const host = request.headers.get('host')?.trim() || 'unknown-host';
+  return `fallback:${userAgent}:${acceptLanguage}:${host}`;
 };
 
 // Pre-configured rate limits for different endpoint types
 export const RateLimits = {
-  /** Authentication endpoints: 5 requests per minute */
-  auth: { maxRequests: 5, windowSeconds: 60 },
+  /** Authentication endpoints: 10 requests per minute */
+  auth: { maxRequests: 10, windowSeconds: 60 },
   /** Password reset: 3 requests per 15 minutes */
   passwordReset: { maxRequests: 3, windowSeconds: 900 },
   /** MFA endpoints: 5 requests per 15 minutes (prevent OTP brute-force) */

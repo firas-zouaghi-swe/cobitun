@@ -23,15 +23,15 @@ export async function GET(req: Request) {
   )}`;
 
   try {
-    const userAgent = process.env.NEXT_PUBLIC_APP_URL
-      ? `CobitunAutocomplete/1.0 (+${process.env.NEXT_PUBLIC_APP_URL})`
-      : 'CobitunAutocomplete/1.0 (+https://localhost:3000)';
+    const requestOrigin = req.headers.get('origin') || `https://${req.headers.get('host') ?? 'localhost:3000'}`;
+    const frontendOrigin = process.env.NEXT_PUBLIC_APP_URL || requestOrigin;
+    const userAgent = `CobitunAutocomplete/1.0 (+${frontendOrigin})`;
 
     const response = await fetch(endpoint, {
       headers: {
         Accept: 'application/json',
         'User-Agent': userAgent,
-        Referer: process.env.NEXT_PUBLIC_APP_URL ?? 'https://localhost:3000',
+        Referer: frontendOrigin,
       },
     });
 

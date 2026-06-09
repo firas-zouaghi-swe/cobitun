@@ -5,9 +5,11 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-const DEFAULT_ALLOWED_ORIGINS = [
-  process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-];
+const DEFAULT_ALLOWED_ORIGINS = process.env.NEXT_PUBLIC_APP_URL
+  ? [process.env.NEXT_PUBLIC_APP_URL]
+  : process.env.NODE_ENV === 'production'
+  ? []
+  : ['http://localhost:3000'];
 
 const DEFAULT_ALLOWED_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
 const DEFAULT_ALLOWED_HEADERS = [
@@ -43,7 +45,8 @@ export function createCorsMiddleware(config: CorsConfig = {}) {
 
     // Handle preflight requests
     if (method === 'OPTIONS') {
-      if (!origin || !allowedOrigins.includes(origin)) {
+      const isSameOrigin = origin === request.nextUrl.origin;
+      if (!origin || (!allowedOrigins.includes(origin) && !isSameOrigin)) {
         return new NextResponse(null, { status: 403 });
       }
 
@@ -73,7 +76,8 @@ export function addCorsHeaders(response: NextResponse, request: NextRequest, con
   const exposeHeaders = config.exposeHeaders ?? [];
 
   const origin = request.headers.get('origin');
-  if (origin && allowedOrigins.includes(origin)) {
+  const isSameOrigin = origin === request.nextUrl.origin;
+  if (origin && (allowedOrigins.includes(origin) || isSameOrigin)) {
     response.headers.set('Access-Control-Allow-Origin', origin);
     if (allowCredentials) {
       response.headers.set('Access-Control-Allow-Credentials', 'true');
