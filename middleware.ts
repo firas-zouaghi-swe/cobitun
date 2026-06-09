@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { httpsRedirect } from '@/middleware/https-redirect';
 import { checkRateLimit, RateLimits } from '@/middleware/rate-limiter';
 
-const ContentSecurityPolicy = "default-src 'self'; script-src 'self' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';";
+const ContentSecurityPolicy = "default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';";
 
 export function middleware(request: NextRequest) {
   // HTTPS redirect (production only)
