@@ -4,6 +4,17 @@ set -e
 # Ensure DB directory exists
 mkdir -p /app/data
 
+# Default DATABASE_URL for SQLite if none is provided at runtime
+if [ -z "$DATABASE_URL" ]; then
+  export DATABASE_URL="file:/app/data/db.sqlite"
+fi
+
+# Apply migrations first so runtime DB has required tables
+if [ "$RUN_DB_MIGRATE" != "false" ]; then
+  echo "[entrypoint] Applying Prisma migrations (NODE_ENV=$NODE_ENV)..."
+  npx prisma migrate deploy
+fi
+
 # If RUN_DB_SEED is enabled, run seeding in production
 if [ "$RUN_DB_SEED" = "true" ] || [ "$SEED_ON_DEPLOY" = "true" ]; then
   echo "[entrypoint] Running database seed (NODE_ENV=$NODE_ENV)..."

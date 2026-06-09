@@ -35,6 +35,9 @@ export async function POST(request: NextRequest) {
       taxId,
     } = parsed.data;
 
+    const sectorIdNum = sectorId && /^[1-9][0-9]*$/.test(sectorId) ? parseInt(sectorId, 10) : null;
+    const businessModelIdNum = businessModelId && /^[1-9][0-9]*$/.test(businessModelId) ? parseInt(businessModelId, 10) : null;
+
     const existingUser = await db.user.findUnique({ where: { username } });
     if (existingUser) {
       return new Response(JSON.stringify({ error: 'Username already exists' }), {
@@ -53,9 +56,9 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const customerRole = await db.enumUserRole.findFirst({
-      where: { roleCode: Roles.CUSTOMER, isCurrent: 1 },
-    });
+    const customerRole =
+      (await db.enumUserRole.findFirst({ where: { roleCode: Roles.CUSTOMER, isCurrent: 1 } })) ??
+      (await db.enumUserRole.findUnique({ where: { roleCode: Roles.CUSTOMER } }));
 
     if (!customerRole) {
       return new Response(JSON.stringify({ error: 'Customer role not found in system' }), {
@@ -66,7 +69,9 @@ export async function POST(request: NextRequest) {
 
     const hashedPassword = await hashPassword(password);
     const { passwordSalt: salt, passwordHash: hash } = splitPasswordHash(hashedPassword);
-    const normalizedEmail = email ? email.trim().toLowerCase() : `${username.toLowerCase()}@cobitun.tn`;
+    const normalizedEmail = email
+      ? email.trim().toLowerCase()
+      : `${username.toLowerCase()}+signup-${Date.now()}@cobitun.tn`;
 
     const user = await db.user.create({
       // mark unverified until email verification (if provided)
@@ -87,26 +92,30 @@ export async function POST(request: NextRequest) {
             address,
             registrationNumber: registrationNumber || null,
             taxId: taxId || null,
-            sectorId: sectorId ? parseInt(sectorId, 10) : null,
-            businessModelId: businessModelId ? parseInt(businessModelId, 10) : null,
+            sectorId: sectorIdNum,
+            businessModelId: businessModelIdNum,
           },
         },
       },
       include: { customer: true, role: true },
     });
 
-    await logAction({
-      entityType: 'User',
-      entityId: user.id,
-      actorId: user.id,
-      actorType: 'USER',
-      action: 'SIGNUP',
-      actionCategory: 'AUTH',
-      newValues: { username: user.username, email: user.email, role: user.role.roleCode },
-      ipAddress: request.headers.get('x-forwarded-for') || undefined,
-      userAgent: request.headers.get('user-agent') || undefined,
-      requestPath: '/api/auth/signup',
-    });
+    try {
+      await logAction({
+        entityType: 'User',
+        entityId: user.id,
+        actorId: user.id,
+        actorType: 'USER',
+        action: 'SIGNUP',
+        actionCategory: 'AUTH',
+        newValues: { username: user.username, email: user.email, role: user.role.roleCode },
+        ipAddress: request.headers.get('x-forwarded-for') || undefined,
+        userAgent: request.headers.get('user-agent') || undefined,
+        requestPath: '/api/auth/signup',
+      });
+    } catch (err) {
+      console.error('Signup audit log failed:', err);
+    }
 
     // If email provided, create verification token (expires in 48 hours)
     const emailDeliveryMode = (process.env.EMAIL_DELIVERY_MODE || 'file').toLowerCase();

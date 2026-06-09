@@ -11,6 +11,7 @@
     "db:generate": "prisma generate",
     "prisma:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
     "db:reset": "prisma migrate reset",
     "db:seed": "bun prisma/seed.ts || npx tsx prisma/seed.ts",
     "test": "jest --passWithNoTests",
