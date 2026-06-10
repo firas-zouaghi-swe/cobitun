@@ -187,7 +187,6 @@ export default function IODASignalChart({
         setSelectedAsns(new Set(data.providers.map((p: SignalProvider) => p.asn)));
       }
     } catch (err) {
-      console.error('Signal fetch error:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);

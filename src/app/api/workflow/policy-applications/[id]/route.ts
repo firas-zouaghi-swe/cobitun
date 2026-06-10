@@ -104,7 +104,6 @@ export async function GET(
     const applicationOut = { ...application, statusCode: application.status?.statusCode ?? null, statusName: application.status?.statusName ?? null };
     return NextResponse.json({ application: applicationOut, auditLogs });
   } catch (error) {
-    console.error('Error getting policy application:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -170,7 +169,6 @@ export async function DELETE(
 
     return NextResponse.json({ message: 'Policy application deleted successfully' });
   } catch (error) {
-    console.error('Error deleting policy application:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -261,7 +259,6 @@ export async function PATCH(
     if (error instanceof WorkflowTransitionError) {
       return NextResponse.json({ error: error.message }, { status: error.statusCode });
     }
-    console.error('Error updating policy application:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -110,14 +110,6 @@ function AdminUsersPageClient({ initialUsers, pagination, currentUserRole }: Adm
   const { t } = useTranslation(['adminCommon', 'common']);
   const { user } = useAuth();
   
-  // Check if user is authenticated and has appropriate role
-  if (!user || (user.role !== Roles.ADMIN && user.role !== Roles.SUPER_ADMIN)) {
-    return <div>{t('common:unauthorized', 'Unauthorized')}</div>;
-  }
-  
-  // Use the currentUserRole prop if available, otherwise use the user role from the hook
-  const effectiveUserRole = currentUserRole || user.role;
-  
   const [users, setUsers] = useState<AdminUser[]>(initialUsers);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
@@ -156,6 +148,10 @@ function AdminUsersPageClient({ initialUsers, pagination, currentUserRole }: Adm
   const [createPasswordErrors, setCreatePasswordErrors] = useState<string[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
 
+  const unauthorized = !user || (user.role !== Roles.ADMIN && user.role !== Roles.SUPER_ADMIN);
+  // Use the currentUserRole prop if available, otherwise use the user role from the hook
+  const effectiveUserRole = currentUserRole || user?.role;
+
   // Load users from API
   const loadUsers = async (searchTerm = '', pageNum = page, limitNum = limit) => {
     try {
@@ -190,9 +186,16 @@ function AdminUsersPageClient({ initialUsers, pagination, currentUserRole }: Adm
   // Load users on component mount
   useEffect(() => {
     if (users.length === 0) {
-      loadUsers();
+      const initLoadUsers = async () => {
+        await loadUsers();
+      };
+      void initLoadUsers();
     }
   }, [users.length]);
+
+  if (unauthorized) {
+    return <div>{t('common:unauthorized', 'Unauthorized')}</div>;
+  }
 
   // Search users
   const handleSearch = () => {

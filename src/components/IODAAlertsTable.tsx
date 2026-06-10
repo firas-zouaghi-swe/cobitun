@@ -225,7 +225,6 @@ export default function IODAAlertsTable({
         setSelectedAsns(new Set(data.providers.map((p: AlertProvider) => p.asn)));
       }
     } catch (err) {
-      console.error('Alerts fetch error:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);

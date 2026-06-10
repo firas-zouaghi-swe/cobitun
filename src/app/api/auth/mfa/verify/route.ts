@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
         actorType: user.role?.roleCode || 'USER',
         metadata: { method: 'email_otp' },
         ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
-      }).catch((err) => console.error('[MFA] Audit log failed:', err));
+      }).catch((err) => {/* Ignore audit log errors */});
 
       return await createAuthResponse(
         {
@@ -142,7 +142,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ message: verifyResult.message });
   } catch (error) {
-    console.error('MFA verification failed:', error);
     return Errors.internal();
   }
 }

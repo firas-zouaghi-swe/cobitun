@@ -55,11 +55,6 @@ export async function POST(request: NextRequest) {
     const { userId, preAuthToken: bodyPreAuthToken } = result.data;
     const preAuthToken = resolvePreAuthToken(request, bodyPreAuthToken);
 
-    console.info('[MFA] challenge request', {
-      userId,
-      tokenSource: bodyPreAuthToken ? 'body' : request.headers.get('x-pre-auth-token') ? 'header' : 'none',
-    });
-
     // Verify pre-auth token to prevent arbitrary OTP requests
     if (!preAuthToken || !verifyPreAuthToken(userId, preAuthToken)) {
       return errorResponse('Invalid or missing pre-authentication token', 'PRE_AUTH_REQUIRED', 401);
@@ -100,7 +95,7 @@ export async function POST(request: NextRequest) {
       actorType: 'SYSTEM',
       metadata: { method: 'email_otp' },
       ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
-    }).catch((err) => console.error('[MFA] Audit log failed:', err));
+    }).catch((err) => {/* Ignore audit log errors */});
 
     return NextResponse.json({
       mfaRequired: true,
@@ -109,7 +104,6 @@ export async function POST(request: NextRequest) {
       expiresAt: sendResult.expiresAt?.toISOString(),
     });
   } catch (error) {
-    console.error('MFA challenge failed:', error);
     return Errors.internal();
   }
 }

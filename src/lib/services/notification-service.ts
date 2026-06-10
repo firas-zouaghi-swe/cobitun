@@ -42,9 +42,6 @@ export async function notifyCustomer(
   notificationType: string,
   entityRefs?: NotificationEntityRefs
 ): Promise<void> {
-  // Log the notification for debugging
-  console.log(`[NOTIFICATION → Customer:${recipientId}] [${notificationType}] ${message}`);
-
   // Create a Notification record
   await db.notification.create({
     data: {
@@ -76,9 +73,6 @@ export async function notifyAdmin(
   notificationType: string,
   entityRefs?: NotificationEntityRefs
 ): Promise<void> {
-  // Log the notification for debugging
-  console.log(`[NOTIFICATION → Admin:${recipientId}] [${notificationType}] ${message}`);
-
   // Create a Notification record
   await db.notification.create({
     data: {
@@ -115,7 +109,6 @@ export async function notifyAdmins(
   });
 
   if (admins.length === 0) {
-    console.warn('[NOTIFICATION] No admin users found to notify');
     return;
   }
 

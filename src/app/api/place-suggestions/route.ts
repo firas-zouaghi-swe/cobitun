@@ -58,7 +58,6 @@ export async function GET(req: Request) {
     suggestionCache.set(normalizedQuery, { timestamp: now, suggestions });
     return NextResponse.json(suggestions);
   } catch (error) {
-    console.error('Place suggestion proxy error:', error);
     if (cached) {
       return NextResponse.json(cached.suggestions);
     }

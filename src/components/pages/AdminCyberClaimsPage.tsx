@@ -97,8 +97,8 @@ interface Claim {
   reportedDate: string;
   incidentType: { typeCode: string; typeName: string } | string;
   description: string;
-  estimatedLoss: number;
-  approvedAmount: number | null;
+  estimatedLoss: number | string;
+  approvedAmount: number | string | null;
   statusCode: string;
   statusName: string;
   forensicReport: string | null;
@@ -185,12 +185,18 @@ const getIncidentBadge = (type: string) => {
   return INCIDENT_TYPE_CONFIG[type]?.badge || INCIDENT_TYPE_CONFIG.OTHER.badge;
 };
 
-const formatTnd = (value: number | null | undefined, locale?: string) => {
+const formatTnd = (value: number | string | null | undefined, locale?: string) => {
   if (value === null || value === undefined) return '—';
-  return value.toLocaleString(locale || undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const numericValue = typeof value === 'string' ? parseFloat(value.replace(/,/g, '')) : value;
+  if (!Number.isFinite(numericValue)) return '—';
+  return numericValue.toLocaleString(locale || undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
-
+const parseNumericAmount = (value: number | string | null | undefined): number => {
+  if (value === null || value === undefined) return 0;
+  const numericValue = typeof value === 'string' ? parseFloat(value.replace(/,/g, '')) : value;
+  return Number.isFinite(numericValue) ? numericValue : 0;
+};
 
 // ── Component ──────────────────────────────────────────────────────────────
 
@@ -256,11 +262,11 @@ export default function AdminCyberClaimsPage() {
   // Summary stats
   const stats = useMemo(() => {
     const totalClaims = claims.length;
-    const totalEstimatedLoss = claims.reduce((sum, c) => sum + c.estimatedLoss, 0);
-    const totalApproved = claims.reduce((sum, c) => sum + (c.approvedAmount || 0), 0);
+    const totalEstimatedLoss = claims.reduce((sum, c) => sum + parseNumericAmount(c.estimatedLoss), 0);
+    const totalApproved = claims.reduce((sum, c) => sum + parseNumericAmount(c.approvedAmount), 0);
     const totalPaid = claims
       .filter((c) => c.statusCode === 'PAID')
-      .reduce((sum, c) => sum + (c.approvedAmount || 0), 0);
+      .reduce((sum, c) => sum + parseNumericAmount(c.approvedAmount), 0);
     return { totalClaims, totalEstimatedLoss, totalApproved, totalPaid };
   }, [claims]);
 

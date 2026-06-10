@@ -35,7 +35,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ questions });
   } catch (error) {
-    console.error('Get questions error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -76,7 +75,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ question });
   } catch (error) {
-    console.error('Create question error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

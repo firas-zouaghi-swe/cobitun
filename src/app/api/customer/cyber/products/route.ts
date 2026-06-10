@@ -76,7 +76,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ products: parsed });
   } catch (error) {
-    console.error('Get customer cyber products error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

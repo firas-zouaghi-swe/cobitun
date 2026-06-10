@@ -37,7 +37,6 @@ export async function POST(request: Request) {
           ...result,
         });
       } catch (error) {
-        console.error(`Failed to process provider ${provider.asn}:`, error);
         results.push({
           provider: provider.organisationName,
           asn: provider.asn,
@@ -55,18 +54,12 @@ export async function POST(request: Request) {
       totalClaims,
       providersProcessed: activeProviders.length,
       results,
+      hint: 'Send POST request to trigger IODA check for all active providers',
+      schedule: 'Recommended: every 5 minutes via external scheduler',
     });
-  } catch (error) {
-    console.error('Cron IODA check error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  } catch (err) {
+    throw new Error('Failed to create authenticated session');
   }
-}
 
-export async function GET() {
-  return NextResponse.json({
-    message: 'IODA cron endpoint is active',
-    hint: 'Send POST request to trigger IODA check for all active providers',
-    schedule: 'Recommended: every 5 minutes via external scheduler',
-  });
 }
 

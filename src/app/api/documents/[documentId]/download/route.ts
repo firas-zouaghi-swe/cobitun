@@ -36,7 +36,7 @@ export async function GET(
     }
 
     // Read file via externalized module to avoid Turbopack NFT tracing
-    const { fileReader } = require('@/lib/services/file-reader');
+    const { fileReader } = await import('@/lib/services/file-reader');
     const readFile = fileReader.promises.readFile;
     const filePath = document.filePath;
     if (!filePath) {
@@ -59,7 +59,7 @@ export async function GET(
       return Errors.notFound('File on disk');
     }
   } catch (error) {
-    console.error('Failed to download document', error);
+    // Ignore download errors
     return Errors.internal();
   }
 }

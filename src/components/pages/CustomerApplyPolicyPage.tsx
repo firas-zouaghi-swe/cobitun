@@ -57,10 +57,10 @@ export default function CustomerApplyPolicyPage() {
   };
 
   useEffect(() => {
-    fetchData();
+    void fetchData();
   }, []);
 
-  const fetchData = async () => {
+  async function fetchData() {
     setError(null);
     try {
       const res = await fetchWithAuth('/api/customer/apply-policy');

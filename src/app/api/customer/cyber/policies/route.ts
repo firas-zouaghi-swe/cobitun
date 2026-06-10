@@ -78,7 +78,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ policies: parsed });
   } catch (error) {
-    console.error('Get customer cyber policies error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

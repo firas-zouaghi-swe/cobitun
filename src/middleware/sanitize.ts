@@ -30,7 +30,6 @@ export function escapeHtml(input: string): string {
  * Remove null bytes and control characters from a string.
  */
 export function stripControlChars(input: string): string {
-  // eslint-disable-next-line no-control-regex
   return input.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, '');
 }
 

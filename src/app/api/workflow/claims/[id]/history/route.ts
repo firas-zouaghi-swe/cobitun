@@ -71,7 +71,6 @@ export async function GET(request: NextRequest, context: RouteContext) {
       history: parsedHistory,
     });
   } catch (error) {
-    console.error('Error fetching claim history:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

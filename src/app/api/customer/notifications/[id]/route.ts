@@ -37,7 +37,6 @@ export async function GET(
       updatedAt: notification.updatedAt.toISOString(),
     });
   } catch (error) {
-    console.error('Failed to fetch notification', error);
     return Errors.internal();
   }
 }
@@ -76,7 +75,6 @@ export async function PATCH(
       createdAt: updated.createdAt.toISOString(),
     });
   } catch (error) {
-    console.error('Failed to mark notification as read', error);
     return Errors.internal();
   }
 }
@@ -111,7 +109,6 @@ export async function DELETE(
 
     return NextResponse.json({ message: 'Notification deleted' });
   } catch (error) {
-    console.error('Failed to delete notification', error);
     return Errors.internal();
   }
 }

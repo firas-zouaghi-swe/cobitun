@@ -107,7 +107,6 @@ export async function fetchWithAuth(input: RequestInfo, init?: RequestInit) {
   try {
     let response = await fetch(input, fetchOptions);
     if (response.status === 401) {
-      console.warn('fetchWithAuth: received 401, attempting refresh');
       const refreshUrl = `${window.location.origin}/api/auth/refresh`;
       const refreshResponse = await fetch(refreshUrl, {
         method: 'POST',
@@ -118,7 +117,6 @@ export async function fetchWithAuth(input: RequestInfo, init?: RequestInit) {
       });
 
       if (refreshResponse.ok) {
-        console.info('fetchWithAuth: refresh succeeded, retrying original request');
         const retryOptions: RequestInit = {
           ...fetchOptions,
           body: cloneBody(fetchOptions.body),
@@ -126,19 +124,16 @@ export async function fetchWithAuth(input: RequestInfo, init?: RequestInit) {
         response = await fetch(input, retryOptions);
       } else {
         const refreshText = await refreshResponse.text().catch(() => '');
-        console.warn('fetchWithAuth: refresh failed', refreshResponse.status, refreshText);
         useAppStore.getState().logout();
       }
     }
 
     if (response.status === 401) {
-      console.warn('fetchWithAuth: authentication still invalid after refresh');
       useAppStore.getState().logout();
     }
 
     return response;
   } catch (error) {
-    console.error('fetchWithAuth: network or auth helper error', error);
     throw error;
   }
 }

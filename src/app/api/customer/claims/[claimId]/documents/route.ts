@@ -67,7 +67,6 @@ export async function GET(
       total: documents.length,
     });
   } catch (error) {
-    console.error('Failed to list claim documents:', error);
     return Errors.internal();
   }
 }
@@ -183,7 +182,6 @@ export async function POST(
       },
     }, { status: 201 });
   } catch (error) {
-    console.error('Failed to upload claim document:', error);
     return Errors.internal();
   }
 }

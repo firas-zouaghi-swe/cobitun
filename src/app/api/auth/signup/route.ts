@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
         requestPath: '/api/auth/signup',
       });
     } catch (err) {
-      console.error('Signup audit log failed:', err);
+      // Ignore audit log errors
     }
 
     // If email provided, create verification token (expires in 48 hours)
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
         await db.emailVerificationToken.create({ data: { userId: user.id, tokenHash, expiresAt: expires } });
         await sendVerificationEmail(user.email, token);
       } catch (err) {
-        console.error('Failed to create or send email verification token', err);
+        // Ignore email verification token creation errors
       }
 
       // Auto-verify email when not using SMTP (dev/file mode) so users can use the platform immediately
@@ -144,9 +144,8 @@ export async function POST(request: NextRequest) {
         try {
           await db.user.update({ where: { id: user.id }, data: { emailVerified: 1, emailVerifiedAt: new Date() } });
           await db.emailVerificationToken.deleteMany({ where: { userId: user.id } });
-          console.info(`[SIGNUP] Auto-verified email for user ${user.id} (EMAIL_DELIVERY_MODE=${emailDeliveryMode})`);
         } catch (err) {
-          console.error('Failed to auto-verify email', err);
+          // Ignore auto-verify errors
         }
       }
     } else {
@@ -155,7 +154,7 @@ export async function POST(request: NextRequest) {
         try {
           await db.user.update({ where: { id: user.id }, data: { emailVerified: 1, emailVerifiedAt: new Date() } });
         } catch (err) {
-          console.error('Failed to auto-verify email', err);
+          // Ignore auto-verify errors
         }
       }
     }
@@ -202,8 +201,7 @@ export async function POST(request: NextRequest) {
         );
       }
     } catch (err) {
-      // LLM or detection errors should not block signup; log and continue
-      console.error('Fraud detector error:', err);
+      // LLM or detection errors should not block signup; continue
     }
 
     return await createAuthResponse(
@@ -218,7 +216,6 @@ export async function POST(request: NextRequest) {
       { secure: isSecureRequest(request) }
     );
   } catch (error) {
-    console.error('Signup error:', error);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

@@ -34,10 +34,10 @@ export default function CustomerHistoryPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user?.id) fetchRecords();
+    if (user?.id) void fetchRecords();
   }, [user?.id]);
 
-  const fetchRecords = async () => {
+  async function fetchRecords() {
     setLoading(true);
     setError(null);
     try {

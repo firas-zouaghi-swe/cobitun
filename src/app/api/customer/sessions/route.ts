@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
     });
     return NextResponse.json({ sessions });
   } catch (err) {
-    console.error('Failed to list sessions', err);
     return NextResponse.json({ error: 'Failed to list sessions' }, { status: 500 });
   }
 }

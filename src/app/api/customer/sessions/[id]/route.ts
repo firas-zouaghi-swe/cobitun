@@ -25,7 +25,6 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
     return NextResponse.json({ message: 'Session revoked' });
   } catch (err) {
-    console.error('Failed to revoke session', err);
     return NextResponse.json({ error: 'Failed to revoke session' }, { status: 500 });
   }
 }

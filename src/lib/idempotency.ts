@@ -35,7 +35,7 @@ export async function storeResponseForKey(key: string, status: number, body: any
   try {
     await db.idempotencyKey.update({ where: { key }, data: { responseStatus: status, responseBody: JSON.stringify(body), usedAt: new Date() } });
   } catch (err) {
-    console.error('Failed to store idempotency response', err);
+    // Failed to store idempotency response, continue without caching
   }
 }
 

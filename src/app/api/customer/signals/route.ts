@@ -141,7 +141,6 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Customer signals API error:', (error as any)?.message ?? error, error);
     return NextResponse.json(
       { error: 'Failed to fetch IODA signals' },
       { status: 500 }

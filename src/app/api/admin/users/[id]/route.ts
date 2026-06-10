@@ -178,7 +178,6 @@ export async function PATCH(
       updatedAt: updated.updatedAt.toISOString(),
     });
   } catch (error) {
-    console.error('Failed to update admin user', error);
     return Errors.internal();
   }
 }
@@ -248,7 +247,6 @@ export async function DELETE(
 
     return NextResponse.json({ message: 'Admin user deactivated', userId });
   } catch (error) {
-    console.error('Failed to deactivate admin user', error);
     return Errors.internal();
   }
 }

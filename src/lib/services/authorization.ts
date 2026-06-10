@@ -39,15 +39,6 @@ export async function requireAuth(request: NextRequest): Promise<AuthInfo | Next
       const mfaRequired = await isMfaRequired(auth.userIdNum);
       if (mfaRequired) {
         if (!verifyCsrfToken(request)) {
-          // Log presence/absence of tokens for debugging (do not log full values in prod)
-          const headerPresent = !!request.headers.get('x-csrf-token');
-          const cookiePresent = !!request.cookies.get('XSRF-TOKEN');
-          console.warn('CSRF verification failed for request', {
-            path: request.nextUrl?.pathname ?? '(unknown)',
-            method: request.method,
-            headerPresent,
-            cookiePresent,
-          });
           return NextResponse.json({ error: 'Invalid CSRF token' }, { status: 403 });
         }
       }
@@ -97,7 +88,7 @@ export async function requireRole(request: NextRequest, allowed: Role[] | Role):
  */
 export function isOwnerOrAdmin(auth: AuthInfo, ownerId?: number | null): boolean {
   if (!auth) return false;
-  if (auth.role === Roles.ADMIN) return true;
+  if (auth.role === Roles.ADMIN || auth.role === Roles.SUPER_ADMIN) return true;
   if (!ownerId) return false;
   // Fast-path: if auth carries customerId (from JWT/session), compare directly
   if ((auth as any).customerId != null && (auth as any).customerId === ownerId) return true;
@@ -112,7 +103,7 @@ export function isOwnerOrAdmin(auth: AuthInfo, ownerId?: number | null): boolean
  */
 export async function isOwnerOrAdminAsync(auth: AuthInfo, customerId?: number | null): Promise<boolean> {
   if (!auth) return false;
-  if (auth.role === Roles.ADMIN) return true;
+  if (auth.role === Roles.ADMIN || auth.role === Roles.SUPER_ADMIN) return true;
   if (!customerId) return false;
   const { db } = await import('@/lib/db');
   const customer = await db.customer.findUnique({

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { REFRESH_COOKIE_NAME, REFRESH_MAX_AGE, IDLE_SESSION_MAX_AGE, isSecureRequest } from '@/lib/session';
 import { JWT_COOKIE_NAME, JWT_MAX_AGE, createJwt } from '@/lib/jwt';
+import { CSRF_COOKIE_NAME } from '@/lib/csrf';
 import { createHash, randomBytes } from 'crypto';
 
 function parseCookies(cookieHeader: string | null): Record<string, string> {
@@ -73,13 +74,24 @@ export async function POST(request: NextRequest) {
 
     const secure = isSecureRequest(request);
     const sameSite = secure ? 'none' : 'lax';
+    const cookieDomain = process.env.SESSION_COOKIE_DOMAIN;
+    const cookieOptions: { path: string; secure: boolean; sameSite: 'none' | 'lax'; domain?: string } = {
+      path: '/',
+      secure,
+      sameSite,
+    };
+    if (cookieDomain) {
+      cookieOptions.domain = cookieDomain;
+    }
+
+    const csrfToken = randomBytes(32).toString('hex');
     const response = NextResponse.json({ message: 'Refreshed' });
-    response.cookies.set({ name: JWT_COOKIE_NAME, value: jwt, httpOnly: true, secure, sameSite, path: '/', maxAge: JWT_MAX_AGE });
-    response.cookies.set({ name: REFRESH_COOKIE_NAME, value: newRefresh, httpOnly: true, secure, sameSite, path: '/', maxAge: REFRESH_MAX_AGE });
+    response.cookies.set({ name: JWT_COOKIE_NAME, value: jwt, httpOnly: true, ...cookieOptions, maxAge: JWT_MAX_AGE });
+    response.cookies.set({ name: CSRF_COOKIE_NAME, value: csrfToken, httpOnly: false, ...cookieOptions, maxAge: JWT_MAX_AGE });
+    response.cookies.set({ name: REFRESH_COOKIE_NAME, value: newRefresh, httpOnly: true, ...cookieOptions, maxAge: REFRESH_MAX_AGE });
 
     return response;
   } catch (err) {
-    console.error('Refresh token error', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

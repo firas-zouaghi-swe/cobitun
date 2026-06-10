@@ -49,7 +49,7 @@ export async function GET(
     }
 
     // Read file via externalized module to avoid Turbopack NFT tracing
-    const { fileReader } = require('@/lib/services/file-reader');
+    const { fileReader } = await import('@/lib/services/file-reader');
     let fileBuffer: Buffer;
     try {
       fileBuffer = await fileReader.promises.readFile(filePath) as Buffer;
@@ -69,7 +69,6 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error('Error downloading declaration PDF:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

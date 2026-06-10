@@ -35,10 +35,40 @@ export interface RateLimitConfig {
   keyGenerator?: (request: NextRequest) => string;
 }
 
+function getClientIp(request: NextRequest): string | null {
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    const ip = forwardedFor.split(',')[0]?.trim();
+    if (ip) return ip;
+  }
+
+  const realIp = request.headers.get('x-real-ip')?.trim();
+  if (realIp) return realIp;
+
+  const cfIp = request.headers.get('cf-connecting-ip')?.trim();
+  if (cfIp) return cfIp;
+
+  const trueClientIp = request.headers.get('true-client-ip')?.trim();
+  if (trueClientIp) return trueClientIp;
+
+  const fastlyIp = request.headers.get('fastly-client-ip')?.trim();
+  if (fastlyIp) return fastlyIp;
+
+  const clientIp = request.headers.get('x-client-ip')?.trim();
+  if (clientIp) return clientIp;
+
+  const forwarded = request.headers.get('forwarded');
+  if (forwarded) {
+    const forPart = forwarded.split(';').find((part) => part.trim().toLowerCase().startsWith('for='));
+    const ip = forPart?.split('=')[1]?.trim();
+    if (ip) return ip.replace(/"/g, '');
+  }
+
+  return null;
+}
+
 const DEFAULT_KEY_GENERATOR = (request: NextRequest): string => {
-  // Prefer real client IP if available behind proxies.
-  const forwarded = request.headers.get('x-forwarded-for');
-  const ip = forwarded?.split(',')[0]?.trim() || request.headers.get('x-real-ip')?.trim();
+  const ip = getClientIp(request);
   if (ip) return ip;
 
   // Fallback to header fingerprinting when IP is unavailable in production.
@@ -50,8 +80,8 @@ const DEFAULT_KEY_GENERATOR = (request: NextRequest): string => {
 
 // Pre-configured rate limits for different endpoint types
 export const RateLimits = {
-  /** Authentication endpoints: 10 requests per minute */
-  auth: { maxRequests: 10, windowSeconds: 60 },
+  /** Authentication endpoints: 20 requests per minute */
+  auth: { maxRequests: 20, windowSeconds: 60 },
   /** Password reset: 3 requests per 15 minutes */
   passwordReset: { maxRequests: 3, windowSeconds: 900 },
   /** MFA endpoints: 5 requests per 15 minutes (prevent OTP brute-force) */

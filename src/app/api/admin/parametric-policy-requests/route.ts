@@ -135,14 +135,12 @@ export async function PUT(request: NextRequest) {
         if (wfApp) {
           workflowUpdate.found = true;
           workflowUpdate.appId = wfApp.id;
-          console.log(`Admin approval: found workflow app id=${wfApp.id} statusId=${wfApp.statusId}`);
 
           if (!wfApp.productId && policy.productId) {
             await db.workflowPolicyApplication.update({
               where: { id: wfApp.id },
               data: { productId: policy.productId },
             });
-            console.log(`Admin approval: linked workflow app ${wfApp.id} to productId=${policy.productId}`);
           }
 
           const reviewTask = await db.workflowPolicyTask.findFirst({
@@ -152,7 +150,6 @@ export async function PUT(request: NextRequest) {
 
           if (reviewTask && reviewTask.status?.statusCode === 'PENDING') {
             await completeTask(reviewTask.id, 'Policy', auth.userIdNum, adminComment || 'Approved by admin');
-            console.log(`Admin approval: completed review task id=${reviewTask.id} for app ${wfApp.id}`);
           }
 
           // Ensure we only attempt transitions that are valid from the application's current state.
@@ -164,11 +161,9 @@ export async function PUT(request: NextRequest) {
             if (freshApp?.status?.statusCode === 'ProviderContractUploaded') {
               try {
                 await updatePolicyApplicationStatus(wfApp.id, 'AdminReviewing');
-                console.log(`Admin approval: transitioned app ${wfApp.id} -> AdminReviewing`);
                 // refresh
                 freshApp = await db.workflowPolicyApplication.findUnique({ where: { id: wfApp.id }, include: { status: { select: { statusCode: true } } } });
               } catch (e) {
-                console.log(`Admin approval: could not transition app ${wfApp.id} to AdminReviewing:`, e instanceof Error ? e.message : String(e));
               }
             }
 
@@ -176,7 +171,6 @@ export async function PUT(request: NextRequest) {
             try {
               await updatePolicyApplicationStatus(wfApp.id, 'PolicyContractGenerated');
               workflowUpdate.transitionedTo = 'PolicyContractGenerated';
-              console.log(`Admin approval: transitioned app ${wfApp.id} -> PolicyContractGenerated`);
 
               const existingSignTask = await db.workflowPolicyTask.findFirst({
                 where: { policyApplicationId: wfApp.id, actionRequired: 'SignPolicyContract', isDeleted: 0 },
@@ -185,13 +179,10 @@ export async function PUT(request: NextRequest) {
                 await createTask({ entityType: 'Policy', policyApplicationId: wfApp.id, actorCode: Roles.CUSTOMER, actionRequired: 'SignPolicyContract' });
               }
             } catch (e) {
-              console.log(`Admin approval: could not transition app ${wfApp.id} to PolicyContractGenerated:`, e instanceof Error ? e.message : String(e));
             }
           } catch (e) {
             console.error('Admin approval: error while handling workflow transitions for app', wfApp.id, e);
           }
-        } else {
-          console.log('Admin approval: no related workflow application found for customerId=', policy.customerId, 'productId=', policy.productId);
         }
       } catch (wfErr) {
         console.error('Failed to update workflow application after parametric approval:', wfErr);

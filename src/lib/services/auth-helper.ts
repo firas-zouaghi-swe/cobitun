@@ -33,31 +33,19 @@ function getSessionToken(request: NextRequest): string | null {
   const authHeader = request.headers.get('authorization');
   if (authHeader?.toLowerCase().startsWith('bearer ')) {
     const token = authHeader.substring(7).trim();
-    console.log('[AUTH] Bearer token extracted from Authorization header');
     return token;
   }
   const cookieToken = request.cookies.get(JWT_COOKIE_NAME)?.value ?? null;
-  if (cookieToken) {
-    console.log('[AUTH] JWT token found in cookie:', JWT_COOKIE_NAME);
-  } else {
-    console.log('[AUTH] No JWT token in Authorization header or cookies');
-  }
   return cookieToken;
 }
 
 export async function getAuthInfo(request: NextRequest): Promise<AuthInfo | null> {
-  console.log('[GETAUTHINFO] Called with path:', request.nextUrl.pathname);
   const token = getSessionToken(request);
   if (token) {
-    console.log('[GETAUTHINFO] Token found, attempting verification');
-    console.log('[GETAUTHINFO] Token length:', token.length);
-    console.log('[GETAUTHINFO] Token starts with:', token.substring(0, 20));
     const payload = verifyJwt(token);
     if (!payload) {
-      console.log('[GETAUTHINFO] JWT verification failed - payload is null');
       return null;
     }
-    console.log('[GETAUTHINFO] JWT verified successfully, sub:', payload.sub);
 
     const userIdNum = parseInt(payload.sub, 10);
     if (isNaN(userIdNum)) {
@@ -86,7 +74,6 @@ export async function getAuthInfo(request: NextRequest): Promise<AuthInfo | null
       await db.userSession.update({ where: { id: session.id }, data: { lastActiveAt: new Date(now) } });
     } catch (err) {
       // On DB error, treat as unauthenticated
-      console.error('Error verifying session in DB', err);
       return null;
     }
 
@@ -100,7 +87,7 @@ export async function getAuthInfo(request: NextRequest): Promise<AuthInfo | null
         });
         customerId = customer?.id ?? null;
       } catch (err) {
-        console.error('Error resolving customerId in getAuthInfo', err);
+        // Ignore customer lookup error
       }
     }
 
@@ -133,14 +120,13 @@ export async function getAuthInfo(request: NextRequest): Promise<AuthInfo | null
         });
         customerId = customer?.id ?? null;
       } catch (err) {
-        console.error('Error resolving customerId in dev-mode getAuthInfo', err);
+        // Ignore customer lookup in dev mode
       }
     }
 
     return { userId: userIdStr, userIdNum, role, customerId, authSource: 'dev-header' };
   }
 
-  console.log('[GETAUTHINFO] No token or dev mode headers - returning null');
   return null;
 }
 

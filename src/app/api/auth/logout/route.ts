@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       });
     }
   } catch (err) {
-    console.error('Failed to revoke session on logout', err);
+    // Ignore session revocation errors
   }
 
   const secure = isSecureRequest(request);

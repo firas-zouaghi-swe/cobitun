@@ -185,6 +185,7 @@ export default function AdminWorkflowPage() {
   const [activeTab, setActiveTab] = useState('policies');
 
   const fetchData = useCallback(async () => {
+    setLoading(true);
     try {
       const headers: Record<string, string> = {};
       const [appRes, claimRes] = await Promise.all([
@@ -237,8 +238,7 @@ export default function AdminWorkflowPage() {
 
   useEffect(() => {
     if (!hydrated || !isAuthenticated) return;
-    setLoading(true);
-    fetchData();
+    void fetchData();
   }, [hydrated, isAuthenticated, fetchData]);
 
   // Listen for external workflow updates (dispatched by other admin pages)

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAuthInfo } from '@/lib/services/auth-helper';
+import { getAuthInfo, isAdmin } from '@/lib/services/auth-helper';
 import { Roles, isOwnerOrAdmin } from '@/lib/services/authorization';
 import { getPendingTasksForActor } from '@/lib/services/workflow-engine';
 
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     const customerIdParam = searchParams.get('customerId');
 
     // Map actor param to Role constants
-    let actorRole = auth.role === Roles.ADMIN ? Roles.ADMIN : Roles.CUSTOMER;
+    let actorRole = isAdmin(auth) ? Roles.ADMIN : Roles.CUSTOMER;
     if (actorParam && ['Customer', 'Admin'].includes(actorParam)) {
       actorRole = actorParam === 'Admin' ? Roles.ADMIN : Roles.CUSTOMER;
     }
@@ -55,7 +55,6 @@ export async function GET(request: NextRequest) {
     const tasks = await getPendingTasksForActor(Roles.ADMIN);
     return NextResponse.json({ tasks });
   } catch (error) {
-    console.error('Error listing workflow tasks:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -65,7 +65,6 @@ export async function POST(
       status: 'SUBMITTED',
     });
   } catch (error) {
-    console.error('Failed to confirm draft claim', error);
     return Errors.internal();
   }
 }
@@ -107,7 +106,6 @@ export async function DELETE(
 
     return NextResponse.json({ message: 'Draft claim dismissed', claimId: claimIdNum });
   } catch (error) {
-    console.error('Failed to dismiss draft claim', error);
     return Errors.internal();
   }
 }

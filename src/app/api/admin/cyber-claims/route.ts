@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
       totalPages: Math.ceil(total / limit),
     });
   } catch (error) {
-    console.error('Get cyber claims error:', error);
+    // Ignore cyber claims retrieval errors
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -231,7 +231,7 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({ claim: updatedClaim });
   } catch (error) {
-    console.error('Update cyber claim error:', error);
+    // Ignore cyber claim update errors
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

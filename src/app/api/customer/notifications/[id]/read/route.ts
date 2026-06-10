@@ -47,7 +47,6 @@ export async function PATCH(
 
     return NextResponse.json({ message: 'Notification marked as read', id: notificationId });
   } catch (error) {
-    console.error('Failed to mark notification as read', error);
     return Errors.internal();
   }
 }

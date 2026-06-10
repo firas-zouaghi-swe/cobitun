@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getAuthInfo } from '@/lib/services/auth-helper';
+import { getAuthInfo, isAdmin } from '@/lib/services/auth-helper';
 import { Roles, isOwnerOrAdmin } from '@/lib/services/authorization';
 import { createTask, completeTask, updatePolicyApplicationStatus } from '@/lib/services/workflow-engine';
 import { logAction } from '@/lib/services/audit-service';
@@ -63,8 +63,8 @@ export async function GET(request: NextRequest) {
 
     let applications;
 
-    if (auth.role === Roles.ADMIN) {
-      // Admin sees all applications
+    if (isAdmin(auth)) {
+      // Admin and super admin see all applications
       applications = await db.workflowPolicyApplication.findMany({
         where: { isDeleted: 0 },
         include: {
@@ -134,14 +134,13 @@ export async function GET(request: NextRequest) {
           premiumAmount: recentPolicy?.finalPremium ?? app.premiumAmount ?? null,
         } as typeof app & { statusCode?: string | null; statusName?: string | null; sector: string | null; annualTurnover?: number | string | null };
       } catch (err) {
-        console.warn('Failed to enrich application with sector:', err);
+        // Ignore enrichment errors
         return { ...app, sector: null } as typeof app & { sector: string | null };
       }
     }));
 
     return NextResponse.json({ applications: enriched });
   } catch (error) {
-    console.error('Error listing policy applications:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -168,7 +167,6 @@ export async function POST(request: NextRequest) {
     try {
       formData = await request.formData();
     } catch (err) {
-      console.error('Failed to parse multipart form data:', request.headers.get('content-type'), err);
       return NextResponse.json(
         { error: 'Invalid multipart/form-data request. Ensure the request contains a file upload and correct Content-Type header.' },
         { status: 415 }
@@ -274,14 +272,14 @@ export async function POST(request: NextRequest) {
     try {
       await completeTask(customerUploadTask.id, 'Policy', auth.userIdNum);
     } catch (err) {
-      console.warn('Failed to auto-complete customer upload task:', err);
+      // Ignore task completion errors
     }
 
     // Transition application status to AdminReviewing now that provider contract is uploaded
     try {
       await updatePolicyApplicationStatus(application.id, 'AdminReviewing');
     } catch (err) {
-      console.warn('Failed to transition application to AdminReviewing:', err);
+      // Ignore status transition errors
     }
 
     // v3: Create a WorkflowPolicyTask for the Admin to review the provider contract
@@ -319,7 +317,7 @@ export async function POST(request: NextRequest) {
         await db.uploadedFile.update({ where: { id: uploadedRecord.id }, data: { workflowPolicyAppId: application.id } });
       }
     } catch (err) {
-      console.warn('Failed to link uploadedFile to workflow application:', err);
+      // Ignore file linking errors
     }
 
     // Re-fetch updated application with tasks and status for the response
@@ -340,7 +338,6 @@ export async function POST(request: NextRequest) {
     const out = updatedApplication ? { ...updatedApplication, statusCode: updatedApplication.status?.statusCode ?? null, statusName: updatedApplication.status?.statusName ?? null } : { application };
     return NextResponse.json({ application: out }, { status: 201 });
   } catch (error) {
-    console.error('Error creating policy application:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
       unreadCount,
     });
   } catch (error) {
-    console.error('Failed to fetch notifications', error);
+    // Ignore notification retrieval errors
     return Errors.internal();
   }
 }
@@ -104,7 +104,6 @@ export async function DELETE(request: NextRequest) {
       deletedCount: result.count,
     });
   } catch (error) {
-    console.error('Failed to delete notifications', error);
     return Errors.internal();
   }
 }

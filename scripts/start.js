@@ -11,8 +11,6 @@ const shouldSeedEmptyDatabase = (() => {
   return !fs.existsSync(dbPath);
 })();
 
-console.log(`[start] Using DATABASE_URL=${databaseUrl}`);
-console.log('[start] Applying Prisma migrations before Next.js startup...');
 const migrateResult = spawnSync('npx', ['prisma', 'migrate', 'deploy'], {
   stdio: 'inherit',
 });
@@ -23,7 +21,6 @@ if (migrateResult.status !== 0) {
 }
 
 if (shouldSeedEmptyDatabase && process.env.RUN_DB_SEED !== 'false') {
-  console.log('[start] Database file missing; running db:seed...');
   const seedResult = spawnSync('npm', ['run', 'db:seed', '--if-present'], {
     stdio: 'inherit',
   });

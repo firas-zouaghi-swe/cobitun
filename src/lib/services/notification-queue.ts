@@ -80,12 +80,10 @@ async function processQueue() {
 
       if (job.attempts >= job.maxAttempts) {
         job.status = 'failed';
-        console.error(`Notification job ${job.id} failed after ${job.attempts} attempts:`, job.lastError);
       } else {
         job.status = 'pending';
         const delay = BACKOFF_DELAYS[Math.min(job.attempts, BACKOFF_DELAYS.length - 1)];
         job.nextRetryAt = new Date(Date.now() + delay);
-        console.warn(`Notification job ${job.id} attempt ${job.attempts} failed, retrying in ${delay}ms`);
       }
     }
   }
@@ -124,7 +122,6 @@ async function processJob(job: NotificationJob): Promise<void> {
 
     case 'sms': {
       // SMS deferred - no paid provider in zero-cost mode
-      console.log(`[SMS DEFERRED] To: ${job.recipientId}, Message: ${job.payload.title}`);
       break;
     }
   }

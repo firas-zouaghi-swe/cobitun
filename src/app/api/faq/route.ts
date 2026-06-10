@@ -100,7 +100,6 @@ export async function GET(request: NextRequest) {
       total: faqs.length,
     });
   } catch (error) {
-    console.error('Failed to list FAQs:', error);
     return Errors.internal();
   }
 }
@@ -142,7 +141,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ faq: { id: setting.id, ...faq } }, { status: 201 });
   } catch (error) {
-    console.error('Failed to create FAQ:', error);
+
     return Errors.internal();
   }
 }
@@ -184,7 +183,6 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({ faq: { id, ...updatedFaq } });
   } catch (error) {
-    console.error('Failed to update FAQ:', error);
     return Errors.internal();
   }
 }
@@ -217,7 +215,6 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ message: 'FAQ deleted' });
   } catch (error) {
-    console.error('Failed to delete FAQ:', error);
     return Errors.internal();
   }
 }

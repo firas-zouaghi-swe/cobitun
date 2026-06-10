@@ -31,7 +31,7 @@ export async function PATCH(request: NextRequest) {
       updatedCount: result.count,
     });
   } catch (error) {
-    console.error('Failed to mark all notifications as read', error);
+    // Ignore mark all read errors
     return Errors.internal();
   }
 }

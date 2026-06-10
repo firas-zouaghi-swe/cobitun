@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
         html: `<h2>Thank you for contacting COBITUN</h2><p>We have received your message and will respond within 24 hours.</p><p><strong>Reference:</strong> #CM-${contactMessage.id}</p>`,
       });
     } catch {
-      console.warn('Failed to send contact confirmation email');
+      // Ignore email send errors
     }
 
     return NextResponse.json({
@@ -60,7 +60,6 @@ export async function POST(request: NextRequest) {
       contactMessage,
     }, { status: 201 });
   } catch (error) {
-    console.error('Contact error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -96,7 +95,6 @@ export async function GET(request: NextRequest) {
       pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
     });
   } catch (error) {
-    console.error('Failed to list contact submissions:', error);
     return Errors.internal();
   }
 }
@@ -134,7 +132,7 @@ export async function PATCH(request: NextRequest) {
         html: `<h2>Response to Your Inquiry</h2><p>Dear ${submission.name},</p><p>${response}</p><p><strong>Reference:</strong> #CM-${submissionId}</p>`,
       });
     } catch {
-      console.warn('Failed to send contact response email');
+      // Failed to send email
     }
 
     await logAction({
@@ -149,7 +147,6 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({ message: 'Response sent', submissionId, status });
   } catch (error) {
-    console.error('Failed to respond to contact submission:', error);
     return Errors.internal();
   }
 }

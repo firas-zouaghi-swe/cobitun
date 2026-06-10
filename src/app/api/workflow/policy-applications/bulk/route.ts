@@ -139,7 +139,6 @@ export async function POST(request: NextRequest) {
     if (error instanceof WorkflowTransitionError) {
       return NextResponse.json({ error: error.message }, { status: error.statusCode });
     }
-    console.error('Error in bulk operation:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

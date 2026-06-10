@@ -231,7 +231,7 @@ export async function PATCH(
       },
     });
   } catch (error) {
-    console.error('Update cyber application error:', error);
+    // Ignore cyber application update errors
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

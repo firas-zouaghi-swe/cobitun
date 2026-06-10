@@ -68,7 +68,6 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('IODA suggestions retrieval error:', error);
     return NextResponse.json(
       { error: 'An error occurred while retrieving IODA suggestions' },
       { status: 500 }
@@ -220,7 +219,6 @@ export async function POST(
       { status: 201 }
     );
   } catch (error) {
-    console.error('IODA claim creation error:', error);
     return NextResponse.json(
       { error: 'An error occurred while creating the claim from IODA suggestion' },
       { status: 500 }
@@ -316,7 +314,6 @@ export async function PATCH(
       { status: 400 }
     );
   } catch (error) {
-    console.error('IODA suggestion update error:', error);
     return NextResponse.json(
       { error: 'An error occurred while updating the IODA suggestion' },
       { status: 500 }

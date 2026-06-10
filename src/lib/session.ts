@@ -15,9 +15,29 @@ export interface AuthResponseOptions {
 
 export function isSecureRequest(request: NextRequest): boolean {
   if (process.env.NODE_ENV !== 'production') return false;
-  const forwardedProto = request.headers.get('x-forwarded-proto');
-  const protocol = forwardedProto || request.nextUrl.protocol || 'http:';
-  return protocol.toLowerCase().startsWith('https');
+
+  const forwardedProto = request.headers.get('x-forwarded-proto') || request.headers.get('x-forwarded-protocol');
+  const forwardedSsl = request.headers.get('x-forwarded-ssl');
+  const urlScheme = request.headers.get('x-url-scheme');
+
+  if (forwardedSsl) {
+    return forwardedSsl.toLowerCase() === 'on';
+  }
+
+  if (forwardedProto) {
+    return forwardedProto.toLowerCase().startsWith('https');
+  }
+
+  if (urlScheme) {
+    return urlScheme.toLowerCase() === 'https';
+  }
+
+  if (request.nextUrl.protocol) {
+    return request.nextUrl.protocol.toLowerCase() === 'https:';
+  }
+
+  // In production, assume HTTPS if the request did not explicitly indicate otherwise.
+  return true;
 }
 
 export interface SessionUserPayload {
@@ -45,14 +65,24 @@ export async function createAuthResponse(
     email: user.email ?? null,
   });
   const csrfToken = createCsrfToken();
-  const secure = options.secure ?? process.env.NODE_ENV === 'production';
-
   const now = Date.now();
   // Generate refresh token and hash it for storage
   const refreshToken = randomBytes(64).toString('hex');
   const refreshHash = createHash('sha256').update(refreshToken).digest('hex');
   const refreshExpires = new Date(now + REFRESH_MAX_AGE * 1000);
   const absoluteExpires = new Date(now + ABSOLUTE_SESSION_MAX_AGE * 1000);
+
+  const cookieDomain = process.env.SESSION_COOKIE_DOMAIN;
+  const secure = options.secure ?? process.env.NODE_ENV === 'production';
+  const sameSite = secure ? 'none' : 'lax';
+  const baseCookieOptions: { path: string; secure: boolean; sameSite: 'none' | 'lax'; domain?: string } = {
+    path: '/',
+    secure,
+    sameSite,
+  };
+  if (cookieDomain) {
+    baseCookieOptions.domain = cookieDomain;
+  }
 
   // Persist session record with refresh token
   try {
@@ -68,9 +98,9 @@ export async function createAuthResponse(
       },
     });
   } catch (err) {
-    console.error('Failed to persist user session', err);
     throw new Error('Failed to create authenticated session');
   }
+
 
   // Enforce concurrent session limits: revoke oldest sessions if over limit
   try {
@@ -88,28 +118,22 @@ export async function createAuthResponse(
       await prisma.userSession.updateMany({ where: { id: { in: ids } }, data: { revokedAt: new Date() } });
     }
   } catch (err) {
-    console.error('Failed to enforce concurrent session limits', err);
-  }
+     }   // Failed to enforce concurrent session limits
 
   const response = NextResponse.json({ ...body, csrfToken });
-  const sameSite = secure ? 'none' : 'lax';
 
   response.cookies.set({
     name: JWT_COOKIE_NAME,
     value: jwt,
     httpOnly: true,
-    secure,
-    sameSite,
-    path: '/',
+    ...baseCookieOptions,
     maxAge: JWT_MAX_AGE,
   });
   response.cookies.set({
     name: CSRF_COOKIE_NAME,
     value: csrfToken,
     httpOnly: false,
-    secure,
-    sameSite,
-    path: '/',
+    ...baseCookieOptions,
     maxAge: JWT_MAX_AGE,
   });
 
@@ -118,9 +142,7 @@ export async function createAuthResponse(
     name: REFRESH_COOKIE_NAME,
     value: refreshToken,
     httpOnly: true,
-    secure,
-    sameSite,
-    path: '/',
+    ...baseCookieOptions,
     maxAge: REFRESH_MAX_AGE,
   });
 
@@ -128,7 +150,15 @@ export async function createAuthResponse(
 }
 
 export function clearAuthCookies(response: NextResponse, secure?: boolean) {
-  const cookieOptions = { path: '/', secure };
+  const cookieDomain = process.env.SESSION_COOKIE_DOMAIN;
+  const cookieOptions: { path: string; secure?: boolean; domain?: string } = {
+    path: '/',
+    secure,
+  };
+  if (cookieDomain) {
+    cookieOptions.domain = cookieDomain;
+  }
+
   response.cookies.delete({ name: JWT_COOKIE_NAME, ...cookieOptions });
   response.cookies.delete({ name: CSRF_COOKIE_NAME, ...cookieOptions });
   response.cookies.delete({ name: REFRESH_COOKIE_NAME, ...cookieOptions });

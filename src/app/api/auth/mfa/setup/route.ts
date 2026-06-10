@@ -21,7 +21,6 @@ export async function GET(request: NextRequest) {
     const status = await getMfaStatus(auth.userIdNum);
     return NextResponse.json(status);
   } catch (error) {
-    console.error('Failed to get MFA status:', error);
     return Errors.internal();
   }
 }
@@ -52,7 +51,6 @@ export async function POST(request: NextRequest) {
       step: 'verify',
     });
   } catch (error) {
-    console.error('Failed to setup MFA:', error);
     return Errors.internal();
   }
 }
@@ -81,7 +79,6 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ message: result.message });
   } catch (error) {
-    console.error('Failed to disable MFA:', error);
     return Errors.internal();
   }
 }

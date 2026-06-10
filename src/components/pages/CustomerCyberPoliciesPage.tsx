@@ -101,10 +101,10 @@ export default function CustomerCyberPoliciesPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user?.id) fetchPolicies();
+    if (user?.id) void fetchPolicies();
   }, [user?.id]);
 
-  const fetchPolicies = async () => {
+  async function fetchPolicies() {
     setLoading(true);
     setError(null);
     try {

@@ -144,12 +144,12 @@ export default function CustomerCyberClaimsPage() {
 
   useEffect(() => {
     if (user?.id) {
-      fetchClaims();
-      fetchPolicies();
+      void fetchClaims();
+      void fetchPolicies();
     }
   }, [user?.id]);
 
-  const fetchClaims = async () => {
+  async function fetchClaims() {
     setLoading(true);
     setError(null);
     try {
@@ -166,7 +166,7 @@ export default function CustomerCyberClaimsPage() {
     }
   };
 
-  const fetchPolicies = async () => {
+  async function fetchPolicies() {
     try {
       const endpoint = '/api/customer/cyber/policies';
       const res = await fetchWithAuth(endpoint);

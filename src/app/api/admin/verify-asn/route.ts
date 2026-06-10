@@ -20,7 +20,6 @@ export async function GET(request: NextRequest) {
     const result = await verifyAsn(Number(asn));
     return NextResponse.json(result);
   } catch (error) {
-    console.error('IODA verify error:', error);
     return NextResponse.json({ error: 'Failed to verify ASN with IODA' }, { status: 500 });
   }
 }

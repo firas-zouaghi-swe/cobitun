@@ -105,10 +105,12 @@ export default function CoverageGapAnalyzerPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchGapData();
+    if (user?.customerId) {
+      void fetchGapData();
+    }
   }, [user?.customerId]);
 
-  const fetchGapData = async () => {
+  async function fetchGapData() {
     setError(null);
     try {
       // Determine what coverage the customer has

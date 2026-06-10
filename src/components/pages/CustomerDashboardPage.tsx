@@ -49,10 +49,10 @@ export default function CustomerDashboardPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user?.id) fetchStats();
+    if (user?.id) void fetchStats();
   }, [user?.id]);
 
-  const fetchStats = async () => {
+  async function fetchStats() {
     setLoading(true);
     setError(null);
     try {

@@ -63,7 +63,7 @@ export default function CustomerDraftClaimsPage() {
     }
   }, []);
 
-  useEffect(() => { fetchDraftClaims(); }, [fetchDraftClaims]);
+  useEffect(() => { void fetchDraftClaims(); }, [fetchDraftClaims]);
 
   const confirmDraft = async (claimId: number) => {
     setActionLoading(claimId);

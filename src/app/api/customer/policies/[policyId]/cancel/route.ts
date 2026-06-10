@@ -162,7 +162,6 @@ export async function POST(
       },
     });
   } catch (error) {
-    console.error('Policy cancellation error:', error);
     return NextResponse.json(
       { error: 'An error occurred while cancelling the policy' },
       { status: 500 }
@@ -221,7 +220,6 @@ export async function GET(
       canCancel: policy.status?.statusCode === 'ACTIVE',
     });
   } catch (error) {
-    console.error('Get cancellation error:', error);
     return NextResponse.json(
       { error: 'An error occurred while fetching cancellation details' },
       { status: 500 }

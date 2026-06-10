@@ -64,7 +64,6 @@ export async function GET(request: NextRequest) {
       })),
     });
   } catch (error) {
-    console.error('Failed to fetch customer claims', error);
     return Errors.internal();
   }
 }

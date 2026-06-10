@@ -104,7 +104,7 @@ export async function GET(request: NextRequest) {
       ),
     });
   } catch (error) {
-    console.error('Failed to get document versions:', error);
+    // Ignore version retrieval errors
     return Errors.internal();
   }
 }
@@ -211,7 +211,7 @@ export async function POST(request: NextRequest) {
       },
     }, { status: 201 });
   } catch (error) {
-    console.error('Failed to upload document version:', error);
+    // Ignore version upload errors
     return Errors.internal();
   }
 }

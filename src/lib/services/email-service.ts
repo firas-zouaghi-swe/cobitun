@@ -96,49 +96,27 @@ async function sendSmtpMail(payload: EmailPayload) {
 }
 
 export async function sendMail(payload: EmailPayload) {
-  console.info('[EMAIL] sendMail called', {
-    deliveryMode: DELIVERY_MODE,
-    to: payload.to,
-    subject: payload.subject,
-    from: DEFAULT_FROM,
-  });
-
   const smtpCredentialsInvalid = !SMTP_USER || !SMTP_PASS || SMTP_HAS_PLACEHOLDER_CREDENTIALS;
 
   if (DELIVERY_MODE === 'console') {
-    console.info('[EMAIL] console delivery mode enabled');
-    console.info(JSON.stringify({ from: DEFAULT_FROM, ...payload }, null, 2));
     return;
   }
 
   if (DELIVERY_MODE === 'smtp') {
-    console.info('[EMAIL] SMTP config', {
-      host: SMTP_HOST,
-      port: SMTP_PORT,
-      secure: SMTP_SECURE,
-      userProvided: Boolean(SMTP_USER),
-      from: DEFAULT_FROM,
-      invalidCredentials: smtpCredentialsInvalid,
-    });
-
     if (smtpCredentialsInvalid) {
       const message = 'SMTP_USER and SMTP_PASS are not configured or contain placeholder values.';
       if (process.env.NODE_ENV === 'production') {
         throw new Error(message);
       }
 
-      console.warn('[EMAIL] SMTP credentials invalid. Falling back to console delivery in development mode.');
-      console.info(JSON.stringify({ from: DEFAULT_FROM, ...payload }, null, 2));
       return;
     }
 
     await sendSmtpMail(payload);
-    console.info(`[EMAIL] sent via SMTP from ${DEFAULT_FROM} to ${payload.to}`);
     return;
   }
 
   const savedPath = await writeOutboxFile(payload);
-  console.info(`[EMAIL] local outbox file created: ${savedPath}`);
 }
 
 export async function sendPasswordResetEmail(email: string, token: string) {

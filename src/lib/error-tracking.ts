@@ -43,9 +43,8 @@ export function initErrorTracking(): void {
       // Dynamic import to avoid requiring @sentry/node as dependency
       // If installed, it will be used; otherwise fallback to local tracking
       sentryInitialized = true;
-      console.log('[ErrorTracking] Sentry DSN configured - integration ready');
     } catch {
-      console.warn('[ErrorTracking] Sentry not available, using local error tracking');
+      // Sentry not available, using local error tracking
     }
   }
 }
@@ -63,11 +62,6 @@ export function captureError(event: Omit<ErrorEvent, 'timestamp'>): void {
   errorStore.push(fullEvent);
   if (errorStore.length > MAX_STORED_ERRORS) {
     errorStore.shift();
-  }
-
-  // Log to console in development
-  if (process.env.NODE_ENV === 'development') {
-    console.error(`[${fullEvent.level.toUpperCase()}] ${fullEvent.message}`, fullEvent.extra);
   }
 
   // Check if critical alert threshold is reached
@@ -158,8 +152,6 @@ function checkCriticalAlertThreshold(): void {
  * Trigger a critical error alert
  */
 function triggerCriticalAlert(errorCount: number): void {
-  console.error(`[CRITICAL ALERT] ${errorCount} fatal errors in the last 5 minutes!`);
-
   // In production, this would:
   // - Send email to ops team
   // - Trigger PagerDuty/OpsGenie
@@ -172,10 +164,7 @@ function triggerCriticalAlert(errorCount: number): void {
  */
 function sendToSentry(event: ErrorEvent): void {
   // When @sentry/node is installed, this would use Sentry.captureException
-  // For now, just log that we would send it
-  if (process.env.NODE_ENV === 'development') {
-    console.log('[Sentry] Would send event:', event.message);
-  }
+  // For now, this is a placeholder implementation
 }
 
 /**

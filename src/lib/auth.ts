@@ -25,7 +25,6 @@ export async function verifyPassword(password: string, storedHash: string): Prom
         const a = await import('@node-rs/argon2');
         return await a.verify(storedHash, password);
       } catch (e) {
-        console.error('Argon2 not available to verify argon2 hash');
         return false;
       }
     }
@@ -40,7 +39,6 @@ export async function verifyPassword(password: string, storedHash: string): Prom
     if (bufA.length !== bufB.length) return false;
     return bufA.equals(bufB);
   } catch (err) {
-    console.error('Password verification error', err);
     return false;
   }
 }

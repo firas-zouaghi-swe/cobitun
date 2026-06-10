@@ -20,7 +20,6 @@ export async function GET() {
 
     return NextResponse.json({ policies: enrichedPolicies, categories });
   } catch (error) {
-    console.error('Get available policies error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -42,7 +41,6 @@ export async function POST(request: NextRequest) {
 
     // In development mode skip the email-verified gate to simplify testing.
     if (auth.role !== 'ADMIN' && process.env.NODE_ENV === 'production' && currentUser.emailVerified !== 1) {
-      console.warn('Apply-policy blocked: email not verified', { userId: auth.userId, role: auth.role, emailVerified: currentUser.emailVerified });
       return NextResponse.json({ error: 'Email verification required before applying for a policy' }, { status: 403 });
     }
 
@@ -56,11 +54,9 @@ export async function POST(request: NextRequest) {
     // Legacy: customerId is kept as string for PolicyRecord compatibility
     const customer = await db.customer.findUnique({ where: { id: parseInt(customerId, 10) || 0 } });
     if (!customer) {
-        console.warn('Apply-policy blocked: customer not found', { userId: auth.userId, customerId });
       return NextResponse.json({ error: 'Customer not found' }, { status: 404 });
     }
     if (!(await isOwnerOrAdminAsync(auth, customer.id))) {
-        console.warn('Apply-policy blocked: access denied', { userId: auth.userId, authRole: auth.role, customerId: customer.id });
         return NextResponse.json({ error: 'Access denied' }, { status: 403 });
     }
 
@@ -75,7 +71,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (existingRecord) {
-      console.warn('Apply-policy blocked: already applied', { userId: auth.userId, customerId, policyId });
       return NextResponse.json({ error: 'You have already applied for this policy' }, { status: 400 });
     }
 

@@ -890,7 +890,6 @@ export async function processProvider(providerId: number): Promise<{ triggers: n
   let rawIodaEvents: RawEvent[] = [];
   try {
     const iodaEvents = await fetchRecentForProvider(Number(provider.asn), 720);
-    console.log(`[IODA] ASN ${provider.asn} (${provider.organisationName}): fetched ${iodaEvents.length} events`);
     rawIodaEvents = iodaEvents.map((e) => ({
       startTs: e.startTs,
       endTs: e.endTs,
@@ -900,7 +899,7 @@ export async function processProvider(providerId: number): Promise<{ triggers: n
       score: e.score,
     }));
   } catch (error) {
-    console.error(`IODA fetch failed for ASN ${provider.asn}:`, error);
+    // IODA fetch failed, will use empty events list
   }
 
   // Step 0: Store raw events in DB

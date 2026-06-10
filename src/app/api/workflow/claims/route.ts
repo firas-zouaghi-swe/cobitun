@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getAuthInfo } from '@/lib/services/auth-helper';
+import { getAuthInfo, isAdmin } from '@/lib/services/auth-helper';
 import { Roles, isOwnerOrAdminAsync } from '@/lib/services/authorization';
 import { createTask } from '@/lib/services/workflow-engine';
 import { generateDeclarationOfLoss } from '@/lib/services/pdf-generator';
@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
 
     let claims;
 
-    if (auth.role === Roles.ADMIN) {
+    if (isAdmin(auth)) {
       claims = await db.workflowClaim.findMany({
         where: { isDeleted: 0 },
         include: {
@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ claims });
   } catch (error) {
-    console.error('Error listing workflow claims:', error);
+    // Ignore workflow claims listing errors
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -262,7 +262,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ claim }, { status: 201 });
   } catch (error) {
-    console.error('Error creating workflow claim:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

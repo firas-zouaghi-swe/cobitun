@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchWithAuth } from '@/hooks/use-auth';
 import { usePlaceAutocomplete } from '@/hooks/use-place-autocomplete';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -175,9 +175,6 @@ export default function ApplyParametricPolicyPage() {
   };
 
   // Computed factors
-  const [previewBreakdown, setPreviewBreakdown] = useState<PricingBreakdown | null>(null);
-
-  // Selected provider info
   const selectedProvider = providers.find((p) => String(p.id) === cloudProviderId);
 
   // Current sector, business model, resilience lookups
@@ -199,29 +196,7 @@ export default function ApplyParametricPolicyPage() {
     ? Number(selectedProvider.premiumFactor ?? selectedProvider.slaTier?.basePremiumFactor ?? 1.0)
     : 1.0;
 
-  useEffect(() => {
-    fetchFormData();
-  }, []);
-
-  const fetchFormData = async () => {
-    try {
-      const res = await fetchWithAuth('/api/customer/apply-parametric');
-      const data = await res.json();
-      setProviders((data.providers || []).filter((p: CloudProviderOption) => p.isActive === 1));
-      setSectors(data.sectors || []);
-      setBusinessModels(data.businessModels || []);
-      setTurnoverBands(data.turnoverBands || []);
-      setResilienceOptions(data.resilienceProfiles || []);
-    } catch (error) {
-      console.error('Failed to fetch form data:', error);
-      setError(t('errors.failedToLoad', 'Failed to load form data'));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Calculate preview whenever form values change
-  useEffect(() => {
+  const previewBreakdown = useMemo<PricingBreakdown | null>(() => {
     const turnover = parseFloat(annualTurnover);
     const gm = parseFloat(grossMargin);
     const cd = parseFloat(cloudDependency);
@@ -249,7 +224,6 @@ export default function ApplyParametricPolicyPage() {
       if (turnover < 50000) validationErrors.push(t('customerApplyParametric:step2.validationMinTurnover'));
       if (turnover > 15000000) validationErrors.push(t('customerApplyParametric:step2.validationMaxTurnover'));
 
-      // Determine underwriting decision (simplified client-side preview)
       let underwritingDecision = 'MANUAL_REVIEW';
       let underwritingReason = t('customerApplyParametric:step3.uwReason.fullAnalysis');
       if (premiumRatePct < 0.20 && validationErrors.length === 0) {
@@ -265,7 +239,7 @@ export default function ApplyParametricPolicyPage() {
         underwritingReason = t('customerApplyParametric:step3.uwReason.manualReview', { rate: premiumRatePct.toFixed(4) });
       }
 
-      setPreviewBreakdown({
+      return {
         hourlyRevenue: Math.round(hourlyRevenue * 10000) / 10000,
         grossMargin: gm,
         cloudDependency: cd,
@@ -284,11 +258,49 @@ export default function ApplyParametricPolicyPage() {
         underwritingDecision,
         underwritingReason,
         validationErrors,
-      });
-    } else {
-      setPreviewBreakdown(null);
+      };
     }
-  }, [annualTurnover, grossMargin, cloudDependency, sectorId, businessModelId, resilienceProfileId, selectedSector, selectedBusinessModel, selectedResilience, selectedTurnoverBand, providerFactor, t]);
+
+    return null;
+  }, [annualTurnover, cloudDependency, grossMargin, providerFactor, selectedBusinessModel, selectedResilience, selectedSector, selectedTurnoverBand, t]);
+
+  useEffect(() => {
+    const loadFormData = async () => {
+      try {
+        const res = await fetchWithAuth('/api/customer/apply-parametric');
+        const data = await res.json();
+        setProviders((data.providers || []).filter((p: CloudProviderOption) => p.isActive === 1));
+        setSectors(data.sectors || []);
+        setBusinessModels(data.businessModels || []);
+        setTurnoverBands(data.turnoverBands || []);
+        setResilienceOptions(data.resilienceProfiles || []);
+      } catch (error) {
+        setError(t('errors.failedToLoad', 'Failed to load form data'));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void loadFormData();
+  }, []);
+
+  const fetchFormData = async () => {
+    try {
+      setLoading(true);
+      const res = await fetchWithAuth('/api/customer/apply-parametric');
+      const data = await res.json();
+      setProviders((data.providers || []).filter((p: CloudProviderOption) => p.isActive === 1));
+      setSectors(data.sectors || []);
+      setBusinessModels(data.businessModels || []);
+      setTurnoverBands(data.turnoverBands || []);
+      setResilienceOptions(data.resilienceProfiles || []);
+      setError('');
+    } catch (error) {
+      setError(t('errors.failedToLoad', 'Failed to load form data'));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const canProceed = () => {
     const parseFlexible = (raw?: string) => {
@@ -405,7 +417,6 @@ export default function ApplyParametricPolicyPage() {
         setRegionLocation('');
         setAcceptedTerms(false);
         setCurrentStep(1);
-        setPreviewBreakdown(null);
       } else {
         toast.error(data.error || t('customerApplyParametric:toast.submitFailed'));
       }

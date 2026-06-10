@@ -63,7 +63,6 @@ export async function POST(request: NextRequest) {
 
     // TODO: Integrate with actual payment gateway
     // For now, log the retry attempt for manual processing
-    console.warn(`[PAYMENTS] Payment retry processed for policy ${policyId}. Manual verification required.`);
     const paymentSuccess = false; // Default to false until real gateway integration
 
     if (paymentSuccess) {
@@ -125,7 +124,6 @@ export async function POST(request: NextRequest) {
       }, { status: 402 });
     }
   } catch (error) {
-    console.error('Failed to retry payment', error);
     return Errors.internal();
   }
 }

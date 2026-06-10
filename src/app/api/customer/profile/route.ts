@@ -132,7 +132,7 @@ export async function PUT(request: NextRequest) {
     });
 
     await sendVerificationEmail(updatedUser.email, token).catch((error) => {
-      console.error('Failed to send email verification after profile update', error);
+      // Ignore email verification send errors
     });
   }
 

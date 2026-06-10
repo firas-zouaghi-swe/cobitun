@@ -58,7 +58,6 @@ export async function GET(
       product: policy.product?.productName ?? null,
     });
   } catch (error) {
-    console.error('Failed to check renewal eligibility', error);
     return Errors.internal();
   }
 }
@@ -173,7 +172,6 @@ export async function POST(
       expiryDate: newExpiryDate.toISOString(),
     }, { status: 201 });
   } catch (error) {
-    console.error('Failed to renew policy', error);
     return Errors.internal();
   }
 }

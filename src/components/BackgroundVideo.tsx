@@ -81,7 +81,6 @@ export default function BackgroundVideo({
           })
           .catch((err) => {
             // Autoplay may be blocked; try muted autoplay
-            console.warn('Autoplay blocked, retrying muted:', err.message);
             video.muted = true;
             video.play()
               .then(() => { if (mounted) setIsVideoReady(true); })
@@ -109,7 +108,6 @@ export default function BackgroundVideo({
     };
 
     const onError = () => {
-      console.error('BackgroundVideo: video load error');
       if (mounted) setVideoError(true);
     };
 
@@ -120,8 +118,7 @@ export default function BackgroundVideo({
     // Safety timeout: if video doesn't become ready in 8s, mark as errored
     const safetyTimer = setTimeout(() => {
       if (mounted && !isVideoReady && !videoError) {
-        console.warn('BackgroundVideo: safety timeout — video did not load in time');
-        // Don't set error, just mark as ready so the opacity transition happens
+        // Safety timeout — mark as ready after 8s if not yet loaded
         setIsVideoReady(true);
       }
     }, 8000);
@@ -133,7 +130,7 @@ export default function BackgroundVideo({
       video.removeEventListener('error', onError);
       clearTimeout(safetyTimer);
     };
-  }, [showVideo]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [showVideo]);
 
   // Toggle pause/play for accessibility
   const togglePause = useCallback(() => {

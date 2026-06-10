@@ -88,7 +88,6 @@ export function decrypt(ciphertext: string): string {
     // If decryption fails, the data might be unencrypted (legacy)
     // Return as-is in dev, throw in production
     if (process.env.NODE_ENV !== 'production') {
-      console.warn('Decryption failed, returning raw value:', err);
       return ciphertext;
     }
     throw new Error('Failed to decrypt field value');

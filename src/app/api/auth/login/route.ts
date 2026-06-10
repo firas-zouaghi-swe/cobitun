@@ -8,7 +8,6 @@ import { isMfaRequired } from '@/lib/services/mfa-service';
 export async function POST(request: NextRequest) {
   try {
     if (!process.env.JWT_SECRET) {
-      console.error('JWT_SECRET is not set');
       return new Response(JSON.stringify({ error: 'Server configuration error' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
     const body = await request.json();
@@ -174,7 +173,6 @@ export async function POST(request: NextRequest) {
       { secure: isSecureRequest(request) }
     );
   } catch (error) {
-    console.error('Login error:', error);
     const devMsg = process.env.NODE_ENV === 'production' ? undefined : (error instanceof Error ? error.message : String(error));
     return new Response(JSON.stringify({ error: 'Internal server error', message: devMsg }), {
       status: 500,

@@ -133,7 +133,6 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Analytics failed:', error);
     return Errors.internal();
   }
 }
@@ -181,7 +180,6 @@ export async function POST(request: NextRequest) {
       surveyId: setting.id,
     }, { status: 201 });
   } catch (error) {
-    console.error('Failed to submit survey:', error);
     return Errors.internal();
   }
 }

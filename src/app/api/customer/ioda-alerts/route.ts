@@ -160,7 +160,7 @@ export async function GET(request: NextRequest) {
               }));
             }
           } catch (err) {
-            console.error(`Failed to fetch alerts for AS${provider.asn}:`, err);
+            // Ignore fetch errors for individual AS numbers
             return [];
           }
         })
@@ -225,7 +225,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Customer IODA alerts API error:', error);
+    // Ignore IODA alerts API errors
     return NextResponse.json(
       { error: 'Failed to fetch IODA alerts' },
       { status: 500 }

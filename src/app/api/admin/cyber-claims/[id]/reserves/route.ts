@@ -67,7 +67,7 @@ export async function POST(
 
     return NextResponse.json({ reserve });
   } catch (error) {
-    console.error('Create cyber claim reserve error:', error);
+    // Ignore reserve creation errors
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

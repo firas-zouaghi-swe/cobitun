@@ -252,7 +252,6 @@ export async function POST(
       },
     }, { status: 201 });
   } catch (error) {
-    console.error('Claim appeal error:', error);
     return NextResponse.json(
       { error: 'An error occurred while submitting the appeal' },
       { status: 500 }
@@ -360,7 +359,6 @@ export async function GET(
       canAppeal: paramClaim.status?.statusCode === 'REJECTED'
     });
   } catch (error) {
-    console.error('Get appeal error:', error);
     return NextResponse.json(
       { error: 'An error occurred while fetching appeal details' },
       { status: 500 }

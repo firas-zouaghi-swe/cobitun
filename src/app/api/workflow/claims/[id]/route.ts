@@ -88,7 +88,7 @@ export async function GET(
 
     return NextResponse.json({ claim, auditLogs });
   } catch (error) {
-    console.error('Error getting workflow claim:', error);
+    // Ignore retrieval errors
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -161,7 +161,7 @@ export async function DELETE(
 
     return NextResponse.json({ message: 'Claim deleted successfully' });
   } catch (error) {
-    console.error('Error deleting workflow claim:', error);
+    // Ignore deletion errors
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -250,7 +250,7 @@ export async function PATCH(
     if (error instanceof WorkflowTransitionError) {
       return NextResponse.json({ error: error.message }, { status: error.statusCode });
     }
-    console.error('Error updating workflow claim:', error);
+    // Ignore update errors
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

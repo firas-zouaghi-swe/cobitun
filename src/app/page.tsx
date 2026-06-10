@@ -899,7 +899,7 @@ export default function COBITUNApp() {
         credentials: 'include',
       });
     } catch (error) {
-      console.error('Logout failed:', error);
+      // Logout request failed, but proceed with client-side logout
     } finally {
       logout();
     }
