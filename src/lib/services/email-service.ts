@@ -71,6 +71,12 @@ async function sendSmtpMail(payload: EmailPayload) {
     throw new Error('SMTP_USER and SMTP_PASS must be configured for SMTP email delivery and must not be placeholder values');
   }
 
+  const MAX_RETRIES = Number(process.env.SMTP_MAX_RETRIES || 2);
+  const BASE_BACKOFF_MS = Number(process.env.SMTP_RETRY_BASE_MS || 1000);
+  const connectionTimeout = Number(process.env.SMTP_CONNECTION_TIMEOUT_MS || 10000);
+  const greetingTimeout = Number(process.env.SMTP_GREETING_TIMEOUT_MS || 5000);
+  const socketTimeout = Number(process.env.SMTP_SOCKET_TIMEOUT_MS || 20000);
+
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: SMTP_PORT,
@@ -80,19 +86,42 @@ async function sendSmtpMail(payload: EmailPayload) {
       pass: SMTP_PASS,
     },
     tls: {
-      rejectUnauthorized: true,
+      rejectUnauthorized: process.env.SMTP_TLS_REJECT_UNAUTHORIZED !== 'false',
     },
+    connectionTimeout,
+    greetingTimeout,
+    socketTimeout,
   });
 
-  await transporter.verify();
+  function sleep(ms: number) {
+    return new Promise((res) => setTimeout(res, ms));
+  }
 
-  await transporter.sendMail({
-    from: DEFAULT_FROM,
-    to: payload.to,
-    subject: payload.subject,
-    text: payload.text,
-    html: payload.html,
-  });
+  let lastErr: any = null;
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      if (attempt > 0) console.warn(`[email-service] SMTP retry attempt ${attempt} for ${payload.to}`);
+      await transporter.verify();
+      await transporter.sendMail({
+        from: DEFAULT_FROM,
+        to: payload.to,
+        subject: payload.subject,
+        text: payload.text,
+        html: payload.html,
+      });
+      return;
+    } catch (err) {
+      lastErr = err;
+      const backoff = BASE_BACKOFF_MS * Math.pow(2, attempt);
+      console.warn(`[email-service] SMTP attempt ${attempt} failed:`, err && (err as any).code ? `${(err as any).code}` : err);
+      if (attempt < MAX_RETRIES) {
+        await sleep(backoff);
+        continue;
+      }
+      // all retries exhausted
+      throw lastErr;
+    }
+  }
 }
 
 export async function sendMail(payload: EmailPayload) {
