@@ -23,6 +23,7 @@ const DELIVERY_MODE = (process.env.EMAIL_DELIVERY_MODE || 'file').toLowerCase();
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.office365.com';
 const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_SECURE = process.env.SMTP_SECURE === 'true';
+const SMTP_FALLBACK_ON_FAILURE = process.env.SMTP_FALLBACK_TO_OUTBOX_ON_FAILURE === 'true';
 const SMTP_HAS_PLACEHOLDER_CREDENTIALS =
   SMTP_USER_RAW === 'your-smtp-user@example.com' ||
   SMTP_PASS_RAW === 'your-smtp-password';
@@ -141,8 +142,17 @@ export async function sendMail(payload: EmailPayload) {
       return;
     }
 
-    await sendSmtpMail(payload);
-    return;
+    try {
+      await sendSmtpMail(payload);
+      return;
+    } catch (error) {
+      if (SMTP_FALLBACK_ON_FAILURE) {
+        const savedPath = await writeOutboxFile(payload);
+        console.warn('[email-service] SMTP failed, falling back to local outbox file:', savedPath, error);
+        return;
+      }
+      throw error;
+    }
   }
 
   const savedPath = await writeOutboxFile(payload);
