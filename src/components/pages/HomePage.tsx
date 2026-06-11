@@ -754,7 +754,7 @@ export default function HomePage() {
               {/* Timeline with connecting dots */}
               <div className="relative z-10">
                 {/* Horizontal connecting line (desktop) */}
-                <div className="hidden md:block absolute top-[5px] left-8 right-8 h-[2px] bg-gradient-to-r from-[#00D4FF]/20 via-[#E5693A]/30 to-[#00D4FF]/20" />
+                <div className="hidden md:block absolute top-5 left-8 right-8 h-[2px] bg-gradient-to-r from-[#00D4FF]/20 via-[#E5693A]/30 to-[#00D4FF]/20" />
 
                 <div className="flex flex-wrap md:flex-nowrap items-start justify-center gap-4 md:gap-0">
                   {automationSteps.map((step, idx) => (

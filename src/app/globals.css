@@ -316,6 +316,88 @@
   background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
 }
 
+.gradient-tunis-rainbow {
+  background: linear-gradient(135deg, #2E5A9D 0%, #4A7EC4 25%, #E5693A 50%, #F08B65 75%, #2E5A9D 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.gradient-tunis-blue-glow {
+  background: linear-gradient(135deg, #2E5A9D 0%, #4A7EC4 100%);
+  box-shadow: 0 0 30px rgba(46, 90, 157, 0.4);
+}
+
+.gradient-tunis-orange-glow {
+  background: linear-gradient(135deg, #E5693A 0%, #F08B65 100%);
+  box-shadow: 0 0 30px rgba(229, 105, 58, 0.4);
+}
+
+.gradient-tunis-card {
+  background: linear-gradient(135deg, rgba(46, 90, 157, 0.1) 0%, rgba(229, 105, 58, 0.1) 100%);
+}
+
+.gradient-tunis-dark {
+  background: linear-gradient(135deg, #0A1628 0%, #1A1A2E 50%, #0F1729 100%);
+}
+
+.gradient-tunis-dark-glass {
+  background: linear-gradient(135deg, rgba(10, 22, 40, 0.8) 0%, rgba(26, 26, 46, 0.8) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.gradient-tunis-light {
+  background: linear-gradient(135deg, #E8EFF8 0%, #F8F8FA 100%);
+}
+
+.gradient-tunis-grid {
+  background-image: 
+    linear-gradient(rgba(46, 90, 157, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 90, 157, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.gradient-tunis-grid-dark {
+  background-image: 
+    linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.gradient-tunis-text {
+  background: linear-gradient(135deg, #2E5A9D, #E5693A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-tunis-text-blue {
+  background: linear-gradient(135deg, #2E5A9D, #4A7EC4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-tunis-text-orange {
+  background: linear-gradient(135deg, #E5693A, #F08B65);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-tunis-border {
+  background: linear-gradient(135deg, #2E5A9D, #E5693A);
+  padding: 1px;
+  border-radius: 4px;
+}
+
+.gradient-tunis-border-glow {
+  background: linear-gradient(135deg, #2E5A9D, #E5693A);
+  padding: 1px;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(46, 90, 157, 0.3);
+}
+
 /* =================================================================
    TUNIS RE BUTTON STYLES
    ================================================================= */
@@ -330,11 +412,33 @@
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(229, 105, 58, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.btn-tunis-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 .btn-tunis-primary:hover {
   background: var(--tunis-orange-dark);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(229, 105, 58, 0.4);
+}
+.btn-tunis-primary:hover::before {
+  opacity: 1;
+}
+.btn-tunis-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(229, 105, 58, 0.3);
 }
 
 .btn-tunis-secondary {
@@ -347,10 +451,108 @@
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 .btn-tunis-secondary:hover {
   background: var(--tunis-blue-pale);
+  border-color: var(--tunis-blue-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(46, 90, 157, 0.2);
+}
+.btn-tunis-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-tunis-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--tunis-blue);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 10px 22px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.btn-tunis-glass:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.btn-tunis-glow {
+  background: var(--tunis-orange);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(229, 105, 58, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.btn-tunis-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.btn-tunis-glow:hover {
+  background: var(--tunis-orange-dark);
+  box-shadow: 0 0 30px rgba(229, 105, 58, 0.5);
+}
+.btn-tunis-glow:hover::before {
+  opacity: 1;
+}
+
+.btn-tunis-gradient {
+  background: linear-gradient(135deg, var(--tunis-blue), var(--tunis-orange));
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(46, 90, 157, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.btn-tunis-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.btn-tunis-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(46, 90, 157, 0.4);
+}
+.btn-tunis-gradient:hover::before {
+  opacity: 1;
 }
 
 /* =================================================================
@@ -513,6 +715,66 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-panel-dark {
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-border {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+.glass-border-glow {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 20px rgba(0, 212, 255, 0.1);
+}
+
+.glass-border-rainbow {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), 0 0 60px rgba(229, 105, 58, 0.1);
 }
 
 /* =================================================================
@@ -881,9 +1143,19 @@ html.dark {
   50% { background-position: 100% 50%; }
 }
 
+@keyframes gradient-shift-slow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 @keyframes glow-pulse-soft {
   0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.15); }
   50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.3); }
+}
+
+@keyframes glow-pulse-intense {
+  0%, 100% { box-shadow: 0 0 30px rgba(229, 105, 58, 0.2); }
+  50% { box-shadow: 0 0 60px rgba(229, 105, 58, 0.4); }
 }
 
 @keyframes border-glow {
@@ -891,9 +1163,22 @@ html.dark {
   50% { border-color: rgba(229, 105, 58, 0.3); }
 }
 
+@keyframes border-glow-rainbow {
+  0% { border-color: rgba(0, 212, 255, 0.3); }
+  25% { border-color: rgba(74, 126, 196, 0.3); }
+  50% { border-color: rgba(229, 105, 58, 0.3); }
+  75% { border-color: rgba(240, 139, 101, 0.3); }
+  100% { border-color: rgba(0, 212, 255, 0.3); }
+}
+
 @keyframes float-slow {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes pulse-ring-quantum {
@@ -921,21 +1206,90 @@ html.dark {
   100% { transform: translateX(100%); }
 }
 
+@keyframes shimmer-slide-slow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes morph {
+  0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+  50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
+}
+
+@keyframes hologram {
+  0% { opacity: 0.2; transform: scale(1) perspective(500px) rotateX(0deg); }
+  50% { opacity: 0.4; transform: scale(1.02) perspective(500px) rotateX(5deg); }
+  100% { opacity: 0.2; transform: scale(1) perspective(500px) rotateX(0deg); }
+}
+
+@keyframes hologram-static {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(2px, 2px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(-2px, 2px); }
+}
+
+@keyframes matrix-rain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes quantum-shift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes quantum-shift-slow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
 .animate-gradient-shift {
   background-size: 200% 200%;
   animation: gradient-shift 3s ease infinite;
+}
+
+.animate-gradient-shift-slow {
+  background-size: 200% 200%;
+  animation: gradient-shift-slow 8s ease infinite;
 }
 
 .animate-glow-pulse-soft {
   animation: glow-pulse-soft 3s ease-in-out infinite;
 }
 
+.animate-glow-pulse-intense {
+  animation: glow-pulse-intense 2s ease-in-out infinite;
+}
+
 .animate-border-glow {
   animation: border-glow 4s ease-in-out infinite;
 }
 
+.animate-border-glow-rainbow {
+  animation: border-glow-rainbow 6s ease-in-out infinite;
+}
+
 .animate-float-slow {
   animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+  animation: float-gentle 8s ease-in-out infinite;
 }
 
 .animate-pulse-ring {
@@ -952,4 +1306,40 @@ html.dark {
 
 .animate-shimmer-slide {
   animation: shimmer-slide 2s ease-in-out infinite;
+}
+
+.animate-shimmer-slide-slow {
+  animation: shimmer-slide-slow 4s ease-in-out infinite;
+}
+
+.animate-morph {
+  animation: morph 8s ease-in-out infinite;
+}
+
+.animate-hologram {
+  animation: hologram 4s ease-in-out infinite;
+}
+
+.animate-hologram-static {
+  animation: hologram-static 3s ease-in-out infinite;
+}
+
+.animate-glitch {
+  animation: glitch 3s infinite;
+}
+
+.animate-glitch-2 {
+  animation: glitch-2 3s infinite;
+}
+
+.animate-matrix-rain {
+  animation: matrix-rain 5s linear infinite;
+}
+
+.animate-quantum-shift {
+  animation: quantum-shift 10s linear infinite;
+}
+
+.animate-quantum-shift-slow {
+  animation: quantum-shift-slow 20s linear infinite;
 }
