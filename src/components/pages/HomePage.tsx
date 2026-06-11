@@ -23,18 +23,20 @@ import { toast } from 'sonner';
    TYPES
    ================================================================= */
 
-interface ProviderFromDB {
-  id: string;
+interface HomeProvider {
+  id?: string;
   asn: number;
-  organisationName: string;
-  iodaName: string;
-  ipCount?: number | null;
-  slaTier: string;
-  mttrHours: number;
-  ancsCertified: boolean;
-  governmental: boolean;
-  isActive: boolean;
-  _count?: { outageEvents: number; policies: number };
+  name: string;
+  organisationName?: string;
+  iodaName?: string | null;
+  ipCount: number;
+  tags: string[];
+  logo?: string;
+  slaTier?: {
+    tierCode: string;
+    tierName: string;
+    mttrHours: number;
+  };
 }
 
 interface OutageEventPreview {
@@ -44,13 +46,6 @@ interface OutageEventPreview {
   datasource: string;
   score: number | null;
   cloudProvider: { organisationName: string; asn: number; slaTier: string };
-}
-
-interface IodaEntityStats {
-  code: string;
-  asn?: number;
-  name: string;
-  ipCount: number;
 }
 
 interface StaticProvider {
@@ -164,8 +159,8 @@ export default function HomePage() {
 
   /* ── Data fetching state ── */
   const [providerCount, setProviderCount] = useState<number>(staticProviders.length);
+  const [providers, setProviders] = useState<HomeProvider[]>([]);
   const [recentOutages, setRecentOutages] = useState<OutageEventPreview[]>([]);
-  const [iodaEntities, setIodaEntities] = useState<IodaEntityStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [totalOutages, setTotalOutages] = useState(0);
@@ -226,22 +221,19 @@ export default function HomePage() {
       if (summaryRes.ok) {
         const summaryData = await summaryRes.json();
         setProviderCount(summaryData.providerCount ?? staticProviders.length);
+        setProviders(summaryData.providers?.length ? summaryData.providers : staticProviders);
         setTotalOutages(summaryData.unprocessedOutages ?? 0);
         setTotalPayouts(Number(summaryData.totalPayouts) || 0);
         setTotalClaimsForms(summaryData.totalClaims ?? 0);
       } else {
         console.warn('Homepage summary endpoint unavailable:', summaryRes.status);
         setProviderCount(staticProviders.length);
-      }
-
-      const iodaRes = await fetch('/api/ioda/entities?country=TN');
-      if (iodaRes.ok) {
-        const iodaData = await iodaRes.json();
-        setIodaEntities(iodaData.entities || []);
+        setProviders(staticProviders);
       }
     } catch (err) {
       console.error('Failed to fetch homepage data:', err);
       setProviderCount(staticProviders.length);
+      setProviders(staticProviders);
     } finally {
       setLoading(false);
     }
@@ -255,12 +247,14 @@ export default function HomePage() {
   }, []);
 
   const nextSlide = useCallback(() => {
-    setActiveSlide(prev => (prev + 1) % staticProviders.length);
-  }, []);
+    const count = providers.length > 0 ? providers.length : staticProviders.length;
+    setActiveSlide(prev => (prev + 1) % count);
+  }, [providers.length]);
 
   const prevSlide = useCallback(() => {
-    setActiveSlide(prev => (prev - 1 + staticProviders.length) % staticProviders.length);
-  }, []);
+    const count = providers.length > 0 ? providers.length : staticProviders.length;
+    setActiveSlide(prev => (prev - 1 + count) % count);
+  }, [providers.length]);
 
   /* ── Auto-play logic ── */
   useEffect(() => {
@@ -352,8 +346,17 @@ export default function HomePage() {
     return count.toString();
   };
 
-  /* ── Total IPs monitored ── */
-  const totalIps = staticProviders.reduce((sum, p) => sum + p.ipCount, 0);
+  const displayProviders = providers.length > 0 ? providers : staticProviders;
+  const averageIps = displayProviders.length > 0
+    ? Math.round(displayProviders.reduce((sum, p) => sum + p.ipCount, 0) / displayProviders.length)
+    : 0;
+
+  useEffect(() => {
+    const count = displayProviders.length;
+    if (count > 0 && activeSlide >= count) {
+      setActiveSlide(activeSlide % count);
+    }
+  }, [displayProviders.length, activeSlide]);
 
   /* ================================================================
      RENDER
@@ -555,22 +558,22 @@ export default function HomePage() {
                   {/* Summary bar */}
                   <div className="grid grid-cols-3 gap-1.5 mb-2">
                     <div className="rounded-lg bg-[#00D4FF]/[0.07] border border-[#00D4FF]/10 px-2.5 py-1.5 text-center">
-                      <div className="text-sm font-bold text-[#00D4FF]">{staticProviders.length}</div>
+                      <div className="text-sm font-bold text-[#00D4FF]">{loading ? '—' : String(providerCount)}</div>
                       <div className="text-[9px] text-white/40">{t('home:hero.providers')}</div>
                     </div>
                     <div className="rounded-lg bg-emerald-500/[0.07] border border-emerald-500/10 px-2.5 py-1.5 text-center">
-                      <div className="text-sm font-bold text-emerald-400">{formatIpCount(totalIps)}</div>
-                      <div className="text-[9px] text-white/40">{t('home:hero.totalIps')}</div>
+                      <div className="text-sm font-bold text-emerald-400">{formatIpCount(averageIps)}</div>
+                      <div className="text-[9px] text-white/40">{t('home:hero.avgIps', 'Avg IPs')}</div>
                     </div>
                     <div className="rounded-lg bg-[#E5693A]/[0.07] border border-[#E5693A]/10 px-2.5 py-1.5 text-center">
-                      <div className="text-sm font-bold text-[#E5693A]">{staticProviders.filter(p => p.tags.includes('ANCS')).length}</div>
+                      <div className="text-sm font-bold text-[#E5693A]">{displayProviders.filter(p => p.tags.includes('ANCS')).length}</div>
                       <div className="text-[9px] text-white/40">{t('home:hero.ancsCert')}</div>
                     </div>
                   </div>
 
                   {/* Provider status rows — show first 10 providers, compact layout */}
                   <div className="space-y-px">
-                    {staticProviders.slice(0, 10).map((p, idx) => (
+                    {displayProviders.slice(0, 10).map((p, idx) => (
                       <div key={p.asn} className="flex items-center justify-between bg-white/[0.03] rounded px-2 py-[3px] hover:bg-white/[0.06] transition-colors">
                         <div className="flex items-center gap-1.5 min-w-0">
                           <span className="w-1 h-1 rounded-full shrink-0 bg-emerald-400" />
@@ -596,7 +599,7 @@ export default function HomePage() {
 
                   {/* Footer with remaining count + all online status */}
                   <div className="mt-1 pt-1 border-t border-white/[0.06] flex items-center justify-between">
-                    <span className="text-[9px] text-white/30">+{staticProviders.length - 10} {t('home:hero.moreProviders', 'more')}</span>
+                    <span className="text-[9px] text-white/30">+{Math.max(displayProviders.length - 10, 0)} {t('home:hero.moreProviders', 'more')}</span>
                     <span className="text-[9px] font-semibold text-emerald-400 flex items-center gap-1">
                       <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
                       {t('home:hero.allOnline', 'All Online')}
@@ -814,11 +817,11 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">{t('home:providers.sectionTitle')}</h2>
             <p className="text-white/50 max-w-2xl mx-auto">{t('home:providers.sectionSubtitle')}</p>
 
-            {/* Total IPs Counter */}
+            {/* Average IPs Counter */}
             <div className="mt-6 inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/[0.04] border border-white/[0.06]">
               <Globe className="h-4 w-4 text-[#00D4FF]" />
-              <span className="text-sm text-white/50">{t('home:providers.sectionSubtitle').split(' ').slice(0, 2).join(' ')}:</span>
-              <span className="text-lg font-bold text-[#00D4FF]">{formatIpCount(totalIps)}</span>
+              <span className="text-sm text-white/50">{t('home:hero.avgIps', 'Avg IPs')}:</span>
+              <span className="text-lg font-bold text-[#00D4FF]">{formatIpCount(averageIps)}</span>
               <span className="text-sm text-white/50">{t('common:ips', 'IPs')}</span>
             </div>
           </motion.div>
@@ -839,10 +842,10 @@ export default function HomePage() {
 
               {/* Slider content */}
               <div className="relative z-10 flex items-center justify-center px-4 py-8 md:py-12" style={{ minHeight: '320px' }}>
-                {staticProviders.map((provider, index) => {
+                {displayProviders.map((provider, index) => {
                   let position = index - activeSlide;
-                  if (position > staticProviders.length / 2) position -= staticProviders.length;
-                  if (position < -staticProviders.length / 2) position += staticProviders.length;
+                  if (position > displayProviders.length / 2) position -= displayProviders.length;
+                  if (position < -displayProviders.length / 2) position += displayProviders.length;
 
                   const isNear = Math.abs(position) <= 2;
                   if (!isNear) return null;
@@ -892,8 +895,8 @@ export default function HomePage() {
                         <div className="relative z-10 p-6 md:p-7">
                           {/* Provider Logo + Name */}
                           <div className="flex items-center gap-4 mb-5">
-                            <div className={`w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center shrink-0 transition-all duration-300 ${
-                              isCenter ? 'bg-white/10 shadow-md' : 'bg-white/5'
+                            <div className={`w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center shrink-0 transition-all duration-300 bg-white shadow-sm ${
+                              isCenter ? 'shadow-md' : 'shadow-none'
                             }`}>
                               {!imgErrors[provider.name] ? (
                                 <img
@@ -903,8 +906,8 @@ export default function HomePage() {
                                   onError={() => handleImgError(provider.name)}
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center rounded-xl" style={{ background: 'linear-gradient(135deg, #00D4FF/10, #0F2847)' }}>
-                                  <span className="text-sm font-bold text-[#00D4FF]">{getInitials(provider.name)}</span>
+                                <div className="w-full h-full flex items-center justify-center rounded-xl bg-white">
+                                  <span className="text-sm font-bold text-[#0F172A]">{getInitials(provider.name)}</span>
                                 </div>
                               )}
                             </div>
@@ -1008,7 +1011,7 @@ export default function HomePage() {
             </button>
 
             <div className="flex items-center gap-1.5">
-              {staticProviders.map((_, index) => (
+              {displayProviders.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => { goToSlide(index); setIsAutoPlaying(false); }}
@@ -1025,7 +1028,7 @@ export default function HomePage() {
             <div className="text-xs font-mono text-white/40 ms-2">
               <span className="text-[#00D4FF] font-bold">{String(activeSlide + 1).padStart(2, '0')}</span>
               <span className="mx-0.5">/</span>
-              <span>{String(staticProviders.length).padStart(2, '0')}</span>
+              <span>{String(displayProviders.length).padStart(2, '0')}</span>
             </div>
           </div>
 
