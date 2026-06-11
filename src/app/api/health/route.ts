@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getMissingEnv } from '@/lib/env-check';
 
 interface HealthCheckResult {
   status: 'ok' | 'degraded' | 'down';
@@ -84,7 +85,13 @@ async function checkIODAApi(): Promise<HealthCheckResult> {
 }
 
 export async function GET() {
+  const requiredEnv = ['JWT_SECRET'];
+  const missingEnv = getMissingEnv(requiredEnv);
+
   const checks = {
+    environment: missingEnv.length > 0
+      ? { status: 'down', details: { missingEnv } }
+      : { status: 'ok' as const },
     database: await checkDatabase(),
     redis: await checkRedis(),
     ioda: await checkIODAApi(),
@@ -95,13 +102,13 @@ export async function GET() {
   let overallStatus: 'ok' | 'degraded' | 'down' = 'ok';
 
   if (statuses.some((s) => s === 'down')) {
-    // If database is down, overall is down; otherwise degraded
-    overallStatus = checks.database.status === 'down' ? 'down' : 'degraded';
+    // If database or environment is down, overall is down; otherwise degraded
+    overallStatus = checks.database.status === 'down' || checks.environment.status === 'down' ? 'down' : 'degraded';
   } else if (statuses.some((s) => s === 'degraded')) {
     overallStatus = 'degraded';
   }
 
-  const statusCode = overallStatus === 'down' ? 503 : overallStatus === 'degraded' ? 200 : 200;
+  const statusCode = overallStatus === 'down' ? 503 : 200;
 
   return NextResponse.json(
     {

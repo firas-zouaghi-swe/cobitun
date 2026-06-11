@@ -66,6 +66,11 @@ Use the second section in Render Environment.
 
 **Important:** replace the placeholder secrets with your real values.
 
+### Health check endpoint
+After deployment, use `/api/health` as a Render health check or monitoring endpoint.
+- The route reports missing required environment variables such as `JWT_SECRET`.
+- If `JWT_SECRET` is not set, the endpoint returns `503` with `environment.status: down`.
+
 ## 6. Deploy and verify
 - Wait for Render to finish building and start the service.
 - Visit the `.onrender.com` URL from Render.

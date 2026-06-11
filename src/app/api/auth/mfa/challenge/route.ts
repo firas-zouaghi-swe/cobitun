@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { sendMfaOtp, isMfaRequired } from '@/lib/services/mfa-service';
 import { logAction } from '@/lib/services/audit-service';
 import { createHmac } from 'crypto';
+import { getMissingEnv } from '@/lib/env-check';
 
 const challengeSchema = z.object({
   userId: z.preprocess((value) => {
@@ -28,12 +29,22 @@ const challengeSchema = z.object({
 
 // Verify pre-auth token (HMAC of userId proving password was verified)
 function verifyPreAuthToken(userId: number, token: string): boolean {
-  if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET environment variable is required');
-  const secret = process.env.JWT_SECRET!;
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    // Missing secret — cannot verify token. Return false so the caller
+    // responds with a 401 instead of crashing with a 500.
+    return false;
+  }
+
   const expected = createHmac('sha256', secret).update(`mfa-pre-auth:${userId}`).digest('hex');
-  const tokenBuf = Buffer.from(token, 'utf8');
-  const expectedBuf = Buffer.from(expected, 'utf8');
-  return tokenBuf.length === expectedBuf.length && tokenBuf.equals(expectedBuf);
+  try {
+    const tokenBuf = Buffer.from(token, 'utf8');
+    const expectedBuf = Buffer.from(expected, 'utf8');
+    if (tokenBuf.length !== expectedBuf.length) return false;
+    return tokenBuf.equals(expectedBuf);
+  } catch (err) {
+    return false;
+  }
 }
 
 function resolvePreAuthToken(request: NextRequest, bodyToken?: string): string | null {
@@ -45,6 +56,19 @@ function resolvePreAuthToken(request: NextRequest, bodyToken?: string): string |
 }
 
 export async function POST(request: NextRequest) {
+  // Fast-fail when critical environment variables are missing. This provides
+  // a clear, actionable error instead of allowing a downstream exception
+  // to surface as a generic 500.
+  const missing = getMissingEnv(['JWT_SECRET']);
+  if (missing.length) {
+    return errorResponse(
+      'Server misconfiguration: missing environment variables',
+      'MISSING_ENV',
+      500,
+      missing.map((m) => ({ field: m, message: 'Missing required environment variable', code: 'MISSING_ENV' }))
+    );
+  }
+
   const result = await validateRequestBody(request, challengeSchema, {
     skipFields: ['password', 'passwordHash', 'passwordSalt', 'tokenHash', 'refreshTokenHash', 'preAuthToken'],
     sanitize: false, // Disable sanitization — preAuthToken is a hex HMAC that can trigger false-positive SQL/XSS detection
