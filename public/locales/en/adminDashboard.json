@@ -25,6 +25,15 @@
     "totalEvents": "{{count}} total events",
     "claimsSub": "{{paid}} paid · {{disputed}} disputed"
   },
+  "fraudDetection": {
+    "sectionTitle": "Fraud Detection",
+    "totalChecked": "Total Checked",
+    "fakeDetected": "Fake Detected",
+    "needsReview": "Needs Review",
+    "avgRiskScore": "Avg Risk Score",
+    "suspiciousIps": "Suspicious IPs",
+    "viewDetails": "View Details"
+  },
   "finance": {
     "totalPremiums": "Total Premiums Collected",
     "totalPayouts": "Total Payouts",

@@ -25,6 +25,15 @@
     "totalEvents": "{{count}} événements au total",
     "claimsSub": "{{paid}} payés · {{disputed}} contestés"
   },
+  "fraudDetection": {
+    "sectionTitle": "Détection de la fraude",
+    "totalChecked": "Total vérifié",
+    "fakeDetected": "Fraude détectée",
+    "needsReview": "Nécessite une revue",
+    "avgRiskScore": "Score de risque moyen",
+    "suspiciousIps": "IPs suspectes",
+    "viewDetails": "Voir les détails"
+  },
   "finance": {
     "totalPremiums": "Total Primes Collectées",
     "totalPayouts": "Total Indemnités",

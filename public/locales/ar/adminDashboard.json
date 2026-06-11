@@ -25,6 +25,15 @@
     "totalEvents": "{{count}} إجمالي الأحداث",
     "claimsSub": "{{paid}} مدفوعة · {{disputed}} متنازع عليها"
   },
+  "fraudDetection": {
+    "sectionTitle": "كشف الاحتيال",
+    "totalChecked": "إجمالي المفحوص",
+    "fakeDetected": "تم اكتشاف احتيال",
+    "needsReview": "يتطلب مراجعة",
+    "avgRiskScore": "متوسط درجة المخاطر",
+    "suspiciousIps": "عناوين IP المشبوهة",
+    "viewDetails": "عرض التفاصيل"
+  },
   "finance": {
     "totalPremiums": "إجمالي الأقساط المحصّلة",
     "totalPayouts": "إجمالي التعويضات",
