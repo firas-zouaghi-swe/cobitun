@@ -17,17 +17,7 @@ const OTP_EXPIRY_MINUTES = Number(process.env.MFA_OTP_EXPIRY_MINUTES && !Number.
 const OTP_RATE_LIMIT_SECONDS = 30;
 const OTP_MAX_ATTEMPTS_PER_HOUR = 5;
 const OTP_MAX_VERIFY_ATTEMPTS = 3;
-
-interface OtpRecord {
-  code: string;
-  createdAt: Date;
-  expiresAt: Date;
-  verified: boolean;
-  verifyAttempts: number;
-}
-
-// In-memory OTP store (production would use Redis or DB table)
-const otpStore: Map<number, { otps: OtpRecord[]; lastSentAt: Date | null }> = new Map();
+const prisma: any = db;
 
 /**
  * Generate a random 6-digit OTP code
@@ -40,13 +30,22 @@ function generateOtpCode(): string {
 /**
  * Check rate limiting for OTP requests
  */
-function checkRateLimit(userId: number): { allowed: boolean; reason?: string } {
-  const record = otpStore.get(userId);
-  if (!record) return { allowed: true };
+async function checkRateLimit(userId: number): Promise<{ allowed: boolean; reason?: string }> {
+  const now = new Date();
+  const cooldownStart = new Date(now.getTime() - OTP_RATE_LIMIT_SECONDS * 1000);
+  const recentOtps = await prisma.mfaOtp.findMany({
+    where: {
+      userId,
+      createdAt: {
+        gte: cooldownStart,
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 1,
+  });
 
-  // Check 30-second cooldown
-  if (record.lastSentAt) {
-    const secondsSinceLast = (Date.now() - record.lastSentAt.getTime()) / 1000;
+  if (recentOtps.length > 0) {
+    const secondsSinceLast = (now.getTime() - recentOtps[0].createdAt.getTime()) / 1000;
     if (secondsSinceLast < OTP_RATE_LIMIT_SECONDS) {
       return {
         allowed: false,
@@ -55,10 +54,17 @@ function checkRateLimit(userId: number): { allowed: boolean; reason?: string } {
     }
   }
 
-  // Check hourly limit
-  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-  const recentOtps = record.otps.filter((o) => o.createdAt >= oneHourAgo);
-  if (recentOtps.length >= OTP_MAX_ATTEMPTS_PER_HOUR) {
+  const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+  const count = await prisma.mfaOtp.count({
+    where: {
+      userId,
+      createdAt: {
+        gte: oneHourAgo,
+      },
+    },
+  });
+
+  if (count >= OTP_MAX_ATTEMPTS_PER_HOUR) {
     return {
       allowed: false,
       reason: 'Maximum OTP requests reached for this hour. Please try again later.',
@@ -68,39 +74,50 @@ function checkRateLimit(userId: number): { allowed: boolean; reason?: string } {
   return { allowed: true };
 }
 
+function hashOtp(code: string): string {
+  return crypto.createHash('sha256').update(code).digest('hex');
+}
+
+function isOtpMatch(storedHash: string, code: string): boolean {
+  const codeHash = hashOtp(code);
+  const bufA = Buffer.from(storedHash, 'utf8');
+  const bufB = Buffer.from(codeHash, 'utf8');
+  if (bufA.length !== bufB.length) return false;
+  try {
+    return crypto.timingSafeEqual(bufA, bufB);
+  } catch {
+    return false;
+  }
+}
+
+function getExpiresAt(): Date {
+  return new Date(Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000);
+}
+
 /**
  * Send MFA OTP code to user's email
  */
 export async function sendMfaOtp(userId: number, email: string): Promise<{ success: boolean; message: string; expiresAt?: Date; errorCode?: string }> {
   // Check rate limit
-  const rateCheck = checkRateLimit(userId);
+  const rateCheck = await checkRateLimit(userId);
   if (!rateCheck.allowed) {
     return { success: false, message: rateCheck.reason || 'Rate limit exceeded', errorCode: 'OTP_RATE_LIMITED' };
   }
 
   // Generate OTP
   const code = generateOtpCode();
-  const now = new Date();
-  const expiresAt = new Date(now.getTime() + OTP_EXPIRY_MINUTES * 60 * 1000);
+  const expiresAt = getExpiresAt();
 
-  const otpRecord: OtpRecord = {
-    code,
-    createdAt: now,
-    expiresAt,
-    verified: false,
-    verifyAttempts: 0,
-  };
-
-  // Store OTP
-  if (!otpStore.has(userId)) {
-    otpStore.set(userId, { otps: [], lastSentAt: null });
-  }
-  const userRecord = otpStore.get(userId)!;
-  userRecord.otps.push(otpRecord);
-  userRecord.lastSentAt = now;
-
-  // Clean up expired OTPs
-  userRecord.otps = userRecord.otps.filter((o) => o.expiresAt > now);
+  // Store OTP in the database
+  const hashedCode = hashOtp(code);
+  await prisma.mfaOtp.create({
+    data: {
+      userId,
+      codeHash: hashedCode,
+      purpose: 'login',
+      expiresAt,
+    },
+  });
 
   // Send OTP email via SMTP
   try {
@@ -150,46 +167,52 @@ If you did not request this code, please ignore this email and contact support.`
  * Verify an MFA OTP code
  */
 export async function verifyMfaOtp(userId: number, code: string): Promise<{ valid: boolean; message: string }> {
-  const record = otpStore.get(userId);
-  if (!record) {
+  const now = new Date();
+
+  const activeOtp = await prisma.mfaOtp.findFirst({
+    where: {
+      userId,
+      expiresAt: {
+        gt: now,
+      },
+      usedAt: null,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  if (!activeOtp) {
     return { valid: false, message: 'No verification code found. Please request a new one.' };
   }
 
-  const now = new Date();
-
-  // Find the latest unexpired, unverified OTP
-  const activeOtp = record.otps
-    .filter((o) => !o.verified && o.expiresAt > now)
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
-
-  if (!activeOtp) {
-    return { valid: false, message: 'Verification code expired. Please request a new one.' };
-  }
-
-  // Check max verify attempts
   if (activeOtp.verifyAttempts >= OTP_MAX_VERIFY_ATTEMPTS) {
-    // Invalidate the OTP
-    activeOtp.expiresAt = now;
+    await prisma.mfaOtp.update({
+      where: { id: activeOtp.id },
+      data: { usedAt: now },
+    });
     return { valid: false, message: 'Too many incorrect attempts. Please request a new code.' };
   }
 
-  // Increment verify attempts
-  activeOtp.verifyAttempts++;
-
-  // Check code match (constant-time comparison)
-  const expectedCode = activeOtp.code;
-  const isMatch = crypto.timingSafeEqual(
-    Buffer.from(code.padStart(OTP_LENGTH, '0')),
-    Buffer.from(expectedCode.padStart(OTP_LENGTH, '0'))
-  );
+  const isMatch = isOtpMatch(activeOtp.codeHash, code);
 
   if (!isMatch) {
-    const remaining = OTP_MAX_VERIFY_ATTEMPTS - activeOtp.verifyAttempts;
+    const updatedAttempts = activeOtp.verifyAttempts + 1;
+    const updateData: { verifyAttempts: number; usedAt?: Date } = { verifyAttempts: updatedAttempts };
+    if (updatedAttempts >= OTP_MAX_VERIFY_ATTEMPTS) {
+      updateData.usedAt = now;
+    }
+    await prisma.mfaOtp.update({
+      where: { id: activeOtp.id },
+      data: updateData,
+    });
+
+    const remaining = OTP_MAX_VERIFY_ATTEMPTS - updatedAttempts;
     return { valid: false, message: `Invalid code. ${remaining} attempt${remaining !== 1 ? 's' : ''} remaining.` };
   }
 
-  // Mark as verified
-  activeOtp.verified = true;
+  await prisma.mfaOtp.update({
+    where: { id: activeOtp.id },
+    data: { usedAt: now },
+  });
 
   return { valid: true, message: 'Verification successful' };
 }
@@ -222,7 +245,7 @@ export async function disableMfa(userId: number): Promise<{ success: boolean; me
     });
 
     // Clean up OTP records
-    otpStore.delete(userId);
+    await prisma.mfaOtp.deleteMany({ where: { userId } });
 
     return { success: true, message: 'MFA disabled successfully' };
   } catch (error) {

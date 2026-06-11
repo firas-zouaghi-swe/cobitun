@@ -605,6 +605,7 @@ model User {
   cyberReinsuranceCededUpdatedBy      CyberReinsuranceCeded[]       @relation("CyberCededUpdatedBy")
   cyberReinsuranceCededCreatedBy      CyberReinsuranceCeded[]       @relation("CyberCededCreatedBy")
   emailVerificationTokens             EmailVerificationToken[]
+  mfaOtps                             MfaOtp[]
   fraudResults                        FraudDetectionResult[]
   iodaClaimsDeletedBy                 IODAClaimSuggestion[]         @relation("IODAClaimDeletedBy")
   iodaClaimsFalsePositiveBy           IODAClaimSuggestion[]         @relation("IODAClaimFalsePositiveBy")
@@ -2025,6 +2026,22 @@ model IdempotencyKey {
   @@index([key], map: "idx_idempotency_key")
   @@index([userId], map: "idx_idempotency_user")
   @@map("idempotency_keys")
+}
+
+model MfaOtp {
+  id             Int      @id @default(autoincrement())
+  userId         Int      @map("user_id")
+  codeHash       String   @map("code_hash")
+  purpose        String   @default("login")
+  verifyAttempts Int      @default(0) @map("verify_attempts")
+  usedAt         DateTime? @map("used_at")
+  expiresAt      DateTime @map("expires_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_mfa_otp_user")
+  @@index([expiresAt], map: "idx_mfa_otp_expires")
+  @@map("mfa_otps")
 }
 
 model PolicyCancellation {

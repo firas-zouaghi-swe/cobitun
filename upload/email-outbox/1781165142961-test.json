@@ -1,0 +1,8 @@
+{
+  "type": "TEST_EMAIL_OUTBOX",
+  "sentAt": "2026-06-11T08:05:42.961Z",
+  "from": "no-reply@cobitun.tn",
+  "to": "mfa.test@example.com",
+  "subject": "COBITUN - Your Verification Code",
+  "text": "Your verification code is: 727005\n\nThis code expires in 10 minutes."
+}

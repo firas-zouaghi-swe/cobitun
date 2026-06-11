@@ -97,7 +97,7 @@ export default function CustomerLoginPage() {
       }
 
       // Handle MFA challenge
-      if (data.mfaRequired) {
+          if (data.mfaRequired) {
         setMfaState({
           userId: data.userId,
           preAuthToken: data.preAuthToken,
@@ -105,11 +105,16 @@ export default function CustomerLoginPage() {
         });
         // Automatically send OTP challenge
         try {
-          const challengeRes = await fetch('/api/auth/mfa/challenge', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: data.userId, preAuthToken: data.preAuthToken }),
-          });
+              const challengeHeaders: Record<string, string> = { 'Content-Type': 'application/json' };
+              // Only include pre-auth header when using email OTP (MFA active)
+              if (data.method === 'email_otp' && data.preAuthToken) {
+                challengeHeaders['x-pre-auth-token'] = data.preAuthToken;
+              }
+              const challengeRes = await fetch('/api/auth/mfa/challenge', {
+                method: 'POST',
+                headers: challengeHeaders,
+                body: JSON.stringify({ userId: data.userId, preAuthToken: data.preAuthToken }),
+              });
           const challengeData = await challengeRes.json();
           if (!challengeRes.ok) {
             // Show the error but keep MFA state so user can retry
@@ -189,9 +194,13 @@ export default function CustomerLoginPage() {
     if (!mfaState) return;
     setOtpLoading(true);
     try {
+      const resendHeaders: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (mfaState.method === 'email_otp' && mfaState.preAuthToken) {
+        resendHeaders['x-pre-auth-token'] = mfaState.preAuthToken;
+      }
       const res = await fetch('/api/auth/mfa/challenge', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: resendHeaders,
         body: JSON.stringify({ userId: mfaState.userId, preAuthToken: mfaState.preAuthToken }),
       });
       const data = await res.json();
