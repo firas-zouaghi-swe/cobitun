@@ -72,7 +72,7 @@ export default function CustomerSignupPage() {
     const v2 = validateField('lastName', lastName, { required: true, minLength: 2 });
     const v3 = validateField('username', username, { required: true, minLength: 3 });
     const v4 = validateField('email', email, { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, patternMessage: t('common:validation.email.invalid') });
-    const v5 = validateField('password', password, { required: true, minLength: 8 });
+    const v5 = validateField('password', password, { required: true, minLength: 12 });
     const v6 = validateField('confirmPassword', confirmPassword, { required: true });
     const v7 = validateField('mobile', mobile, { required: true, minLength: 8 });
     const v8 = validateField('address', address, { required: true, minLength: 5 });
@@ -236,7 +236,7 @@ export default function CustomerSignupPage() {
                     placeholder={t('auth:signup.passwordPlaceholder')}
                     value={form.password}
                     onChange={(e) => updateField('password', e.target.value)}
-                    onBlur={() => validateField('password', form.password, { required: true, minLength: 8 })}
+                    onBlur={() => validateField('password', form.password, { required: true, minLength: 12 })}
                     aria-invalid={!!fieldErrors.password}
                     aria-describedby={fieldErrors.password ? 'password-error' : undefined}
                     className="focus-visible:ring-tunis-blue/30 pe-10"

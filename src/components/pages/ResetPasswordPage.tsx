@@ -125,7 +125,7 @@ export default function ResetPasswordPage() {
                     type={showNewPassword ? 'text' : 'password'}
                     value={newPassword}
                     onChange={(e) => { setNewPassword(e.target.value); clearFieldError('newPassword'); }}
-                    onBlur={() => { if (!newPassword.trim()) setFieldErrors((prev) => ({ ...prev, newPassword: t('common:validation.required') })); else if (newPassword.length < 8) setFieldErrors((prev) => ({ ...prev, newPassword: t('common:validation.minLength', { count: 8 }) })); }}
+                    onBlur={() => { if (!newPassword.trim()) setFieldErrors((prev) => ({ ...prev, newPassword: t('common:validation.required') })); else if (newPassword.length < 12) setFieldErrors((prev) => ({ ...prev, newPassword: t('common:validation.minLength', { count: 12 }) })); }}
                     placeholder={t('common:label.newPasswordPlaceholder')}
                     className="focus-visible:ring-tunis-blue/30 pe-10"
                     aria-invalid={!!fieldErrors.newPassword}

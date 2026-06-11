@@ -15,7 +15,7 @@ interface PasswordRule {
 }
 
 const DEFAULT_RULES: PasswordRule[] = [
-  { key: 'minLength', test: (pw) => pw.length >= 8, enabled: true },
+  { key: 'minLength', test: (pw) => pw.length >= 12, enabled: true },
   { key: 'uppercase', test: (pw) => /[A-Z]/.test(pw), enabled: true },
   { key: 'lowercase', test: (pw) => /[a-z]/.test(pw), enabled: true },
   { key: 'number', test: (pw) => /\d/.test(pw), enabled: true },
@@ -98,7 +98,7 @@ export function PasswordComplexityIndicator({
  */
 export function validatePasswordComplexity(
   password: string,
-  minLength: number = 8
+  minLength: number = 12
 ): { valid: boolean; failedRules: string[] } {
   const rules = DEFAULT_RULES.map((rule) => {
     if (rule.key === 'minLength') {
