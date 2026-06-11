@@ -45,11 +45,24 @@ export interface IodaNormalizedEvent {
   status: number;
 }
 
+export interface IodaEntityAttrs {
+  org?: string;
+  fqid?: string;
+  ip_count?: string | number;
+  ipCount?: string | number;
+  name?: string;
+}
+
 export interface IodaEntity {
   type: string;
   code: string;
   name: string;
   asn?: number;
+  attrs?: IodaEntityAttrs;
+}
+
+export interface IodaEntityWithIpCount extends IodaEntity {
+  ipCount: number;
 }
 
 interface IodaApiResponse {
@@ -209,7 +222,38 @@ export async function searchEntities(query: string): Promise<IodaEntity[]> {
     code: (entity.code as string) || '',
     name: (entity.name as string) || '',
     asn: (entity.asn as number) || undefined,
+    attrs: (entity.attrs as IodaEntityAttrs) ?? undefined,
   }));
+}
+
+export async function queryEntities(
+  entityType: string = 'asn',
+  relatedTo: string
+): Promise<IodaEntityWithIpCount[]> {
+  const url = `${IODA_BASE_URL}/entities/query?entityType=${encodeURIComponent(entityType)}&relatedTo=${encodeURIComponent(relatedTo)}`;
+
+  const response = await fetchWithRetry(url);
+  const data: IodaApiResponse = await response.json();
+
+  if (!data || !data.data || !Array.isArray(data.data)) {
+    return [];
+  }
+
+  return (data.data as unknown as Record<string, unknown>[]).map((entity) => {
+    const attrs = (entity.attrs as IodaEntityAttrs) ?? {};
+    const ipCount = Number(attrs.ip_count ?? attrs.ipCount ?? 0) || 0;
+    const code = String(entity.code ?? '');
+    const asn = code.replace(/^AS/i, '') ? Number(code.replace(/^AS/i, '')) : undefined;
+
+    return {
+      type: (entity.type as string) || 'asn',
+      code,
+      name: (entity.name as string) || String(attrs.name || ''),
+      asn: Number.isFinite(asn) ? asn : undefined,
+      attrs,
+      ipCount,
+    };
+  });
 }
 
 // ==================== SIGNALS (Time-Series) ====================

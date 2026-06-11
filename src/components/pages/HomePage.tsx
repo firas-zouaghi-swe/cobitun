@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { fetchWithAuth } from '@/hooks/use-auth';
 import { PageErrorState } from '@/components/shared/PageStates';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -29,7 +28,7 @@ interface ProviderFromDB {
   asn: number;
   organisationName: string;
   iodaName: string;
-  ipCount: number;
+  ipCount?: number | null;
   slaTier: string;
   mttrHours: number;
   ancsCertified: boolean;
@@ -45,6 +44,13 @@ interface OutageEventPreview {
   datasource: string;
   score: number | null;
   cloudProvider: { organisationName: string; asn: number; slaTier: string };
+}
+
+interface IodaEntityStats {
+  code: string;
+  asn?: number;
+  name: string;
+  ipCount: number;
 }
 
 interface StaticProvider {
@@ -157,12 +163,14 @@ export default function HomePage() {
   }, []);
 
   /* ── Data fetching state ── */
-  const [providers, setProviders] = useState<(ProviderFromDB | StaticProvider)[]>([]);
+  const [providerCount, setProviderCount] = useState<number>(staticProviders.length);
   const [recentOutages, setRecentOutages] = useState<OutageEventPreview[]>([]);
+  const [iodaEntities, setIodaEntities] = useState<IodaEntityStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [totalOutages, setTotalOutages] = useState(0);
   const [totalPayouts, setTotalPayouts] = useState<number>(0);
+  const [totalClaimsForms, setTotalClaimsForms] = useState(0);
   const normalizedTotalPayouts = Number(totalPayouts) || 0;
 
   /* ── Slider state ── */
@@ -214,29 +222,26 @@ export default function HomePage() {
   const fetchRealData = async () => {
     setError(null);
     try {
-      // Use public FAQ endpoint for provider data to avoid admin auth requirement
-      // Admin endpoints require authentication; fall back to static data for unauthenticated visitors
-      const provRes = await fetchWithAuth('/api/admin/cloud-providers');
-      if (provRes.ok) {
-        const provData = await provRes.json();
-        setProviders(provData.providers || []);
+      const summaryRes = await fetch('/api/homepage/summary');
+      if (summaryRes.ok) {
+        const summaryData = await summaryRes.json();
+        setProviderCount(summaryData.providerCount ?? staticProviders.length);
+        setTotalOutages(summaryData.unprocessedOutages ?? 0);
+        setTotalPayouts(Number(summaryData.totalPayouts) || 0);
+        setTotalClaimsForms(summaryData.totalClaims ?? 0);
       } else {
-        // Unauthenticated user — use static provider data
-        setProviders(staticProviders || []);
+        console.warn('Homepage summary endpoint unavailable:', summaryRes.status);
+        setProviderCount(staticProviders.length);
       }
 
-      const monRes = await fetchWithAuth('/api/admin/outage-monitor');
-      if (monRes.ok) {
-        const monData = await monRes.json();
-        setRecentOutages(monData.outageEvents?.slice(0, 5) || []);
-        setTotalOutages(monData.stats?.unprocessedOutages || 0);
-        setTotalPayouts(Number(monData.stats?.totalPayouts) || 0);
+      const iodaRes = await fetch('/api/ioda/entities?country=TN');
+      if (iodaRes.ok) {
+        const iodaData = await iodaRes.json();
+        setIodaEntities(iodaData.entities || []);
       }
-      // If outage monitor fails (unauthenticated), leave default empty state
     } catch (err) {
       console.error('Failed to fetch homepage data:', err);
-      // Use static provider data as fallback
-      setProviders(staticProviders || []);
+      setProviderCount(staticProviders.length);
     } finally {
       setLoading(false);
     }
@@ -601,10 +606,10 @@ export default function HomePage() {
 
                 {/* Floating accent cards */}
                 <div className="absolute -top-4 -end-4 px-3 py-2 rounded-lg bg-[#00D4FF]/10 border border-[#00D4FF]/20 backdrop-blur-sm">
-                  <span className="text-xs font-bold text-[#00D4FF]">{loading ? '—' : providers.length} {t('home:stat.monitoredProviders')}</span>
+                  <span className="text-xs font-bold text-[#00D4FF]">{loading ? '—' : providerCount} {t('home:stat.monitoredProviders')}</span>
                 </div>
                 <div className="absolute -bottom-3 -start-3 px-3 py-2 rounded-lg bg-[#E5693A]/10 border border-[#E5693A]/20 backdrop-blur-sm">
-                  <span className="text-xs font-bold text-[#E5693A]">0 {t('home:stat.claimsForms')}</span>
+                  <span className="text-xs font-bold text-[#E5693A]">{loading ? '—' : String(totalClaimsForms)} {t('home:stat.claimsForms')}</span>
                 </div>
               </div>
             </motion.div>
@@ -617,10 +622,10 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
             <div className="flex flex-wrap justify-center gap-4 md:gap-8">
               {[
-                { value: loading ? '—' : String(providers.length), label: t('home:stat.monitoredProviders'), color: '#00D4FF' },
+                { value: loading ? '—' : String(providerCount), label: t('home:stat.monitoredProviders'), color: '#00D4FF' },
                 { value: String(totalOutages), label: t('home:stat.activeOutages'), color: '#E5693A' },
                 { value: normalizedTotalPayouts > 0 ? normalizedTotalPayouts.toFixed(0) + ' TND' : '0', label: t('home:stat.totalPayouts'), color: '#00D4FF' },
-                { value: '0', label: t('home:stat.claimsForms'), color: '#22C55E' },
+                { value: loading ? '—' : String(totalClaimsForms), label: t('home:stat.claimsForms'), color: '#22C55E' },
               ].map((stat, i) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/[0.04] border border-white/[0.06] hover:border-white/[0.12] transition-all group">
                   <div className="text-2xl md:text-3xl font-bold tabular-nums" style={{ color: stat.color }}>
@@ -697,7 +702,7 @@ export default function HomePage() {
           {/* Step Cards - Horizontal Timeline */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
             {[
-              { step: 1, icon: Cloud, title: t('home:howItWorks.step1Title'), desc: t('home:howItWorks.step1Desc', { count: loading ? '—' : providers.length }) },
+              { step: 1, icon: Cloud, title: t('home:howItWorks.step1Title'), desc: t('home:howItWorks.step1Desc', { count: loading ? '—' : providerCount }) },
               { step: 2, icon: Calculator, title: t('home:howItWorks.step2Title'), desc: t('home:howItWorks.step2Desc') },
               { step: 3, icon: SatelliteDish, title: t('home:howItWorks.step3Title'), desc: t('home:howItWorks.step3Desc') },
               { step: 4, icon: Zap, title: t('home:howItWorks.step4Title'), desc: t('home:howItWorks.step4Desc') },
