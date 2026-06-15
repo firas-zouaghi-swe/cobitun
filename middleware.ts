@@ -2,10 +2,31 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { httpsRedirect } from '@/middleware/https-redirect';
 import { checkRateLimit, RateLimits } from '@/middleware/rate-limiter';
+import { validateEnvironment } from '@/lib/env-validation';
+
+// Validate environment variables once at startup
+let envValidated = false;
+function ensureEnvValidated() {
+  if (!envValidated) {
+    try {
+      validateEnvironment();
+      envValidated = true;
+    } catch (error) {
+      console.error('[CRITICAL] Environment validation failed at startup:', error);
+      // In production, re-throw to prevent startup
+      if (process.env.NODE_ENV === 'production') {
+        throw error;
+      }
+    }
+  }
+}
 
 const ContentSecurityPolicy = "default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';";
 
 export function middleware(request: NextRequest) {
+  // Ensure environment is validated once
+  ensureEnvValidated();
+
   // HTTPS redirect (production only)
   const redirect = httpsRedirect(request);
   if (redirect) return redirect;

@@ -16,7 +16,22 @@ function getUploadDir(): string {
   if (val) return val;
   return path.join(process.cwd(), 'upload');
 }
-const PRESIGNED_URL_SECRET = process.env.PRESIGNED_URL_SECRET || 'cobitun-presigned-secret';
+
+// SECURITY: Require PRESIGNED_URL_SECRET to be explicitly configured
+function getPresignedUrlSecret(): string {
+  const secret = process.env.PRESIGNED_URL_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('PRESIGNED_URL_SECRET environment variable is required in production');
+    }
+    // Development fallback - still log a warning
+    console.warn('[SECURITY WARNING] PRESIGNED_URL_SECRET not configured. Using insecure development fallback. Set PRESIGNED_URL_SECRET in production.');
+    return 'dev-presigned-secret';
+  }
+  return secret;
+}
+
+const PRESIGNED_URL_SECRET = getPresignedUrlSecret();
 const PRESIGNED_URL_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 /**

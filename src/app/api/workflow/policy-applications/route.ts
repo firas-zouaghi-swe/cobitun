@@ -272,14 +272,36 @@ export async function POST(request: NextRequest) {
     try {
       await completeTask(customerUploadTask.id, 'Policy', auth.userIdNum);
     } catch (err) {
-      // Ignore task completion errors
+      // Log error but continue - task completion is not critical to state transition
+      console.error('[WORKFLOW] Failed to complete customer upload task:', err);
+      await logAction({
+        entityType: 'WorkflowPolicyApplication',
+        entityId: application.id,
+        actorId: auth.userIdNum,
+        action: 'Task completion failed (non-fatal)',
+        actionCategory: 'WORKFLOW_ERROR',
+        metadata: { error: String(err), taskId: customerUploadTask.id },
+      });
     }
 
     // Transition application status to AdminReviewing now that provider contract is uploaded
     try {
       await updatePolicyApplicationStatus(application.id, 'AdminReviewing');
     } catch (err) {
-      // Ignore status transition errors
+      // CRITICAL ERROR: Status transition failure - must not be silent
+      console.error('[WORKFLOW-CRITICAL] Status transition FAILED - workflow state may be inconsistent:', err);
+      await logAction({
+        entityType: 'WorkflowPolicyApplication',
+        entityId: application.id,
+        actorId: auth.userIdNum,
+        action: 'CRITICAL: Status transition to AdminReviewing failed',
+        actionCategory: 'WORKFLOW_CRITICAL_ERROR',
+        metadata: { error: String(err) },
+      });
+      return NextResponse.json(
+        { error: 'Failed to advance workflow state. Please contact support.', details: 'WorkflowStateTransitionError' },
+        { status: 500 }
+      );
     }
 
     // v3: Create a WorkflowPolicyTask for the Admin to review the provider contract
@@ -311,13 +333,22 @@ export async function POST(request: NextRequest) {
       'action_required'
     );
 
-    // Link the uploaded file record to the created workflow application (if possible)
+    // Link the uploaded file record to the created workflow application
     try {
       if (uploadedRecord && uploadedRecord.id) {
         await db.uploadedFile.update({ where: { id: uploadedRecord.id }, data: { workflowPolicyAppId: application.id } });
       }
     } catch (err) {
-      // Ignore file linking errors
+      // Log error - file linking is non-critical to workflow state
+      console.error('[WORKFLOW] Failed to link uploaded file to workflow application:', err);
+      await logAction({
+        entityType: 'WorkflowPolicyApplication',
+        entityId: application.id,
+        actorId: auth.userIdNum,
+        action: 'File linking failed (non-fatal)',
+        actionCategory: 'WORKFLOW_ERROR',
+        metadata: { error: String(err), fileId: uploadedRecord?.id },
+      });
     }
 
     // Re-fetch updated application with tasks and status for the response
