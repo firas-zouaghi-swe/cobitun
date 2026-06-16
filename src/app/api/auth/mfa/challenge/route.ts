@@ -128,7 +128,8 @@ export async function POST(request: NextRequest) {
       expiresAt: sendResult.expiresAt?.toISOString(),
     });
   } catch (error) {
-    return Errors.internal();
+    console.error('[MFA Challenge] Error:', error instanceof Error ? error.message : String(error), error);
+    return Errors.internal(`MFA challenge failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }
 

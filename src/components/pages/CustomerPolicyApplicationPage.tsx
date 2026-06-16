@@ -83,6 +83,21 @@ export default function CustomerPolicyApplicationPage() {
 
   // ─── Submit ──────────────────────────────────────────────────
 
+  const persistSelection = async (policyId: number | null, claimId: number | null) => {
+    try {
+      await fetchWithAuth(`${API_BASE}/selection`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lastViewedWorkflowPolicyApplicationId: policyId,
+          lastViewedWorkflowClaimId: claimId,
+        }),
+      });
+    } catch (err) {
+      console.warn('Failed to persist workflow selection', err);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!file) {
       setFileError(t('customerPolicyApplication:validation.uploadContract'));
@@ -120,9 +135,8 @@ export default function CustomerPolicyApplicationPage() {
       // If server returned the created application, navigate to its detail and notify other pages
       const app = data?.application ?? null;
       if (app?.id) {
-        // set workflow context to show detail
+        await persistSelection(app.id, null);
         setWorkflowContext({ policyId: app.id, claimId: null });
-        // notify other pages (admin dashboard) that an application was created/updated
         try {
           window.dispatchEvent(new CustomEvent('workflowAppUpdated', { detail: { appId: app.id } }));
         } catch (ev) {

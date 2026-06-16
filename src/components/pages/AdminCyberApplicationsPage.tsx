@@ -613,7 +613,7 @@ export default function AdminCyberApplicationsPage() {
                                               variant="outline"
                                               className="bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800/30 text-xs"
                                             >
-                                              {exc.code.replace(/_/g, ' ')}
+                                              {exc.code ? exc.code.replace(/_/g, ' ') : exc.id}
                                             </Badge>
                                           ))}
                                         </div>

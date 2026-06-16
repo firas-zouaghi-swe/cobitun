@@ -136,53 +136,51 @@ export async function PUT(request: NextRequest) {
           workflowUpdate.found = true;
           workflowUpdate.appId = wfApp.id;
 
-          if (!wfApp.productId && policy.productId) {
-            await db.workflowPolicyApplication.update({
-              where: { id: wfApp.id },
-              data: { productId: policy.productId },
+          await db.$transaction(async (tx) => {
+            if (!wfApp.productId && policy.productId) {
+              await tx.workflowPolicyApplication.update({
+                where: { id: wfApp.id },
+                data: { productId: policy.productId },
+              });
+            }
+
+            const reviewTask = await tx.workflowPolicyTask.findFirst({
+              where: { policyApplicationId: wfApp.id, actionRequired: 'ReviewProviderContract', isDeleted: 0 },
+              include: { status: { select: { statusCode: true } } },
             });
-          }
 
-          const reviewTask = await db.workflowPolicyTask.findFirst({
-            where: { policyApplicationId: wfApp.id, actionRequired: 'ReviewProviderContract', isDeleted: 0 },
-            include: { status: { select: { statusCode: true } } },
-          });
+            if (reviewTask && reviewTask.status?.statusCode === 'PENDING') {
+              await completeTask(reviewTask.id, 'Policy', auth.userIdNum, adminComment || 'Approved by admin', tx);
+            }
 
-          if (reviewTask && reviewTask.status?.statusCode === 'PENDING') {
-            await completeTask(reviewTask.id, 'Policy', auth.userIdNum, adminComment || 'Approved by admin');
-          }
-
-          // Ensure we only attempt transitions that are valid from the application's current state.
-          try {
+            // Ensure we only attempt transitions that are valid from the application's current state.
             // Re-fetch the application to have the latest status
-            let freshApp = await db.workflowPolicyApplication.findUnique({ where: { id: wfApp.id }, include: { status: { select: { statusCode: true } } } });
+            let freshApp = await tx.workflowPolicyApplication.findUnique({ where: { id: wfApp.id }, include: { status: { select: { statusCode: true } } } });
 
             // Only move to AdminReviewing if the app is at ProviderContractUploaded
             if (freshApp?.status?.statusCode === 'ProviderContractUploaded') {
               try {
-                await updatePolicyApplicationStatus(wfApp.id, 'AdminReviewing');
+                await updatePolicyApplicationStatus(wfApp.id, 'AdminReviewing', { tx });
                 // refresh
-                freshApp = await db.workflowPolicyApplication.findUnique({ where: { id: wfApp.id }, include: { status: { select: { statusCode: true } } } });
+                freshApp = await tx.workflowPolicyApplication.findUnique({ where: { id: wfApp.id }, include: { status: { select: { statusCode: true } } } });
               } catch (e) {
               }
             }
 
             // Now attempt to advance to PolicyContractGenerated (if allowed)
             try {
-              await updatePolicyApplicationStatus(wfApp.id, 'PolicyContractGenerated');
+              await updatePolicyApplicationStatus(wfApp.id, 'PolicyContractGenerated', { tx });
               workflowUpdate.transitionedTo = 'PolicyContractGenerated';
 
-              const existingSignTask = await db.workflowPolicyTask.findFirst({
+              const existingSignTask = await tx.workflowPolicyTask.findFirst({
                 where: { policyApplicationId: wfApp.id, actionRequired: 'SignPolicyContract', isDeleted: 0 },
               });
               if (!existingSignTask) {
-                await createTask({ entityType: 'Policy', policyApplicationId: wfApp.id, actorCode: Roles.CUSTOMER, actionRequired: 'SignPolicyContract' });
+                await createTask({ entityType: 'Policy', policyApplicationId: wfApp.id, actorCode: Roles.CUSTOMER, actionRequired: 'SignPolicyContract' }, tx);
               }
             } catch (e) {
             }
-          } catch (e) {
-            console.error('Admin approval: error while handling workflow transitions for app', wfApp.id, e);
-          }
+          });
         }
       } catch (wfErr) {
         console.error('Failed to update workflow application after parametric approval:', wfErr);

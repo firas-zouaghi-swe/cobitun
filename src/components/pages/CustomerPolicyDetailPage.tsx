@@ -123,6 +123,27 @@ export default function CustomerPolicyDetailPage() {
     }
   }, [policyId]);
 
+  useEffect(() => {
+    if (!policyId) return;
+
+    const persistSelection = async () => {
+      try {
+        await fetchWithAuth(`${API_BASE}/selection`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lastViewedWorkflowPolicyApplicationId: policyId,
+            lastViewedWorkflowClaimId: null,
+          }),
+        });
+      } catch (error) {
+        console.warn('Failed to persist policy detail selection', error);
+      }
+    };
+
+    void persistSelection();
+  }, [policyId]);
+
   const fetchApplication = async () => {
     try {
       const res = await fetchWithAuth(`${API_BASE}/policy-applications/${policyId}`);

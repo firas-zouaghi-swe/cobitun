@@ -56,12 +56,14 @@ export const useAppStore = create<AppStore>()(
             user.role === Roles.ADMIN || user.role === Roles.SUPER_ADMIN
               ? 'admin-dashboard'
               : 'customer-dashboard',
+          workflowContext: { policyId: null, claimId: null },
         }),
       logout: () =>
         set({
           user: null,
           isAuthenticated: false,
           currentPage: 'home',
+          workflowContext: { policyId: null, claimId: null },
         }),
 
       // Navigation state
@@ -83,6 +85,7 @@ export const useAppStore = create<AppStore>()(
         user: state.user,
         isAuthenticated: state.isAuthenticated,
         currentPage: state.currentPage,
+        workflowContext: state.workflowContext,
       }),
       onRehydrateStorage: () => (state) => {
         state?.setHydrated?.();

@@ -1,7 +1,9 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useAppStore } from '@/lib/store';
 import { Roles } from '@/lib/roles';
+import { fetchWithAuth } from '@/hooks/use-auth';
 import HomePage from '@/components/pages/HomePage';
 import AdminLoginPage from '@/components/pages/AdminLoginPage';
 import CustomerLoginPage from '@/components/pages/CustomerLoginPage';
@@ -861,10 +863,51 @@ function CustomerPageContent({ currentPage }: { currentPage: string }) {
 }
 
 export default function COBITUNApp() {
-  const { currentPage, setCurrentPage, previousPage, goBack, user, isAuthenticated, logout, hydrated } = useAppStore();
+  const { currentPage, setCurrentPage, previousPage, goBack, user, isAuthenticated, logout, hydrated, setWorkflowContext } = useAppStore();
   const { t } = useTranslation('common');
   const adminPageIds = getAdminMenuItems(t).map((item) => item.id);
   const customerPageIds = getCustomerMenuItems(t).map((item) => item.id);
+  const customerHiddenPages = ['customer-policy-application', 'customer-policy-detail', 'customer-claim'];
+
+  useEffect(() => {
+    if (!hydrated || !isAuthenticated || user?.role !== Roles.CUSTOMER) {
+      return;
+    }
+
+    const loadWorkflowSelection = async () => {
+      try {
+        const res = await fetchWithAuth('/api/workflow/selection');
+        if (!res.ok) return;
+
+        const data = await res.json();
+        const selection = data.selection;
+        if (!selection) return;
+
+        setWorkflowContext({
+          policyId: selection.lastViewedWorkflowPolicyApplicationId ?? null,
+          claimId: selection.lastViewedWorkflowClaimId ?? null,
+        });
+
+        if (
+          ['home', 'customer-dashboard', 'customer-workflow'].includes(currentPage) &&
+          selection.lastViewedWorkflowPolicyApplicationId !== null
+        ) {
+          setCurrentPage('customer-policy-detail');
+        }
+
+        if (
+          ['home', 'customer-dashboard', 'customer-workflow'].includes(currentPage) &&
+          selection.lastViewedWorkflowClaimId !== null
+        ) {
+          setCurrentPage('customer-claim');
+        }
+      } catch (error) {
+        console.warn('Unable to restore workflow selection from the database', error);
+      }
+    };
+
+    void loadWorkflowSelection();
+  }, [hydrated, isAuthenticated, user?.role, setWorkflowContext]);
 
   const safeCurrentPage = publicPages.includes(currentPage)
     ? currentPage
@@ -873,7 +916,7 @@ export default function COBITUNApp() {
       ? currentPage
       : 'admin-dashboard'
     : user?.role === Roles.CUSTOMER
-    ? customerPageIds.includes(currentPage)
+    ? customerPageIds.includes(currentPage) || customerHiddenPages.includes(currentPage)
       ? currentPage
       : 'customer-dashboard'
     : 'home';

@@ -112,6 +112,21 @@ export default function CustomerClaimPage() {
     }
   };
 
+  const persistClaimSelection = async (claimId: number | null) => {
+    try {
+      await fetchWithAuth(`${API_BASE}/selection`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lastViewedWorkflowPolicyApplicationId: null,
+          lastViewedWorkflowClaimId: claimId,
+        }),
+      });
+    } catch (error) {
+      console.warn('Failed to persist claim selection', error);
+    }
+  };
+
   const fetchData = async () => {
     try {
       const [claimRes, policyRes] = await Promise.all([
@@ -153,6 +168,11 @@ export default function CustomerClaimPage() {
     if (!user?.customerId) return;
     void Promise.resolve().then(fetchData);
   }, [user?.customerId]);
+
+  useEffect(() => {
+    if (!selectedClaimId) return;
+    void persistClaimSelection(selectedClaimId);
+  }, [selectedClaimId]);
 
   // ─── Create new claim ──────────────────────────────────────────
 
@@ -197,6 +217,7 @@ export default function CustomerClaimPage() {
       setFieldErrors({});
       setClaims((prev) => [data.claim, ...prev]);
       setActiveClaim(data.claim);
+      void persistClaimSelection(data.claim.id);
     } catch {
       toast.error(t('common:error.somethingWentWrong'));
     } finally {

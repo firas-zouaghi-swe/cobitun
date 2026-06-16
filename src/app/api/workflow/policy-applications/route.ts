@@ -245,71 +245,53 @@ export async function POST(request: NextRequest) {
     // Generate application number
     const applicationNumber = await generateApplicationNumber();
 
-    // Create the workflow policy application (v3 model)
-    const application = await db.workflowPolicyApplication.create({
-      data: {
-        applicationNumber,
-        customerId: parsedCustomerId,
-        productId: productId ? parseInt(productId, 10) : null,
-        providerContractPdfUrl: savedFilePath,
-        statusId: initialStatus?.id ?? null,
-      },
-      include: {
-        tasks: true,
-        status: { select: { statusCode: true, statusName: true } },
-      },
-    });
-
-    // v3: Create and immediately complete a customer upload task representing 'Contract Uploaded'
-    const customerUploadTask = await createTask({
-      entityType: 'Policy',
-      policyApplicationId: application.id,
-      actorCode: Roles.CUSTOMER,
-      actionRequired: 'UploadProviderContract',
-    });
-
-    // Mark the customer's upload task completed (they just uploaded the file)
-    try {
-      await completeTask(customerUploadTask.id, 'Policy', auth.userIdNum);
-    } catch (err) {
-      // Log error but continue - task completion is not critical to state transition
-      console.error('[WORKFLOW] Failed to complete customer upload task:', err);
-      await logAction({
-        entityType: 'WorkflowPolicyApplication',
-        entityId: application.id,
-        actorId: auth.userIdNum,
-        action: 'Task completion failed (non-fatal)',
-        actionCategory: 'WORKFLOW_ERROR',
-        metadata: { error: String(err), taskId: customerUploadTask.id },
+    const application = await db.$transaction(async (tx) => {
+      // Create the workflow policy application (v3 model)
+      const created = await tx.workflowPolicyApplication.create({
+        data: {
+          applicationNumber,
+          customerId: parsedCustomerId,
+          productId: productId ? parseInt(productId, 10) : null,
+          providerContractPdfUrl: savedFilePath,
+          statusId: initialStatus?.id ?? null,
+        },
+        include: {
+          tasks: true,
+          status: { select: { statusCode: true, statusName: true } },
+        },
       });
-    }
 
-    // Transition application status to AdminReviewing now that provider contract is uploaded
-    try {
-      await updatePolicyApplicationStatus(application.id, 'AdminReviewing');
-    } catch (err) {
-      // CRITICAL ERROR: Status transition failure - must not be silent
-      console.error('[WORKFLOW-CRITICAL] Status transition FAILED - workflow state may be inconsistent:', err);
-      await logAction({
-        entityType: 'WorkflowPolicyApplication',
-        entityId: application.id,
-        actorId: auth.userIdNum,
-        action: 'CRITICAL: Status transition to AdminReviewing failed',
-        actionCategory: 'WORKFLOW_CRITICAL_ERROR',
-        metadata: { error: String(err) },
-      });
-      return NextResponse.json(
-        { error: 'Failed to advance workflow state. Please contact support.', details: 'WorkflowStateTransitionError' },
-        { status: 500 }
-      );
-    }
+      // v3: Create and immediately complete a customer upload task representing 'Contract Uploaded'
+      const customerUploadTask = await createTask({
+        entityType: 'Policy',
+        policyApplicationId: created.id,
+        actorCode: Roles.CUSTOMER,
+        actionRequired: 'UploadProviderContract',
+      }, tx);
 
-    // v3: Create a WorkflowPolicyTask for the Admin to review the provider contract
-    await createTask({
-      entityType: 'Policy',
-      policyApplicationId: application.id,
-      actorCode: Roles.ADMIN,
-      actionRequired: 'ReviewProviderContract',
+      // Complete the customer's upload task
+      await completeTask(customerUploadTask.id, 'Policy', auth.userIdNum, undefined, tx);
+
+      // Transition application status to AdminReviewing now that provider contract is uploaded
+      await updatePolicyApplicationStatus(created.id, 'AdminReviewing', { tx });
+
+      // v3: Create a WorkflowPolicyTask for the Admin to review the provider contract
+      await createTask({
+        entityType: 'Policy',
+        policyApplicationId: created.id,
+        actorCode: Roles.ADMIN,
+        actionRequired: 'ReviewProviderContract',
+      }, tx);
+
+      // Link the uploaded file record to the created workflow application
+      if (uploadedRecord?.id) {
+        await tx.uploadedFile.update({
+          where: { id: uploadedRecord.id },
+          data: { workflowPolicyAppId: created.id },
+        });
+      }
+
+      return created;
     });
 
     // Log the action (v3: actorId is number, entityId is number)

@@ -258,16 +258,22 @@ export async function disableMfa(userId: number): Promise<{ success: boolean; me
  * Check if MFA is required for a user
  */
 export async function isMfaRequired(userId: number): Promise<boolean> {
-  const user = await db.user.findFirst({
-    where: { id: userId, isDeleted: 0 },
-    select: { mfaEnabled: true, role: { select: { roleCode: true } } },
-  });
+  try {
+    const user = await db.user.findFirst({
+      where: { id: userId, isDeleted: 0 },
+      select: { mfaEnabled: true, roleId: true, role: { select: { roleCode: true } } },
+    });
 
-  if (!user) return false;
+    if (!user) return false;
 
-  const roleCode = user.role?.roleCode || '';
-  // MFA required if explicitly enabled OR if user is admin/super-admin
-  return user.mfaEnabled === 1 || ['ADMIN', 'SUPER_ADMIN'].includes(roleCode);
+    const roleCode = user.role?.roleCode || '';
+    // MFA required if explicitly enabled OR if user is admin/super-admin
+    return user.mfaEnabled === 1 || ['ADMIN', 'SUPER_ADMIN'].includes(roleCode);
+  } catch (error) {
+    console.error('[MFA] Error checking MFA requirement:', error);
+    // If we can't determine MFA status, be safe and assume it's required
+    return true;
+  }
 }
 
 /**

@@ -279,6 +279,21 @@ export default function CustomerWorkflowPage() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('policies');
 
+  const persistSelection = async (policyId: number | null, claimId: number | null) => {
+    try {
+      await fetchWithAuth(`${API_BASE}/selection`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lastViewedWorkflowPolicyApplicationId: policyId,
+          lastViewedWorkflowClaimId: claimId,
+        }),
+      });
+    } catch (error) {
+      console.warn('Failed to persist workflow selection', error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [user?.id]);
@@ -332,12 +347,14 @@ export default function CustomerWorkflowPage() {
 
   const openClaimCount = claims.filter((c) => c.statusCode === 'Open').length;
 
-  const handleNavigateToPolicyDetail = (policyId: number) => {
+  const handleNavigateToPolicyDetail = async (policyId: number) => {
+    await persistSelection(policyId, null);
     setWorkflowContext({ policyId, claimId: null });
     setCurrentPage('customer-policy-detail');
   };
 
-  const handleNavigateToClaim = (claimId?: number) => {
+  const handleNavigateToClaim = async (claimId?: number) => {
+    await persistSelection(null, claimId || null);
     setWorkflowContext({ policyId: null, claimId: claimId || null });
     setCurrentPage('customer-claim');
   };

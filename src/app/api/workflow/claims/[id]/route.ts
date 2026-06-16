@@ -394,7 +394,7 @@ async function handleSubmit(
     (t) => t.actionRequired === 'FillDeclarationOfLoss' && t.status?.statusCode === 'PENDING'
   );
   if (fillTask) {
-    await completeTask(fillTask.id, 'Claim', auth.userIdNum);
+    await completeTask(fillTask.id, 'Claim', auth.userIdNum, undefined, tx);
   }
 
   // Wrap the status update in a concurrency guard
@@ -403,9 +403,9 @@ async function handleSubmit(
     'WorkflowClaim',
     claim.id,
     currentStatusCode,
-    async () => {
+    async (tx) => {
       const submittedStatusId = await getClaimStatusIdByCode('Submitted');
-      return db.workflowClaim.update({
+      return tx.workflowClaim.update({
         where: { id: claim.id },
         data: {
           statusId: submittedStatusId,
@@ -511,7 +511,7 @@ async function handleComplete(
     (t) => t.actionRequired === 'ReviewClaim' && t.status?.statusCode === 'PENDING'
   );
   if (reviewTask) {
-    await completeTask(reviewTask.id, 'Claim', auth.userIdNum);
+    await completeTask(reviewTask.id, 'Claim', auth.userIdNum, undefined, tx);
   }
 
   // Wrap in concurrency guard
@@ -519,14 +519,14 @@ async function handleComplete(
     'WorkflowClaim',
     claim.id,
     currentStatusCode,
-    async () => {
+    async (tx) => {
       // Generate payout transaction ID
       const timestamp = Date.now().toString(36);
       const random = Math.random().toString(36).substring(2, 10);
       const payoutTransactionId = `PAY-C${timestamp.toUpperCase()}${random.toUpperCase()}`;
 
       const completedStatusId = await getClaimStatusIdByCode('Completed');
-      return db.workflowClaim.update({
+      return tx.workflowClaim.update({
         where: { id: claim.id },
         data: {
           statusId: completedStatusId,

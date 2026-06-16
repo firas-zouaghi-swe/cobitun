@@ -692,6 +692,8 @@ model Customer {
   totalClaims                Int                         @default(0) @map("total_claims")
   totalPremiumPaid           Decimal                     @default(0) @map("total_premium_paid")
   totalPayoutsReceived       Decimal                     @default(0) @map("total_payouts_received")
+  lastViewedWorkflowPolicyApplicationId Int?              @map("last_viewed_workflow_policy_application_id")
+  lastViewedWorkflowClaimId  Int?                        @map("last_viewed_workflow_claim_id")
   deletedAt                  DateTime?                   @map("deleted_at")
   deletedBy                  Int?                        @map("deleted_by")
   deletionReason             String?                     @map("deletion_reason")

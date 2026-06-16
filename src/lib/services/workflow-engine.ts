@@ -1,4 +1,5 @@
 import { db, safeTransaction } from '@/lib/db';
+import type { Prisma } from '@prisma/client';
 import { Roles, Role } from '@/lib/services/authorization';
 
 // ==================== CUSTOM ERROR CLASS ====================
@@ -656,7 +657,7 @@ export async function transitionWithConcurrencyGuard<T>(
   entityType: 'PolicyApplication' | 'WorkflowClaim',
   entityId: number,
   expectedCurrentStatusCode: string,
-  transitionFn: () => Promise<T>,
+  transitionFn: (tx: Prisma.TransactionClient) => Promise<T>,
   options?: { timeout?: number }
 ): Promise<T> {
   return safeTransaction(async (tx) => {
@@ -700,8 +701,8 @@ export async function transitionWithConcurrencyGuard<T>(
       );
     }
 
-    // Execute the transition function
-    return transitionFn();
+    // Execute the transition function inside the same transaction
+    return transitionFn(tx);
   }, { timeout: options?.timeout });
 }
 
@@ -722,8 +723,12 @@ interface CreateTaskParams {
  * Creates a new workflow task.
  * Dispatches to WorkflowPolicyTask or WorkflowClaimTask based on entityType.
  */
-export async function createTask(params: CreateTaskParams) {
+export async function createTask(
+  params: CreateTaskParams,
+  tx?: Prisma.TransactionClient
+) {
   const { entityType, policyApplicationId, workflowClaimId, actorCode, actionRequired, actionDetailsJson, priority, dueDate } = params;
+  const client = tx ?? db;
 
   const actorId = await getTaskActorIdByCode(actorCode);
   const pendingStatusId = await getTaskStatusIdByCode('PENDING');
@@ -741,7 +746,7 @@ export async function createTask(params: CreateTaskParams) {
     if (!policyApplicationId) {
       throw new Error('policyApplicationId is required for Policy tasks');
     }
-    return db.workflowPolicyTask.create({
+    return client.workflowPolicyTask.create({
       data: {
         policyApplicationId,
         ...commonData,
@@ -751,7 +756,7 @@ export async function createTask(params: CreateTaskParams) {
     if (!workflowClaimId) {
       throw new Error('workflowClaimId is required for Claim tasks');
     }
-    return db.workflowClaimTask.create({
+    return client.workflowClaimTask.create({
       data: {
         workflowClaimId,
         ...commonData,
@@ -768,12 +773,14 @@ export async function completeTask(
   taskId: number,
   entityType: 'Policy' | 'Claim',
   completedBy: number,
-  completionNotes?: string
+  completionNotes?: string,
+  tx?: Prisma.TransactionClient
 ) {
+  const client = tx ?? db;
   const completedStatusId = await getTaskStatusIdByCode('COMPLETED');
 
   if (entityType === 'Policy') {
-    return db.workflowPolicyTask.update({
+    return client.workflowPolicyTask.update({
       where: { id: taskId },
       data: {
         statusId: completedStatusId,
@@ -783,7 +790,7 @@ export async function completeTask(
       },
     });
   } else {
-    return db.workflowClaimTask.update({
+    return client.workflowClaimTask.update({
       where: { id: taskId },
       data: {
         statusId: completedStatusId,
@@ -930,9 +937,11 @@ export async function updatePolicyApplicationStatus(
     adminFinalizedBy?: number;
     rejectedBy?: number;
     rejectionReason?: string;
+    tx?: Prisma.TransactionClient;
   }
 ) {
-  const application = await db.workflowPolicyApplication.findUnique({
+  const client = options?.tx ?? db;
+  const application = await client.workflowPolicyApplication.findUnique({
     where: { id: applicationId },
   });
 
@@ -965,7 +974,7 @@ export async function updatePolicyApplicationStatus(
     updateData.rejectionReason = options.rejectionReason ?? null;
   }
 
-  return db.workflowPolicyApplication.update({
+  return client.workflowPolicyApplication.update({
     where: { id: applicationId },
     data: updateData,
   });
@@ -985,9 +994,11 @@ export async function updateWorkflowClaimStatus(
     payoutAmount?: number;
     payoutTransactionId?: string;
     payoutMethod?: string;
+    tx?: Prisma.TransactionClient;
   }
 ) {
-  const claim = await db.workflowClaim.findUnique({
+  const client = options?.tx ?? db;
+  const claim = await client.workflowClaim.findUnique({
     where: { id: claimId },
   });
 
@@ -1017,7 +1028,7 @@ export async function updateWorkflowClaimStatus(
     updateData.payoutMethod = options.payoutMethod ?? null;
   }
 
-  return db.workflowClaim.update({
+  return client.workflowClaim.update({
     where: { id: claimId },
     data: updateData,
   });

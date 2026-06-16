@@ -145,7 +145,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Authenticated user not found' }, { status: 404 });
     }
 
-    if (auth.role !== 'ADMIN' && currentUser.emailVerified !== 1) {
+    // In development, allow local testing without email verification.
+    // In production, require verified email for non-admin customers.
+    if (auth.role !== 'ADMIN' && process.env.NODE_ENV === 'production' && currentUser.emailVerified !== 1) {
       return NextResponse.json({ error: 'Email verification required before applying for a policy' }, { status: 403 });
     }
 

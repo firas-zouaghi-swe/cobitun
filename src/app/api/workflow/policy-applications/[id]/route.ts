@@ -334,14 +334,14 @@ async function handleReview(
       'PolicyApplication',
       application.id,
       currentStatusCode,
-      async () => {
+      async (tx) => {
         // v3: Complete the ReviewProviderContract task using WorkflowPolicyTask
         const adminReviewTasks = application.tasks ?? [];
         const reviewTask = adminReviewTasks.find(
           (t) => t.actionRequired === 'ReviewProviderContract' && t.status?.statusCode === 'PENDING'
         );
         if (reviewTask) {
-          await completeTask(reviewTask.id, 'Policy', auth.userIdNum);
+          await completeTask(reviewTask.id, 'Policy', auth.userIdNum, undefined, tx);
         }
 
         // Generate the policy contract PDF
@@ -379,7 +379,7 @@ async function handleReview(
 
         // Update application with policy contract and new status
         const policyContractGeneratedStatusId = await getStatusIdByCode('PolicyContractGenerated');
-        const updated = await db.workflowPolicyApplication.update({
+        const updated = await tx.workflowPolicyApplication.update({
           where: { id: application.id },
           data: {
             statusId: policyContractGeneratedStatusId,
@@ -397,7 +397,7 @@ async function handleReview(
           policyApplicationId: application.id,
           actorCode: Roles.CUSTOMER,
           actionRequired: 'SignPolicyContract',
-        });
+        }, tx);
 
         // Log audit
         await logAction({
@@ -455,7 +455,7 @@ async function handleReview(
       'PolicyApplication',
       application.id,
       currentStatusCode,
-      async () => {
+      async (tx) => {
         const rejectedTasks = application.tasks ?? [];
         const reviewTask = rejectedTasks.find(
           (t) => t.actionRequired === 'ReviewProviderContract' && t.status?.statusCode === 'PENDING'
@@ -465,7 +465,7 @@ async function handleReview(
         }
 
         const rejectedStatusId = await getStatusIdByCode('Rejected');
-        const updated = await db.workflowPolicyApplication.update({
+        const updated = await tx.workflowPolicyApplication.update({
           where: { id: application.id },
           data: {
             statusId: rejectedStatusId,
@@ -566,7 +566,7 @@ async function handleSign(
     'PolicyApplication',
     application.id,
     currentStatusCode,
-    async () => {
+    async (tx) => {
       const timestamp = Date.now().toString(36);
       const random = Math.random().toString(36).substring(2, 10);
       const fileName = `COBITUN_police_assurance_parametrique_signee_c${timestamp}${random}.pdf`;
@@ -585,11 +585,11 @@ async function handleSign(
         (t) => t.actionRequired === 'SignPolicyContract' && t.status?.statusCode === 'PENDING'
       );
       if (signTask) {
-        await completeTask(signTask.id, 'Policy', auth.userIdNum);
+        await completeTask(signTask.id, 'Policy', auth.userIdNum, undefined, tx);
       }
 
       const awaitingStatusId = await getStatusIdByCode('AwaitingSignatureAndPayment');
-      const updated = await db.workflowPolicyApplication.update({
+      const updated = await tx.workflowPolicyApplication.update({
         where: { id: application.id },
         data: {
           signedPolicyContractPdfUrl: savedFilePath,
@@ -608,7 +608,7 @@ async function handleSign(
         policyApplicationId: application.id,
         actorCode: Roles.CUSTOMER,
         actionRequired: 'PayPremium',
-      });
+      }, tx);
 
       // Log audit
       await logAction({
@@ -734,16 +734,16 @@ async function handlePay(
     'PolicyApplication',
     application.id,
     currentStatusCode,
-    async () => {
+    async (tx) => {
       const payTask = application.tasks?.find(
         (t) => t.actionRequired === 'PayPremium' && t.status?.statusCode === 'PENDING'
       );
       if (payTask) {
-        await completeTask(payTask.id, 'Policy', auth.userIdNum);
+        await completeTask(payTask.id, 'Policy', auth.userIdNum, undefined, tx);
       }
 
       const readyStatusId = await getStatusIdByCode('ReadyForFinalApproval');
-      const updated = await db.workflowPolicyApplication.update({
+      const updated = await tx.workflowPolicyApplication.update({
         where: { id: application.id },
         data: {
           paymentTransactionId: premiumTransactionId,
@@ -763,7 +763,7 @@ async function handlePay(
         policyApplicationId: application.id,
         actorCode: Roles.ADMIN,
         actionRequired: 'FinalAdminSign',
-      });
+      }, tx);
 
       await logAction({
         entityType: 'WorkflowPolicyApplication',
@@ -860,16 +860,16 @@ async function handleFinalSign(
     'PolicyApplication',
     application.id,
     currentStatusCode,
-    async () => {
+    async (tx) => {
       const finalSignTask = application.tasks?.find(
         (t) => t.actionRequired === 'FinalAdminSign' && t.status?.statusCode === 'PENDING'
       );
       if (finalSignTask) {
-        await completeTask(finalSignTask.id, 'Policy', auth.userIdNum);
+        await completeTask(finalSignTask.id, 'Policy', auth.userIdNum, undefined, tx);
       }
 
       const completedStatusId = await getStatusIdByCode('UnderwritingCompleted');
-      const updated = await db.workflowPolicyApplication.update({
+      const updated = await tx.workflowPolicyApplication.update({
         where: { id: application.id },
         data: {
           statusId: completedStatusId,

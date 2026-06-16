@@ -25,42 +25,20 @@ import { PageLoadingState, PageErrorState } from '@/components/shared/PageStates
 
 interface PolicyRow {
   id: number;
-  policyNumber: string;
-  sector?: { sectorCode?: string; sectorName?: string } | null;
-  sectorName?: string;
-  businessModel?: { modelCode?: string; modelName?: string } | null;
-  businessModelName?: string;
-  resilienceProfile?: { profileCode?: string; profileName?: string } | null;
-  resilienceProfileName?: string;
-  annualTurnoverTnd: number | string;
-  hourlyRevenue: number | string | null;
-  grossMargin: number | string;
-  cloudDependency: number | string;
-  criticality: number | string;
-  resilienceFactor: number | string;
-  bmFactor: number | string;
-  providerFactor: number | string;
-  payoutPerHour: number | string | null;
-  purePremium: number | string | null;
-  commercialPremium: number | string | null;
-  finalPremium: number | string | null;
-  premiumRatePct: number | string | null;
-  underwritingDecision: string | null;
-  maxPayoutPerEventHours: number | string;
-  adminComment: string | null;
+  applicationNumber: string;
+  customerId: number;
+  productId?: number | null;
+  premiumAmount?: number | string | null;
   createdAt: string;
-  statusCode: string;
-  status?: { statusName?: string } | null;
-  customer: { user: { firstName: string; lastName: string } };
-  cloudProvider: { organisationName: string; asn: string; slaTier: { tierCode: string; tierName: string } | string };
+  statusCode?: string | null;
+  statusName?: string | null;
+  status?: { id?: number; statusCode?: string | null; statusName?: string | null } | null;
+  product?: { id?: number; productCode?: string; productName?: string } | null;
+  customer: { user: { firstName: string; lastName: string; email?: string | null } };
+  tasks?: Array<{ id: number; actionRequired: string; status?: { statusCode?: string | null } | null }> | null;
+  sector?: string | null;
+  annualTurnover?: number | string | null;
 }
-
-const TIER_STYLES: Record<string, { badge: string; dot: string }> = {
-  Platinum: { badge: 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800/30', dot: 'bg-purple-500' },
-  Gold: { badge: 'bg-yellow-50 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-800/30', dot: 'bg-yellow-500' },
-  Silver: { badge: 'bg-muted text-muted-foreground border-border', dot: 'bg-gray-400' },
-  Bronze: { badge: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800/30', dot: 'bg-amber-500' },
-};
 
 function formatNumericValue(value: number | string | null | undefined, digits = 2) {
   if (value === null || value === undefined || value === '') {
@@ -119,13 +97,15 @@ export default function AdminParametricPolicyRequestsPage() {
   const fetchPolicies = async () => {
     setError(null);
     try {
-      const res = await fetchWithAuth('/api/admin/parametric-policy-requests');
+      // FIXED: Changed from /api/admin/parametric-policy-requests (which looks for approved policies)
+      // to /api/workflow/policy-applications (which shows pending applications awaiting admin review)
+      const res = await fetchWithAuth('/api/workflow/policy-applications');
       if (!res.ok) {
         const errorData = await res.json().catch(() => null);
         throw new Error(errorData?.error || `Request failed with status ${res.status}`);
       }
       const data = await res.json();
-      setPolicies(data.policies || []);
+      setPolicies((data.applications || []) as PolicyRow[]);
     } catch (err) {
       console.error('Failed to fetch policy requests:', err);
       setError(t('errors.failedToLoad', 'Failed to load data'));
@@ -155,15 +135,16 @@ export default function AdminParametricPolicyRequestsPage() {
         return;
       }
 
-      const res = await fetchWithAuth('/api/admin/parametric-policy-requests', {
-        method: 'PUT',
+      // FIXED: Call workflow policy application endpoint instead of parametric policy endpoint
+      const res = await fetchWithAuth(`/api/workflow/policy-applications/${selectedPolicy.id}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          policyId: selectedPolicy.id,
-          action: actionType,
-          adminComment: comment.trim() || undefined,
+          action: 'review',
+          approved: actionType === 'approve' ? 'true' : 'false',
+          rejectionReason: actionType === 'reject' ? comment.trim() : undefined,
         }),
       });
       const data = await res.json();
@@ -259,43 +240,31 @@ export default function AdminParametricPolicyRequestsPage() {
                 </thead>
                 <tbody>
                   {policies.map((p) => {
-                    const tierStyle = TIER_STYLES[typeof p.cloudProvider.slaTier === 'object' ? p.cloudProvider.slaTier.tierName : p.cloudProvider.slaTier] || TIER_STYLES.Bronze;
                     return (
                       <tr key={p.id} className="border-b table-row-hover">
-                        <td className="p-3 font-mono text-xs text-muted-foreground">{p.policyNumber || `POL-${String(p.id).padStart(6, '0')}`}</td>
+                        <td className="p-3 font-mono text-xs text-muted-foreground">{p.applicationNumber || `APP-${String(p.id).padStart(6, '0')}`}</td>
                         <td className="p-3 font-medium">{p.customer.user.firstName} {p.customer.user.lastName}</td>
                         <td className="p-3">
                           <div>
-                            <p className="font-medium">{p.cloudProvider.organisationName}</p>
-                            <div className="flex items-center gap-1 mt-0.5">
-                              <Badge variant="outline" className={tierStyle.badge + ' text-[10px] px-1.5 py-0'}>
-                                <span className={`w-1 h-1 rounded-full ${tierStyle.dot} me-1`} />
-                                AS{p.cloudProvider.asn} · {typeof p.cloudProvider.slaTier === 'object' ? p.cloudProvider.slaTier.tierName : p.cloudProvider.slaTier}
-                              </Badge>
-                            </div>
+                            <p className="font-medium">{p.product?.productName || 'N/A'}</p>
+                            <p className="text-xs text-muted-foreground mt-0.5">{p.product?.productCode || '—'}</p>
                           </div>
                         </td>
                         <td className="p-3">
-                          <Badge variant="outline" title={p.sector?.sectorName ?? p.sectorName ?? '—'} className="bg-muted text-muted-foreground border-border">{p.sector?.sectorName ?? p.sectorName ?? '—'}</Badge>
+                          <Badge variant="outline" title={p.sector ?? '—'} className="bg-muted text-muted-foreground border-border">{p.sector ?? '—'}</Badge>
                         </td>
                         <td className="p-3">
-                          <Badge variant="outline" title={p.status?.statusName ?? p.statusCode ?? '—'} className="text-[10px] bg-muted text-muted-foreground border-border">{p.status?.statusName ?? p.statusCode ?? '—'}</Badge>
+                          <Badge variant="outline" title={p.status?.statusName ?? p.statusCode ?? '—'} className={`text-[10px] ${
+                            p.statusCode === 'ProviderContractUploaded' || p.statusCode === 'AdminReviewing' ? 'bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800/30' :
+                            p.statusCode === 'PolicyContractGenerated' ? 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800/30' :
+                            p.statusCode === 'Rejected' ? 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800/30' :
+                            'bg-muted text-muted-foreground border-border'
+                          }`}>{p.status?.statusName ?? p.statusCode ?? '—'}</Badge>
                         </td>
-                        <td className="p-3 text-muted-foreground">{formatLocaleNumber(p.annualTurnoverTnd) ?? '—'}</td>
-                        <td className="p-3 font-semibold text-primary">{formatNumericValue(p.finalPremium, 2) ?? formatNumericValue(p.commercialPremium, 2) ?? '—'} {t('common:unit.tnd', 'TND')}</td>
-                        <td className="p-3 text-muted-foreground">{formatNumericValue(p.premiumRatePct, 4) ?? '—'}%</td>
-                        <td className="p-3">
-                          {p.underwritingDecision ? (
-                            <Badge variant="outline" title={p.underwritingDecision.replace(/_/g, ' ')} className={`text-[10px] ${
-                              p.underwritingDecision === 'AUTO_ACCEPT' ? 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800/30' :
-                              p.underwritingDecision === 'MANUAL_REVIEW' ? 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800/30' :
-                              p.underwritingDecision === 'SURCHARGE' ? 'bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800/30' :
-                              'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800/30'
-                            }`}>
-                              {p.underwritingDecision.replace(/_/g, ' ')}
-                            </Badge>
-                          ) : '—'}
-                        </td>
+                        <td className="p-3 text-muted-foreground">{formatLocaleNumber(p.annualTurnover) ?? '—'}</td>
+                        <td className="p-3 font-semibold text-primary">{formatNumericValue(p.premiumAmount, 2) ?? '—'} {t('common:unit.tnd', 'TND')}</td>
+                        <td className="p-3 text-muted-foreground">—</td>
+                        <td className="p-3">—</td>
                         <td className="p-3 text-xs text-muted-foreground">{formatDate(p.createdAt)}</td>
                         <td className="p-3">
                           <div className="flex gap-2">
@@ -339,7 +308,7 @@ export default function AdminParametricPolicyRequestsPage() {
             </DialogTitle>
             <DialogDescription>
               {selectedPolicy && (
-                <>{t('adminParametricPolicy:dialog.policyFor', { name: `${selectedPolicy.customer.user.firstName} ${selectedPolicy.customer.user.lastName}`, provider: selectedPolicy.cloudProvider.organisationName })}</>
+                <>{t('adminParametricPolicy:dialog.policyFor', { name: `${selectedPolicy.customer.user.firstName} ${selectedPolicy.customer.user.lastName}`, provider: selectedPolicy.product?.productName || 'N/A' })}</>
               )}
             </DialogDescription>
           </DialogHeader>
@@ -348,18 +317,12 @@ export default function AdminParametricPolicyRequestsPage() {
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3 text-sm bg-muted rounded-xl p-3">
                 {[
-                  { label: t('adminParametricPolicy:dialog.fields.sector'), value: resolveText(selectedPolicy.sector ?? selectedPolicy.sectorName, '—') },
-                  { label: t('adminParametricPolicy:dialog.fields.businessModel'), value: `${resolveText(selectedPolicy.businessModel ?? selectedPolicy.businessModelName, '—')} (×${formatNumericValue(selectedPolicy.bmFactor, 2) ?? '—'})` },
-                  { label: t('adminParametricPolicy:dialog.fields.resilienceProfile'), value: `${resolveText(selectedPolicy.resilienceProfile ?? selectedPolicy.resilienceProfileName, 'Medium')} (×${formatNumericValue(selectedPolicy.resilienceFactor, 4) ?? '—'})` },
-                  { label: t('adminParametricPolicy:dialog.fields.annualTurnover'), value: `${formatNumericValue(selectedPolicy.annualTurnoverTnd, 0) ?? '—'} ${t('common:unit.tnd', 'TND')}` },
-                  { label: t('adminParametricPolicy:dialog.fields.hourlyRevenue'), value: `${formatNumericValue(selectedPolicy.hourlyRevenue, 2) ?? '—'} ${t('common:unit.tnd', 'TND')}/h` },
-                  { label: t('adminParametricPolicy:dialog.fields.purePremium'), value: `${formatNumericValue(selectedPolicy.purePremium, 2) ?? '—'} ${t('common:unit.tnd', 'TND')}` },
-                  { label: t('adminParametricPolicy:dialog.fields.commercialPremium'), value: `${formatNumericValue(selectedPolicy.commercialPremium, 2) ?? '—'} ${t('common:unit.tnd', 'TND')}` },
-                  { label: t('adminParametricPolicy:dialog.fields.finalPremium'), value: `${formatNumericValue(selectedPolicy.finalPremium, 2) ?? formatNumericValue(selectedPolicy.commercialPremium, 2) ?? '—'} ${t('common:unit.tnd', 'TND')}`, highlight: true },
-                  { label: t('adminParametricPolicy:dialog.fields.payoutPerHour'), value: `${formatNumericValue(selectedPolicy.payoutPerHour, 4) ?? '—'} ${t('common:unit.tnd', 'TND')}` },
-                  { label: t('adminParametricPolicy:dialog.fields.rate'), value: `${formatNumericValue(selectedPolicy.premiumRatePct, 4) ?? '—'}%` },
-                  { label: t('adminParametricPolicy:dialog.fields.providerFactor'), value: `×${formatNumericValue(selectedPolicy.providerFactor, 2) ?? '1.00'}` },
-                  { label: t('adminParametricPolicy:dialog.fields.uwDecision'), value: resolveText(selectedPolicy.underwritingDecision?.replace(/_/g, ' '), '—') },
+                  { label: 'Application #', value: selectedPolicy.applicationNumber || '—' },
+                  { label: 'Product', value: selectedPolicy.product?.productName || '—' },
+                  { label: t('adminParametricPolicy:dialog.fields.sector'), value: resolveText(selectedPolicy.sector, '—') },
+                  { label: t('adminParametricPolicy:dialog.fields.annualTurnover'), value: `${formatNumericValue(selectedPolicy.annualTurnover, 0) ?? '—'} ${t('common:unit.tnd', 'TND')}` },
+                  { label: t('adminParametricPolicy:dialog.fields.finalPremium'), value: `${formatNumericValue(selectedPolicy.premiumAmount, 2) ?? '—'} ${t('common:unit.tnd', 'TND')}`, highlight: true },
+                  { label: 'Status', value: selectedPolicy.status?.statusName ?? selectedPolicy.statusCode ?? '—' },
                 ].map((field) => (
                   <div key={field.label}>
                     <p className="text-muted-foreground text-xs">{field.label}</p>
